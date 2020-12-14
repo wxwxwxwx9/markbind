@@ -95,9 +95,9 @@
       </transition>
       <div
         v-if="shouldShowPreview && !isPreviewCardExpanded"
-        class="preview-read-more"
+        class="preview-read-more glyphicon glyphicon-chevron-down"
         @click="togglePreviewCard()"
-      > Read More </div>
+      > </div>
     </div>
   </span>
 </template>
@@ -164,7 +164,7 @@ export default {
         position: absolute;
         width: 100%;
         bottom: 0;
-        height: 100px;
+        height: 120px;
         background: linear-gradient(transparent, white);
         z-index: 1;
     }
@@ -174,11 +174,12 @@ export default {
         text-align: center;
         background-color: transparent;
         z-index: 2;
-        opacity: 0;
+        opacity: 0.2;
     }
 
     .preview-read-more:hover {
         cursor: pointer;
+        opacity: 0.4;
     }
 
     .card-collapse {

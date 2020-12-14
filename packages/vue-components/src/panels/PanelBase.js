@@ -186,10 +186,14 @@ export default {
     },
     setExpandedPreviewCardHeight() {
       const setCardHeight = () => {
-        // extra 50px to accomodate for the text fade
-        this.expandedPreviewCardHeight = this.$refs.card.scrollHeight + 50;
+        this.expandedPreviewCardHeight = this.$refs.card.scrollHeight;
         this.$refs.card.style.maxHeight = `${this.collapsedPreviewCardHeight}px`;
         this.previewCardExpanded = false;
+        this.$refs.card.addEventListener('transitionend', () => {
+          if (this.isPreviewCardExpanded) {
+            this.$refs.card.style.maxHeight = 'none';
+          }
+        });
       };
       if (this.localMinimized) {
         this.open(); // open minimized panel to retrieve the expanded height of the card
