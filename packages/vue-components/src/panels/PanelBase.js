@@ -53,6 +53,22 @@ export default {
       type: Boolean,
       default: false,
     },
+    showPreview: {
+      type: Boolean,
+      default: false,
+    },
+    previewCardExpanded: {
+      type: Boolean,
+      default: true,
+    },
+    expandedPreviewCardHeight: {
+      type: Number,
+      default: 0, // to be set dynamically during mounting
+    },
+    collapsedPreviewCardHeight: {
+      type: Number,
+      default: 180,
+    },
   },
   computed: {
     // Vue 2.0 coerce migration
@@ -93,6 +109,12 @@ export default {
     shouldShowHeader() {
       return (!this.localExpanded) || (!this.expandHeaderless);
     },
+    shouldShowPreview() {
+      return this.showPreview;
+    },
+    isPreviewCardExpanded() {
+      return this.previewCardExpanded;
+    },
   },
   data() {
     return {
@@ -116,8 +138,21 @@ export default {
         this.localExpanded = !this.localExpanded;
       }
     },
+    togglePreviewCard() {
+      if (this.previewCardExpanded) {
+        this.$refs.card.style.maxHeight = `${this.collapsedPreviewCardHeight}px`;
+      } else {
+        this.$refs.card.style.maxHeight = `${this.expandedPreviewCardHeight}px`;
+      }
+      this.previewCardExpanded = !this.previewCardExpanded;
+    },
     close() {
       this.localExpanded = false;
+      this.localMinimized = true;
+    },
+    closePreviewCard() {
+      this.$refs.card.style.maxHeight = `${this.collapsedPreviewCardHeight}px`;
+      this.previewCardExpanded = false;
       this.localMinimized = true;
     },
     open() {
@@ -148,6 +183,23 @@ export default {
 
       this.$refs.panel.addEventListener('transitionend', onExpandDone);
       this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
+    },
+    setExpandedPreviewCardHeight() {
+      const setCardHeight = () => {
+        // extra 50px to accomodate for the text fade
+        this.expandedPreviewCardHeight = this.$refs.card.scrollHeight + 50;
+        this.$refs.card.style.maxHeight = `${this.collapsedPreviewCardHeight}px`;
+        this.previewCardExpanded = false;
+      };
+      if (this.localMinimized) {
+        this.open(); // open minimized panel to retrieve the expanded height of the card
+        this.$nextTick(() => {
+          setCardHeight();
+          this.closePreviewCard();
+        });
+        return;
+      }
+      setCardHeight();
     },
     beforeExpand(el) {
       el.style.maxHeight = '0';
@@ -186,9 +238,17 @@ export default {
     // Set local data to computed prop value
 
     // Ensure this expr ordering is maintained
-    this.localExpanded = notExpandableNoExpand || this.expandedBool;
+    this.localExpanded = notExpandableNoExpand || this.shouldShowPreview || this.expandedBool;
     // If it is expanded, load the retriever immediately.
     this.wasRetrieverLoaded = this.localExpanded;
     this.localMinimized = this.minimizedBool;
+  },
+  mounted() {
+    if (this.shouldShowPreview) {
+      this.wasRetrieverLoaded = true;
+      this.$nextTick(() => {
+        this.setExpandedPreviewCardHeight();
+      });
+    }
   },
 };

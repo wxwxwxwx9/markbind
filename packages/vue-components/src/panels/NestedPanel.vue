@@ -7,10 +7,17 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" :class="['card', { 'expandable-card': isExpandableCard }, borderType]">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      :class="['card',
+               {'expandable-card': isExpandableCard, 'show-preview': shouldShowPreview,
+                'card-preview-collapsed': shouldShowPreview && !isPreviewCardExpanded },
+               borderType]"
+    >
       <div
         :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
-        @click.prevent.stop="isExpandableCard && toggle()"
+        @click.prevent.stop="shouldShowPreview ? togglePreviewCard() : isExpandableCard && toggle()"
       >
         <div class="caret-wrapper">
           <span
@@ -29,7 +36,7 @@
           <slot name="button">
             <panel-switch
               v-show="isExpandableCard && !noSwitchBool && !showCaret"
-              :is-open="localExpanded"
+              :is-open="shouldShowPreview ? isPreviewCardExpanded : localExpanded"
               :is-light-bg="isLightBg"
             />
             <button
@@ -38,7 +45,7 @@
               class="close-button btn"
               :class="[isLightBg ? 'btn-outline-secondary' : 'btn-outline-light',
                        { 'seamless-button': isSeamless }]"
-              @click.stop="close()"
+              @click.stop="shouldShowPreview ? closePreviewCard() : close()"
             >
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
@@ -80,12 +87,17 @@
             <panel-switch
               v-show="isExpandableCard && bottomSwitchBool"
               :is-open="localExpanded"
-              @click.native.stop.prevent="toggle()"
+              @click.native.stop.prevent="shouldShowPreview ? togglePreviewCard() : toggle()"
             />
           </div>
           <hr v-show="isSeamless" />
         </div>
       </transition>
+      <div
+        v-if="shouldShowPreview && !isPreviewCardExpanded"
+        class="preview-read-more"
+        @click="togglePreviewCard()"
+      > Read More </div>
     </div>
   </span>
 </template>
@@ -139,6 +151,36 @@ export default {
 </script>
 
 <style scoped>
+    .show-preview {
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+    }
+
+    .card-preview-collapsed::after {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        content: "";
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 100px;
+        background: linear-gradient(transparent, white);
+        z-index: 1;
+    }
+
+    .preview-read-more {
+        margin: 10px 0;
+        text-align: center;
+        background-color: transparent;
+        z-index: 2;
+        opacity: 0;
+    }
+
+    .preview-read-more:hover {
+        cursor: pointer;
+    }
+
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
