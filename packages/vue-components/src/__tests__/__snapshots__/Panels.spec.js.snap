@@ -96,6 +96,8 @@ exports[`NestedPanels should not show header after expand with expandHeaderless 
         />
       </div>
     </transition-stub>
+     
+    <!---->
   </div>
 </span>
 `;
@@ -196,6 +198,8 @@ exports[`NestedPanels should show header after expand with expandHeaderless as f
         />
       </div>
     </transition-stub>
+     
+    <!---->
   </div>
 </span>
 `;
@@ -270,6 +274,8 @@ exports[`NestedPanels should show header when minimized with expandHeaderless as
     </div>
      
     <!---->
+     
+    <!---->
   </div>
 </span>
 `;
@@ -342,6 +348,8 @@ exports[`NestedPanels should show header when minimized with expandHeaderless as
         </button>
       </div>
     </div>
+     
+    <!---->
      
     <!---->
   </div>
