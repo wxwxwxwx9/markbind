@@ -7,7 +7,16 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" :class="['card', { 'expandable-card': isExpandableCard }, borderType]">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      :class="['card',
+               { 'expandable-card': isExpandableCard,
+                 'show-preview': showPreview,
+                 'card-preview-collapsed': showPreview && !localExpanded,
+               },
+               borderType]"
+    >
       <div
         :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
         @click.prevent.stop="isExpandableCard && toggle()"
@@ -55,37 +64,32 @@
           </slot>
         </div>
       </div>
-      <transition
-        v-if="preloadBool || wasRetrieverLoaded"
-        @before-enter="beforeExpand"
-        @enter="duringExpand"
-        @after-enter="afterExpand"
-        @before-leave="beforeCollapse"
-        @leave="duringCollapse"
+      <div
+        ref="panel"
+        class="card-collapse"
       >
-        <div
-          v-show="localExpanded"
-          ref="panel"
-          class="card-collapse"
-        >
-          <div class="card-body">
-            <slot></slot>
-            <retriever
-              v-if="hasSrc"
-              ref="retriever"
-              :src="src"
-              :fragment="fragment"
-              @src-loaded="setMaxHeight"
-            />
-            <panel-switch
-              v-show="isExpandableCard && bottomSwitchBool"
-              :is-open="localExpanded"
-              @click.native.stop.prevent="toggle()"
-            />
-          </div>
-          <hr v-show="isSeamless" />
+        <div class="card-body">
+          <slot></slot>
+          <retriever
+            v-if="hasSrc"
+            ref="retriever"
+            :src="src"
+            :fragment="fragment"
+            @src-loaded="setMaxHeight"
+          />
+          <panel-switch
+            v-show="isExpandableCard && bottomSwitchBool"
+            :is-open="localExpanded"
+            @click.native.stop.prevent="toggle()"
+          />
         </div>
-      </transition>
+        <hr v-show="isSeamless" />
+      </div>
+      <div
+        v-if="shouldShowPreviewArrow"
+        class="preview-read-more glyphicon glyphicon-chevron-down"
+        @click="toggle()"
+      ></div>
     </div>
   </span>
 </template>
@@ -139,6 +143,40 @@ export default {
 </script>
 
 <style scoped>
+    .card {
+        transition: max-height 0.5s ease-in-out;
+    }
+
+    .show-preview {
+        overflow: hidden;
+    }
+
+    .card-preview-collapsed::after {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        content: "";
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 120px;
+        background: linear-gradient(transparent, white);
+        z-index: 1;
+    }
+
+    .preview-read-more {
+        margin: 10px 0;
+        text-align: center;
+        background-color: transparent;
+        z-index: 2;
+        opacity: 0.2;
+    }
+
+    .preview-read-more:hover {
+        cursor: pointer;
+        opacity: 0.4;
+    }
+
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;

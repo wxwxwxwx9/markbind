@@ -53,6 +53,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    showPreview: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     // Vue 2.0 coerce migration
@@ -93,16 +97,37 @@ export default {
     shouldShowHeader() {
       return (!this.localExpanded) || (!this.expandHeaderless);
     },
+    shouldShowPreviewArrow() {
+      return this.showPreview && !this.localExpanded;
+    },
   },
   data() {
     return {
       localExpanded: false,
       localMinimized: false,
       wasRetrieverLoaded: false,
+      expandedCardHeight: 0, // to be set dynamically during mounting
+      collapsedCardHeight: 0, // to be set dynamically
+      collapsedPreviewCardHeight: 180,
     };
   },
   methods: {
     toggle() {
+      const toggleHeight = () => {
+        console.log(this.collapsedCardHeight);
+        console.log(this.expandedCardHeight);
+        console.log(this.localExpanded);
+        if (this.localExpanded) {
+          this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+        } else {
+          // const func = () => {
+          //   this.$refs.card.style.maxHeight = 'none';
+          // };
+          // this.$refs.card.addEventListener('transitionend', func);
+          this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+        }
+        this.localExpanded = !this.localExpanded;
+      };
       if (!this.wasRetrieverLoaded && !this.localExpanded) {
         /*
         Let the retriever load before toggling localExpanded which triggers the animation,
@@ -110,65 +135,74 @@ export default {
         */
         this.wasRetrieverLoaded = true;
         this.$nextTick(() => {
-          this.localExpanded = true;
+          toggleHeight();
         });
       } else {
-        this.localExpanded = !this.localExpanded;
+        toggleHeight();
       }
     },
     close() {
+      // this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
       this.localExpanded = false;
       this.localMinimized = true;
     },
     open() {
       this.wasRetrieverLoaded = true;
-      this.$nextTick(() => {
-        this.localExpanded = true;
-      });
+      // this.$nextTick(() => {
+      //   this.localExpanded = true;
+      // });
       this.localMinimized = false;
     },
     openPopup() {
       window.open(this.popupUrl);
     },
-    setMaxHeight() {
-      // Don't play the transition for this case as the loading should feel 'instant'
-      if (this.expandedBool) {
-        this.$refs.panel.style.maxHeight = 'none';
-        return;
-      }
+    // setMaxHeight() {
+    //   // Don't play the transition for this case as the loading should feel 'instant'
+    //   if (this.expandedBool) {
+    //     this.$refs.panel.style.maxHeight = 'none';
+    //     return;
+    //   }
 
-      /*
-      Otherwise, since the vue transition is dependent on localExpanded, we have to manually
-      set our own transition end handlers here for the initial loading of the content.
-      */
-      const onExpandDone = () => {
-        this.$refs.panel.style.maxHeight = 'none';
-        this.$refs.panel.removeEventListener('transitionend', onExpandDone);
+    //   /*
+    //   Otherwise, since the vue transition is dependent on localExpanded, we have to manually
+    //   set our own transition end handlers here for the initial loading of the content.
+    //   */
+    //   const onExpandDone = () => {
+    //     this.$refs.panel.style.maxHeight = 'none';
+    //     this.$refs.panel.removeEventListener('transitionend', onExpandDone);
+    //   };
+
+    //   this.$refs.panel.addEventListener('transitionend', onExpandDone);
+    //   this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
+    // },
+    setCollapsedCardHeight() {
+      if (this.showPreview) {
+        this.collapsedCardHeight = this.collapsedPreviewCardHeight;
+      } else {
+        const cardHeader = document.querySelector('.card-header');
+        this.collapsedCardHeight = cardHeader.scrollHeight;
+      }
+    },
+    setExpandedCardHeight() {
+      const setHeight = () => {
+        // console.log("set: " + this.$refs.card.scrollHeight);
+        this.expandedCardHeight = this.$refs.card.scrollHeight;
       };
-
-      this.$refs.panel.addEventListener('transitionend', onExpandDone);
-      this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
-    },
-    beforeExpand(el) {
-      el.style.maxHeight = '0';
-    },
-    duringExpand(el) {
-      jQuery('html').stop();
-      el.style.maxHeight = `${el.scrollHeight}px`;
-    },
-    afterExpand(el) {
-      el.style.maxHeight = 'none';
-    },
-    beforeCollapse(el) {
-      el.style.maxHeight = `${el.scrollHeight}px`;
-    },
-    duringCollapse(el) {
-      if (this.$el.getBoundingClientRect().top < 0) {
-        jQuery('html').animate({
-          scrollTop: window.scrollY + this.$el.getBoundingClientRect().top - 3,
-        }, 500, 'swing');
+      if (this.localMinimized) {
+        this.open();
+        this.$nextTick(() => {
+          setHeight();
+          this.close();
+        });
       }
-      el.style.maxHeight = '0';
+      setHeight();
+    },
+    setInitialCardHeight() {
+      if (this.localExpanded) {
+        this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+      } else {
+        this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+      }
     },
   },
   created() {
@@ -187,8 +221,25 @@ export default {
 
     // Ensure this expr ordering is maintained
     this.localExpanded = notExpandableNoExpand || this.expandedBool;
+    if (this.localExpanded == null) {
+      this.localExpanded = false;
+    }
     // If it is expanded, load the retriever immediately.
-    this.wasRetrieverLoaded = this.localExpanded;
-    this.localMinimized = this.minimizedBool;
+    // this.wasRetrieverLoaded = this.localExpanded;
+    // this.wasRetrieverLoaded = true;
+    // this.localMinimized = this.minimizedBool;
+  },
+  mounted() {
+    this.wasRetrieverLoaded = true;
+    this.$nextTick(() => {
+      this.setCollapsedCardHeight();
+      this.setExpandedCardHeight();
+      this.setInitialCardHeight();
+
+      this.localMinimized = this.minimizedBool;
+      if (this.localMinimized) {
+        this.localExpanded = false;
+      }
+    });
   },
 };
