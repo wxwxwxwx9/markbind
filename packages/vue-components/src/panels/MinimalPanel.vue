@@ -7,7 +7,11 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" class="card card-flex">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      class="card card-flex"
+    >
       <div
         :class="['header-wrapper',
                  { 'header-wrapper-bottom': isHeaderAtBottom, 'header-toggle': isExpandableCard }]"
@@ -55,32 +59,21 @@
           </slot>
         </div>
       </div>
-      <transition
-        v-if="preloadBool || wasRetrieverLoaded"
-        @before-enter="beforeExpandMinimal"
-        @enter="duringExpand"
-        @after-enter="afterExpand"
-        @before-leave="beforeCollapse"
-        @leave="duringCollapse"
-        @after-leave="afterCollapseMinimal"
+      <div
+        ref="panel"
+        class="card-collapse"
       >
-        <div
-          v-show="localExpanded"
-          ref="panel"
-          class="card-collapse"
-        >
-          <div class="card-body">
-            <slot></slot>
-            <retriever
-              v-if="hasSrc"
-              ref="retriever"
-              :src="src"
-              :fragment="fragment"
-              @src-loaded="setMaxHeight"
-            />
-          </div>
+        <div class="card-body">
+          <slot></slot>
+          <retriever
+            v-if="hasSrc"
+            ref="retriever"
+            :src="src"
+            :fragment="fragment"
+            @src-loaded="setMaxHeight"
+          />
         </div>
-      </transition>
+      </div>
     </div>
   </span>
 </template>

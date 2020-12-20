@@ -142,7 +142,7 @@ export default {
       }
     },
     close() {
-      // this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+      this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
       this.localExpanded = false;
       this.localMinimized = true;
     },
@@ -235,7 +235,16 @@ export default {
       this.setCollapsedCardHeight();
       this.setExpandedCardHeight();
       this.setInitialCardHeight();
-
+      this.$refs.card.addEventListener('transitionend', () => {
+        if (this.localExpanded) {
+          this.$refs.card.style.maxHeight = 'none';
+        }
+      });
+      this.$refs.card.addEventListener('transitionrun', () => {
+        if (this.localExpanded) {
+          this.$refs.card.style.maxHeight = this.$refs.card.scrollHeight;
+        }
+      });
       this.localMinimized = this.minimizedBool;
       if (this.localMinimized) {
         this.localExpanded = false;
