@@ -156,25 +156,25 @@ export default {
     openPopup() {
       window.open(this.popupUrl);
     },
-    // setMaxHeight() {
-    //   // Don't play the transition for this case as the loading should feel 'instant'
-    //   if (this.expandedBool) {
-    //     this.$refs.panel.style.maxHeight = 'none';
-    //     return;
-    //   }
+    setMaxHeight() {
+      // Don't play the transition for this case as the loading should feel 'instant'
+      if (this.expandedBool) {
+        this.$refs.panel.style.maxHeight = 'none';
+        return;
+      }
 
-    //   /*
-    //   Otherwise, since the vue transition is dependent on localExpanded, we have to manually
-    //   set our own transition end handlers here for the initial loading of the content.
-    //   */
-    //   const onExpandDone = () => {
-    //     this.$refs.panel.style.maxHeight = 'none';
-    //     this.$refs.panel.removeEventListener('transitionend', onExpandDone);
-    //   };
+      /*
+      Otherwise, since the vue transition is dependent on localExpanded, we have to manually
+      set our own transition end handlers here for the initial loading of the content.
+      */
+      const onExpandDone = () => {
+        this.$refs.panel.style.maxHeight = 'none';
+        this.$refs.panel.removeEventListener('transitionend', onExpandDone);
+      };
 
-    //   this.$refs.panel.addEventListener('transitionend', onExpandDone);
-    //   this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
-    // },
+      this.$refs.panel.addEventListener('transitionend', onExpandDone);
+      this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
+    },
     setCollapsedCardHeight() {
       if (this.showPreview) {
         this.collapsedCardHeight = this.collapsedPreviewCardHeight;
@@ -251,4 +251,25 @@ export default {
       }
     });
   },
+  // beforeExpand(el) {
+  //   el.style.maxHeight = '0';
+  // },
+  // duringExpand(el) {
+  //   jQuery('html').stop();
+  //   el.style.maxHeight = `${el.scrollHeight}px`;
+  // },
+  // afterExpand(el) {
+  //   el.style.maxHeight = 'none';
+  // },
+  // beforeCollapse(el) {
+  //   el.style.maxHeight = `${el.scrollHeight}px`;
+  // },
+  // duringCollapse(el) {
+  //   if (this.$el.getBoundingClientRect().top < 0) {
+  //     jQuery('html').animate({
+  //       scrollTop: window.scrollY + this.$el.getBoundingClientRect().top - 3,
+  //     }, 500, 'swing');
+  //   }
+  //   el.style.maxHeight = '0';
+  // },
 };
