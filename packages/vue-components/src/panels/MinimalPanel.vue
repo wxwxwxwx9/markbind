@@ -1,17 +1,21 @@
 <template>
   <span ref="cardContainer" :class="['card-container', addClass]">
     <div v-show="localMinimized" class="morph">
-      <button class="morph-display-wrapper btn card-title morph-title" @click="open()">
+      <button class="morph-display-wrapper btn card-title morph-title" @click="open(), updateBottomHeader()">
         <slot name="_alt">
           <slot name="header"></slot>
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" class="card card-flex">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      class="card card-flex"
+    >
       <div
         :class="['header-wrapper',
                  { 'header-wrapper-bottom': isHeaderAtBottom, 'header-toggle': isExpandableCard }]"
-        @click.prevent.stop="isExpandableCard && toggle()"
+        @click.prevent.stop="isExpandableCard && toggle(), updateBottomHeader()"
       >
         <transition name="header-fade">
           <span
@@ -55,7 +59,7 @@
           </slot>
         </div>
       </div>
-      <transition
+      <!-- <transition
         v-if="preloadBool || wasRetrieverLoaded"
         @before-enter="beforeExpandMinimal"
         @enter="duringExpand"
@@ -63,24 +67,23 @@
         @before-leave="beforeCollapse"
         @leave="duringCollapse"
         @after-leave="afterCollapseMinimal"
+      > -->
+      <div
+        ref="panel"
+        class="card-collapse"
       >
-        <div
-          v-show="localExpanded"
-          ref="panel"
-          class="card-collapse"
-        >
-          <div class="card-body">
-            <slot></slot>
-            <retriever
-              v-if="hasSrc"
-              ref="retriever"
-              :src="src"
-              :fragment="fragment"
-              @src-loaded="setMaxHeight"
-            />
-          </div>
+        <div class="card-body">
+          <slot></slot>
+          <retriever
+            v-if="hasSrc"
+            ref="retriever"
+            :src="src"
+            :fragment="fragment"
+            @src-loaded="setMaxHeight"
+          />
         </div>
-      </transition>
+      </div>
+      <!-- </transition> -->
     </div>
   </span>
 </template>
@@ -110,9 +113,12 @@ export default {
     },
   },
   methods: {
+    updateBottomHeader() {
+      this.isHeaderAtBottom = this.localExpanded;
+    },
     beforeExpandMinimal(el) {
       this.isHeaderAtBottom = true;
-      this.beforeExpand(el);
+      // this.beforeExpand(el);
     },
     afterCollapseMinimal() {
       this.isHeaderAtBottom = false;
@@ -137,6 +143,10 @@ export default {
     color: black;
     border-color: black;
     background-color: rgba(244, 244, 244, 0.3);
+  }
+
+  .card {
+    transition: max-height 0.5s ease-in-out;
   }
 
   .card-collapse {

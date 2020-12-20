@@ -53,6 +53,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    showPreview: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     // Vue 2.0 coerce migration
@@ -93,16 +97,39 @@ export default {
     shouldShowHeader() {
       return (!this.localExpanded) || (!this.expandHeaderless);
     },
+    isPreviewCollapsed() {
+      return this.showPreview && !this.localExpanded;
+    },
   },
   data() {
     return {
       localExpanded: false,
       localMinimized: false,
       wasRetrieverLoaded: false,
+      expandedCardHeight: 0,
+      collapsedCardHeight: 0,
+      collapsedPreviewCardHeight: 180,
     };
   },
   methods: {
     toggle() {
+      const toggleHeight = () => {
+        console.log(this.type);
+        console.log(this.collapsedCardHeight);
+        console.log(this.expandedCardHeight);
+        if (this.localExpanded) {
+          console.log('collapsing');
+          this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+        } else {
+          // const func = () => {
+          //   this.$refs.card.style.maxHeight = 'none';
+          // };
+          // this.$refs.card.addEventListener('transitionend', func);
+          console.log('expanding');
+          this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+        }
+        this.localExpanded = !this.localExpanded;
+      };
       if (!this.wasRetrieverLoaded && !this.localExpanded) {
         /*
         Let the retriever load before toggling localExpanded which triggers the animation,
@@ -110,21 +137,20 @@ export default {
         */
         this.wasRetrieverLoaded = true;
         this.$nextTick(() => {
-          this.localExpanded = true;
+          toggleHeight();
         });
       } else {
-        this.localExpanded = !this.localExpanded;
+        toggleHeight();
       }
     },
     close() {
+      this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
       this.localExpanded = false;
       this.localMinimized = true;
     },
     open() {
-      this.wasRetrieverLoaded = true;
-      this.$nextTick(() => {
-        this.localExpanded = true;
-      });
+      this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+      this.localExpanded = true;
       this.localMinimized = false;
     },
     openPopup() {
@@ -149,27 +175,61 @@ export default {
       this.$refs.panel.addEventListener('transitionend', onExpandDone);
       this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
     },
-    beforeExpand(el) {
-      el.style.maxHeight = '0';
-    },
-    duringExpand(el) {
-      jQuery('html').stop();
-      el.style.maxHeight = `${el.scrollHeight}px`;
-    },
-    afterExpand(el) {
-      el.style.maxHeight = 'none';
-    },
-    beforeCollapse(el) {
-      el.style.maxHeight = `${el.scrollHeight}px`;
-    },
-    duringCollapse(el) {
-      if (this.$el.getBoundingClientRect().top < 0) {
-        jQuery('html').animate({
-          scrollTop: window.scrollY + this.$el.getBoundingClientRect().top - 3,
-        }, 500, 'swing');
+    setCollapsedCardHeight() {
+      if (this.showPreview) {
+        this.collapsedCardHeight = this.collapsedPreviewCardHeight;
+      } else {
+        let cardHeader;
+        if (this.type === 'minimal') {
+          cardHeader = document.querySelector('.header-wrapper');
+        } else {
+          cardHeader = document.querySelector('.card-header');
+        }
+        this.collapsedCardHeight = cardHeader.scrollHeight;
       }
-      el.style.maxHeight = '0';
     },
+    setExpandedCardHeight() {
+      const setHeight = () => {
+        // console.log("set: " + this.$refs.card.scrollHeight);
+        this.expandedCardHeight = this.$refs.card.scrollHeight;
+      };
+      if (this.localMinimized) {
+        this.open();
+        this.$nextTick(() => {
+          setHeight();
+          this.close();
+        });
+      }
+      setHeight();
+    },
+    setInitialCardHeight() {
+      if (this.localExpanded) {
+        this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+      } else {
+        this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+      }
+    },
+    // beforeExpand(el) {
+    //   el.style.maxHeight = '0';
+    // },
+    // duringExpand(el) {
+    //   jQuery('html').stop();
+    //   el.style.maxHeight = `${el.scrollHeight}px`;
+    // },
+    // afterExpand(el) {
+    //   el.style.maxHeight = 'none';
+    // },
+    // beforeCollapse(el) {
+    //   el.style.maxHeight = `${el.scrollHeight}px`;
+    // },
+    // duringCollapse(el) {
+    //   if (this.$el.getBoundingClientRect().top < 0) {
+    //     jQuery('html').animate({
+    //       scrollTop: window.scrollY + this.$el.getBoundingClientRect().top - 3,
+    //     }, 500, 'swing');
+    //   }
+    //   el.style.maxHeight = '0';
+    // },
   },
   created() {
     if (this.src) {
@@ -187,8 +247,33 @@ export default {
 
     // Ensure this expr ordering is maintained
     this.localExpanded = notExpandableNoExpand || this.expandedBool;
+    if (this.localExpanded == null) {
+      console.log('NULL');
+      console.log(this.expandedBool);
+      this.localExpanded = false;
+    }
     // If it is expanded, load the retriever immediately.
-    this.wasRetrieverLoaded = this.localExpanded;
-    this.localMinimized = this.minimizedBool;
+    // this.wasRetrieverLoaded = this.localExpanded;
+    // this.localMinimized = this.minimizedBool;
+  },
+  mounted() {
+    this.wasRetrieverLoaded = true;
+    this.$nextTick(() => {
+      this.setCollapsedCardHeight();
+      this.setExpandedCardHeight();
+      this.setInitialCardHeight();
+      // this.$refs.card.addEventListener('transitionend', () => {
+      //   if (this.localExpanded) {
+      //     this.$refs.card.style.maxHeight = 'none';
+      //   }
+      // });
+      // this.$refs.card.addEventListener('transitionrun', () => {
+      //   if (this.localExpanded) {
+      //     this.$refs.card.style.maxHeight = this.$refs.card.scrollHeight;
+      //   }
+      // });
+      this.localMinimized = this.minimizedBool;
+      this.localExpanded = this.localMinimized;
+    });
   },
 };
