@@ -7,8 +7,15 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" :class="['card', { 'expandable-card': isExpandableCard }, borderType]">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      :class="['card',
+               { 'expandable-card': isExpandableCard },
+               borderType]"
+    >
       <div
+        ref="cardHeader"
         :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
         @click.prevent.stop="isExpandableCard && toggle()"
       >
@@ -55,37 +62,32 @@
           </slot>
         </div>
       </div>
-      <transition
-        v-if="preloadBool || wasRetrieverLoaded"
-        @before-enter="beforeExpand"
-        @enter="duringExpand"
-        @after-enter="afterExpand"
-        @before-leave="beforeCollapse"
-        @leave="duringCollapse"
+      <div
+        ref="panel"
+        class="card-collapse"
       >
-        <div
-          v-show="localExpanded"
-          ref="panel"
-          class="card-collapse"
-        >
-          <div class="card-body">
-            <slot></slot>
-            <retriever
-              v-if="hasSrc"
-              ref="retriever"
-              :src="src"
-              :fragment="fragment"
-              @src-loaded="setMaxHeight"
-            />
-            <panel-switch
-              v-show="isExpandableCard && bottomSwitchBool"
-              :is-open="localExpanded"
-              @click.native.stop.prevent="toggle()"
-            />
-          </div>
-          <hr v-show="isSeamless" />
+        <div class="card-body">
+          <slot></slot>
+          <retriever
+            v-if="hasSrc"
+            ref="retriever"
+            :src="src"
+            :fragment="fragment"
+            @src-loaded="setMaxHeight"
+          />
+          <panel-switch
+            v-show="isExpandableCard && bottomSwitchBool"
+            :is-open="localExpanded"
+            @click.native.stop.prevent="toggle()"
+          />
         </div>
-      </transition>
+        <hr v-show="isSeamless" />
+      </div>
+      <div
+        v-if="isPreviewCollapsed"
+        class="preview-read-more glyphicon glyphicon-chevron-down"
+        @click="toggle()"
+      ></div>
     </div>
   </span>
 </template>
@@ -139,6 +141,10 @@ export default {
 </script>
 
 <style scoped>
+    .card {
+        transition: max-height 0.5s ease-in-out;
+    }
+
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;

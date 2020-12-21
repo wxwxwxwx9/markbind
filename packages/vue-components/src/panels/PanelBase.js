@@ -149,58 +149,53 @@ export default {
       this.localMinimized = true;
     },
     open() {
-      this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
-      this.localExpanded = true;
       this.localMinimized = false;
+      this.localExpanded = true;
+      this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
     },
     openPopup() {
       window.open(this.popupUrl);
     },
     setMaxHeight() {
-      // Don't play the transition for this case as the loading should feel 'instant'
-      if (this.expandedBool) {
-        this.$refs.panel.style.maxHeight = 'none';
-        return;
-      }
+      // // Don't play the transition for this case as the loading should feel 'instant'
+      // if (this.expandedBool) {
+      //   this.$refs.panel.style.maxHeight = 'none';
+      //   return;
+      // }
 
-      /*
-      Otherwise, since the vue transition is dependent on localExpanded, we have to manually
-      set our own transition end handlers here for the initial loading of the content.
-      */
-      const onExpandDone = () => {
-        this.$refs.panel.style.maxHeight = 'none';
-        this.$refs.panel.removeEventListener('transitionend', onExpandDone);
-      };
+      // /*
+      // Otherwise, since the vue transition is dependent on localExpanded, we have to manually
+      // set our own transition end handlers here for the initial loading of the content.
+      // */
+      // const onExpandDone = () => {
+      //   this.$refs.panel.style.maxHeight = 'none';
+      //   this.$refs.panel.removeEventListener('transitionend', onExpandDone);
+      // };
 
-      this.$refs.panel.addEventListener('transitionend', onExpandDone);
-      this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
+      // this.$refs.panel.addEventListener('transitionend', onExpandDone);
+      // this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
     },
     setCollapsedCardHeight() {
-      if (this.showPreview) {
-        this.collapsedCardHeight = this.collapsedPreviewCardHeight;
+      if (this.type === 'minimal') {
+        this.collapsedCardHeight = this.$refs.headerWrapper.scrollHeight;
       } else {
-        let cardHeader;
-        if (this.type === 'minimal') {
-          cardHeader = document.querySelector('.header-wrapper');
-        } else {
-          cardHeader = document.querySelector('.card-header');
-        }
-        this.collapsedCardHeight = cardHeader.scrollHeight;
+        this.collapsedCardHeight = this.$refs.cardHeader.scrollHeight;
+      }
+      if (this.showPreview) {
+        this.collapsedCardHeight += this.collapsedPreviewCardHeight;
       }
     },
     setExpandedCardHeight() {
-      const setHeight = () => {
-        // console.log("set: " + this.$refs.card.scrollHeight);
-        this.expandedCardHeight = this.$refs.card.scrollHeight;
-      };
-      if (this.localMinimized) {
-        this.open();
-        this.$nextTick(() => {
-          setHeight();
-          this.close();
-        });
-      }
-      setHeight();
+      this.expandedCardHeight = this.$refs.card.scrollHeight;
+      // if (this.localMinimized) {
+      //   this.open();
+      //   this.$nextTick(() => {
+      //     this.expandedCardHeight = this.$refs.card.scrollHeight;
+      //     this.close();
+      //   });
+      // } else {
+      //   this.expandedCardHeight = this.$refs.card.scrollHeight;
+      // }
     },
     setInitialCardHeight() {
       if (this.localExpanded) {
@@ -248,10 +243,9 @@ export default {
     // Ensure this expr ordering is maintained
     this.localExpanded = notExpandableNoExpand || this.expandedBool;
     if (this.localExpanded == null) {
-      console.log('NULL');
-      console.log(this.expandedBool);
       this.localExpanded = false;
     }
+    // this.wasRetrieverLoaded = true;
     // If it is expanded, load the retriever immediately.
     // this.wasRetrieverLoaded = this.localExpanded;
     // this.localMinimized = this.minimizedBool;
@@ -267,13 +261,18 @@ export default {
       //     this.$refs.card.style.maxHeight = 'none';
       //   }
       // });
+      // this.$refs.card.addEventListener('transitionend', () => {
+      //   if (this.localExpanded) {
+      //     this.$refs.card.style.maxHeight = 'none';
+      //   }
+      // });
       // this.$refs.card.addEventListener('transitionrun', () => {
       //   if (this.localExpanded) {
       //     this.$refs.card.style.maxHeight = this.$refs.card.scrollHeight;
       //   }
       // });
       this.localMinimized = this.minimizedBool;
-      this.localExpanded = this.localMinimized;
+      // this.localExpanded = this.localMinimized;
     });
   },
 };

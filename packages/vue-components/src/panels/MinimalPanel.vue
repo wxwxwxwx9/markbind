@@ -1,7 +1,7 @@
 <template>
   <span ref="cardContainer" :class="['card-container', addClass]">
     <div v-show="localMinimized" class="morph">
-      <button class="morph-display-wrapper btn card-title morph-title" @click="open(), updateBottomHeader()">
+      <button class="morph-display-wrapper btn card-title morph-title" @click="updateBottomHeader(), open()">
         <slot name="_alt">
           <slot name="header"></slot>
         </slot>
@@ -13,14 +13,14 @@
       class="card card-flex"
     >
       <div
+        ref="headerWrapper"
         :class="['header-wrapper',
                  { 'header-wrapper-bottom': isHeaderAtBottom, 'header-toggle': isExpandableCard }]"
-        @click.prevent.stop="isExpandableCard && toggle(), updateBottomHeader()"
+        @click.prevent.stop="updateBottomHeader(), isExpandableCard && toggle()"
       >
         <transition name="header-fade">
           <span
             v-show="!isHeaderAtBottom"
-            ref="headerWrapper"
             :class="['card-title', 'card-title-transparent', { 'ellipses': !hasHeaderBool }]"
           >
             <span class="card-title-inline"><slot name="header"></slot></span>
@@ -37,7 +37,7 @@
               v-show="!noCloseBool"
               class="minimal-button"
               type="button"
-              @click.stop="close()"
+              @click.stop="close(), updateBottomHeader()"
             >
               <span class="glyphicon glyphicon-remove minimal-close-button" aria-hidden="true"></span>
             </button>
@@ -83,6 +83,11 @@
           />
         </div>
       </div>
+      <div
+        v-if="isPreviewCollapsed"
+        class="preview-read-more glyphicon glyphicon-chevron-down"
+        @click="toggle(), updateBottomHeader()"
+      ></div>
       <!-- </transition> -->
     </div>
   </span>
@@ -114,7 +119,8 @@ export default {
   },
   methods: {
     updateBottomHeader() {
-      this.isHeaderAtBottom = this.localExpanded;
+      // this.isHeaderAtBottom = this.localExpanded;
+      this.isHeaderAtBottom = !this.isHeaderAtBottom;
     },
     beforeExpandMinimal(el) {
       this.isHeaderAtBottom = true;
