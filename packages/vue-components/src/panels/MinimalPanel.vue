@@ -9,7 +9,6 @@
     </div>
     <div
       v-show="!localMinimized"
-      ref="card"
       class="card card-flex"
     >
       <div

@@ -9,11 +9,9 @@
     </div>
     <div
       v-show="!localMinimized"
-      ref="card"
       :class="['card', { 'expandable-card': isExpandableCard }, borderType]"
     >
       <div
-        ref="cardHeader"
         :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
         @click.prevent.stop="isExpandableCard && toggle()"
       >
@@ -60,16 +58,15 @@
           </slot>
         </div>
       </div>
-      <transition
+      <!-- <transition
         v-if="preloadBool || wasRetrieverLoaded"
         @before-enter="beforeExpand"
         @enter="duringExpand"
         @after-enter="afterExpand"
         @before-leave="beforeCollapse"
         @leave="duringCollapse"
-      >
+      > -->
         <div
-          v-show="localExpanded"
           ref="panel"
           class="card-collapse"
         >
@@ -90,7 +87,7 @@
           </div>
           <hr v-show="isSeamless" />
         </div>
-      </transition>
+      <!-- </transition> -->
     </div>
   </span>
 </template>

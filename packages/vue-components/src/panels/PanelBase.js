@@ -99,38 +99,45 @@ export default {
       localExpanded: false,
       localMinimized: false,
       wasRetrieverLoaded: false,
-      expandedCardHeight: 0,
-      collapsedCardHeight: 0,
-      collapsedPreviewCardHeight: 180,
+      expandedPanelHeight: 0, // to be set dynamically
+      collapsedPanelHeight: 0,
+      previewPanelHeight: 150,
     };
   },
   methods: {
     toggle() {
       console.log(this.type);
-      console.log(this.collapsedCardHeight);
-      console.log(this.expandedCardHeight);
+      console.log(this.collapsedPanelHeight);
+      console.log(this.expandedPanelHeight);
+      console.log(this.$refs.panel.style.maxHeight);
       if (this.localExpanded) {
         console.log('collapsing');
-        this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+        if (this.$refs.panel.style.maxHeight === 'none') {
+          console.log('hhuu');
+          this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
+          this.expandedPanelHeight = this.$refs.panel.scrollHeight; // to circumvent nested panels
+        }
+        setTimeout(() => {
+          this.$refs.panel.style.maxHeight = `${this.collapsedPanelHeight}px`;
+        }, 0); // nextTick doesn't work
       } else {
-        // const func = () => {
-        //   this.$refs.card.style.maxHeight = 'none';
-        // };
-        // this.$refs.card.addEventListener('transitionend', func);
         console.log('expanding');
-        this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+        this.$refs.panel.style.maxHeight = `${this.expandedPanelHeight}px`;
       }
       this.localExpanded = !this.localExpanded;
     },
     close() {
       this.localExpanded = false;
       this.localMinimized = true;
-      this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+      this.expandedPanelHeight = this.$refs.panel.scrollHeight; // to circumvent nested panels
+      this.$refs.panel.style.maxHeight = `${this.collapsedPanelHeight}px`;
     },
     open() {
       this.localMinimized = false;
-      this.localExpanded = true;
-      this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+      setTimeout(() => {
+        this.localExpanded = true;
+        this.$refs.panel.style.maxHeight = `${this.expandedPanelHeight}px`;
+      }, 50);
     },
     openPopup() {
       window.open(this.popupUrl);
@@ -175,26 +182,15 @@ export default {
     //   }
     //   el.style.maxHeight = '0';
     // },
-    setCollapsedCardHeight() {
-      if (this.type === 'minimal') {
-        this.collapsedCardHeight = this.$refs.headerWrapper.scrollHeight;
-      } else {
-        this.collapsedCardHeight = this.$refs.cardHeader.scrollHeight;
-      }
-      if (this.showPreview) {
-        this.collapsedCardHeight += this.collapsedPreviewCardHeight;
-      }
+    setExpandedPanelHeight() {
+      this.expandedPanelHeight = this.$refs.panel.scrollHeight;
     },
-    setExpandedCardHeight() {
-      this.expandedCardHeight = this.$refs.card.scrollHeight;
+    setCollapsedPanelHeight() {
+      this.collapsedPanelHeight = 0;
     },
-    setInitialCardHeight() {
+    setInitialPanelHeight() {
       if (this.minimizedBool) {
-        this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
-        this.localExpanded = false;
-        this.$nextTick(() => {
-          this.localMinimized = this.minimizedBool;
-        });
+        this.close();
         return;
       }
 
@@ -204,9 +200,9 @@ export default {
         this.localExpanded = false;
       }
       if (this.localExpanded) {
-        this.$refs.card.style.maxHeight = `${this.expandedCardHeight}px`;
+        this.$refs.panel.style.maxHeight = `${this.expandedPanelHeight}px`;
       } else {
-        this.$refs.card.style.maxHeight = `${this.collapsedCardHeight}px`;
+        this.$refs.panel.style.maxHeight = `${this.collapsedPanelHeight}px`;
       }
     },
   },
@@ -235,29 +231,31 @@ export default {
     // this.localMinimized = this.minimizedBool;
   },
   mounted() {
+    // expand everything to retrieve the appropriate heights
     this.localMinimized = false;
     this.localExpanded = true;
     this.wasRetrieverLoaded = true;
     this.$nextTick(() => {
-      this.setCollapsedCardHeight();
-      this.setExpandedCardHeight();
-      this.setInitialCardHeight();
+      this.setExpandedPanelHeight();
+      this.setCollapsedPanelHeight();
+      this.setInitialPanelHeight();
       // this.$refs.card.addEventListener('transitionend', () => {
       //   if (this.localExpanded) {
       //     this.$refs.card.style.maxHeight = 'none';
       //   }
       // });
-      // this.$refs.card.addEventListener('transitionend', () => {
+      this.$refs.panel.addEventListener('transitionend', () => {
+        if (this.localExpanded) {
+          console.log('end');
+          this.$refs.panel.style.maxHeight = 'none';
+        }
+      });
+      // this.$refs.panel.addEventListener('transitionstart', () => {
       //   if (this.localExpanded) {
-      //     this.$refs.card.style.maxHeight = 'none';
+      //     console.log('HERE');
+      //     this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
       //   }
       // });
-      // this.$refs.card.addEventListener('transitionrun', () => {
-      //   if (this.localExpanded) {
-      //     this.$refs.card.style.maxHeight = this.$refs.card.scrollHeight;
-      //   }
-      // });
-      // this.localExpanded = !this.localMinimized;
     });
   },
 };
