@@ -1,5 +1,9 @@
 <template>
-  <minimal-panel v-if="isMinimal" v-bind="$attrs">
+  <minimal-panel
+    v-if="isMinimal"
+    :type="type"
+    v-bind="$attrs"
+  >
     <template v-for="(node, name) in $slots" :slot="name">
       <slot :name="name"></slot>
     </template>

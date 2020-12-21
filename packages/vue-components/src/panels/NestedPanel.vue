@@ -7,8 +7,13 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" :class="['card', { 'expandable-card': isExpandableCard }, borderType]">
+    <div
+      v-show="!localMinimized"
+      ref="card"
+      :class="['card', { 'expandable-card': isExpandableCard }, borderType]"
+    >
       <div
+        ref="cardHeader"
         :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
         @click.prevent.stop="isExpandableCard && toggle()"
       >
@@ -139,6 +144,11 @@ export default {
 </script>
 
 <style scoped>
+
+    .card {
+      transition: max-height 0.5s ease-in-out;
+    }
+
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;

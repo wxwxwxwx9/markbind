@@ -79,7 +79,10 @@
   ...
 </panel>
 <panel header="**minimal type panel**" type="minimal" minimized>
-  ...
+  <p> ... </p>
+  <p> ... </p>	
+  <p> ... </p>	
+  <p> ... </p>	
 </panel>
 </variable>
 </include>
