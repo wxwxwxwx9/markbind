@@ -24,9 +24,9 @@ function addNoIndexClasses(content) {
     'dropdown',
     'b-modal',
     'panel:not([expanded])',
-    'popover div[v-slot\\:content]',
-    'question div[v-slot\\:hint]',
-    'question div[v-slot\\:answer]',
+    'popover div["#content"]',
+    'question div["#hint"]',
+    'question div["#answer"]',
     'tab:not(:first-child)',
     'tab-group:not(:first-child)',
   ].join(', ');
