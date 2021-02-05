@@ -109,49 +109,12 @@ class NodeProcessor {
   _processAttributeWithoutOverride(node, attribute, isInline, slotName = attribute) {
     const hasAttributeSlot = node.children
       && node.children.some((child) => {
-        /*
-          User can use latest Vue slot shorthand syntax (#test) or deprecated Vue slot syntax (slot="test").
-          If user has both, we will prioritize processing the shorthand syntax.
-        */
         const vslotShorthand = NodeProcessor.getVslotShorthand(child);
-        const hasSlot = _.has(child.attribs, 'slot');
-
-        if (vslotShorthand) {
-          const vslotShorthandName = vslotShorthand.substring(1, vslotShorthand.length); // remove #
-          const isTargetVslotShorthand = vslotShorthandName === slotName;
-          if (hasSlot) {
-            // User has both kinds of syntax
-            const isTargetSlot = child.attribs.slot === slotName;
-            if (isTargetSlot && isTargetVslotShorthand) {
-              /*
-                Both syntax's slot names match what we are looking for.
-                We will use the the shorthand syntax and delete the deprecated syntax.
-              */
-              delete child.attribs.slot;
-            }
-          }
-          if (isTargetVslotShorthand) {
-            /*
-              User may use tag names like "div" or "p" but we have to change it to "template"
-              for vslot shorthand syntax to work, according to Vue2.6 syntax documenatation.
-            */
-            child.name = 'template';
-            return true;
-          }
+        if (!vslotShorthand) {
+          return false;
         }
-        if (hasSlot) {
-          const isTargetSlot = child.attribs.slot === slotName;
-          if (isTargetSlot) {
-            // We will convert the deprecated syntax to the shorthand syntax.
-            const newVslotShorthand = `#${child.attribs.slot}`;
-            child.attribs[newVslotShorthand] = '';
-            delete child.attribs.slot;
-
-            child.name = 'template';
-            return true;
-          }
-        }
-        return false;
+        const vslotShorthandName = vslotShorthand.substring(1, vslotShorthand.length);
+        return vslotShorthandName === slotName;
       });
 
     if (!hasAttributeSlot && _.has(node.attribs, attribute)) {
@@ -414,18 +377,18 @@ class NodeProcessor {
           });
       }
 
-      const hasSlot = _.has(child.attribs, 'slot');
-      if (hasSlot) {
-        const slotName = child.attribs.slot;
-        Object.entries(namePairs)
-          .forEach(([deprecatedName, correctName]) => {
-            if (slotName !== deprecatedName) {
-              return;
-            }
-            logger.warn(`${element.name} slot name '${deprecatedName}' `
-              + `is deprecated and may be removed in the future. Please use '${correctName}'`);
-          });
-      }
+      // const hasSlot = _.has(child.attribs, 'slot');
+      // if (hasSlot) {
+      //   const slotName = child.attribs.slot;
+      //   Object.entries(namePairs)
+      //     .forEach(([deprecatedName, correctName]) => {
+      //       if (slotName !== deprecatedName) {
+      //         return;
+      //       }
+      //       logger.warn(`${element.name} slot name '${deprecatedName}' `
+      //         + `is deprecated and may be removed in the future. Please use '${correctName}'`);
+      //     });
+      // }
     });
   }
 
@@ -573,15 +536,6 @@ class NodeProcessor {
           return true;
         }
       }
-
-      const hasSlot = _.has(child.attribs, 'slot');
-      if (hasSlot) {
-        const slotName = child.attribs.slot;
-        if (slotName === 'header') {
-          return true;
-        }
-      }
-
       return false;
     });
 
@@ -720,12 +674,85 @@ class NodeProcessor {
     node.attribs.id = headerId;
   }
 
+  static shiftSlotNodeDeeper(node) {
+    if (!node.children) {
+      return;
+    }
+
+    node.children.forEach((child) => {
+      const vslotShorthand = NodeProcessor.getVslotShorthand(child);
+      if (vslotShorthand && child.name !== 'template') {
+        const newSlotNode = cheerio.parseHTML('<template></template>')[0];
+        newSlotNode.attribs[vslotShorthand] = '';
+        delete child.attribs[vslotShorthand];
+
+        // node.children = node.children.filter(childNode => childNode !== child);
+
+        newSlotNode.parent = node;
+        child.parent = newSlotNode;
+
+        newSlotNode.children.push(child);
+        // node.children.push(newSlotNode);
+
+        node.children.forEach((childNode, idx) => {
+          if (childNode === child) {
+            node.children[idx] = newSlotNode;
+          }
+        });
+      }
+    });
+
+    // const hasVslot = node.children
+    //   && node.children.some(child => NodeProcessor.getVslotShorthand(child) !== undefined);
+    // if (!hasVslot) {
+    //   return;
+    // }
+
+    // const oldSlotNode = node.children.find(child => NodeProcessor.getVslotShorthand(child) !== undefined);
+    // if (oldSlotNode.name === 'template') {
+    //   return;
+    // }
+    // const vslotShorthandName = NodeProcessor.getVslotShorthand(oldSlotNode);
+
+    // const newSlotNode = cheerio.parseHTML('<template></template>')[0];
+
+    // newSlotNode.attribs[vslotShorthandName] = '';
+    // delete oldSlotNode.attribs[vslotShorthandName];
+
+    // node.children.filter(child => child !== oldSlotNode);
+
+    // newSlotNode.parent = node;
+    // oldSlotNode.parent = newSlotNode;
+
+    // newSlotNode.children.push(oldSlotNode);
+    // node.children.push(newSlotNode);
+  }
+
+  /*
+   * Transforms deprecated vue slot syntax (slot="test") into the updated Vue slot shorthand syntax (#test).
+   */
+  static transformSlotNode(node) {
+    if (!node.children) {
+      return;
+    }
+
+    node.children.forEach((child) => {
+      if (_.has(child.attribs, 'slot')) {
+        const vslotShorthandName = `#${child.attribs.slot}`;
+        child.attribs[vslotShorthandName] = '';
+        delete child.attribs.slot;
+      }
+    });
+  }
+
   /*
    * API
    */
 
   processNode(node, context) {
     try {
+      NodeProcessor.transformSlotNode(node);
+      NodeProcessor.shiftSlotNodeDeeper(node);
       switch (node.name) {
       case 'frontmatter':
         this._processFrontMatter(node, context);
