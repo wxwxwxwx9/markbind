@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - Contributing</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body>
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">Developer Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/devGuide.html">Contributing</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/settingUp.html">Setting up</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/workflow.html">Workflow</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Design
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/projectStructure.html">Project Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/architecture.html">Architecture</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/writingPlugins.html">Writing Plugins</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/projectManagement.html">Project management</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Appendices
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/styleGuides.html">Style guides</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Contributing</span></p>
+
+        <h1 class="display-3" id="developer-guide"><span id="developer-guide" class="anchor"></span>Developer guide<a class="fa fa-anchor" href="#developer-guide" onclick="event.stopPropagation()"></a></h1>
+        <h1 id="contributing"><span id="contributing" class="anchor"></span>Contributing<a class="fa fa-anchor" href="#contributing" onclick="event.stopPropagation()"></a></h1>
+        <div class="lead">
+          <p><strong>Thank you for your interest in contributing!</strong> We're glad you want to help. We welcome PRs, especially from students.</p>
+        </div>
+        <p><strong>First, do take note of</strong> <a href="https://se-education.org/guides/guidelines/codeOfConduct.html"><strong>our <em>code of conduct</em></strong> (from SE-EDU)</a>. Reporting bugs or submitting feature suggestions in <a href="https://github.com/markbind/markbind">our issue tracker</a> can help too.</p>
+        <p><strong>Second, ensure you have a basic knowledge</strong> of the following:</p>
+        <ul>
+          <li>JavaScript (ES6)</li>
+          <li>Node.js</li>
+          <li>HTML &amp; CSS</li>
+          <li>Markdown</li>
+          <li>Command-line environment</li>
+        </ul>
+        <p><strong>Third, ensure you have spent time with MarkBind and familiar with the content of the <a href="https://markbind.org/">user guide</a>.</strong> It's important to know the product well before you start contributing code.</p>
+        <p><strong>Now, follow these steps to get started on contributing:</strong></p>
+        <ol>
+          <li><strong>Set up the project</strong> in your computer (see <a href="/devGuide/settingUp.html">the <em>Setting up</em> page</a>)</li>
+          <li><strong>Learn our workflow</strong> (see <a href="/devGuide/workflow.html">the <em>Workflow</em> page</a>)</li>
+          <li><strong>Submit PRs</strong> as per the workflow. If you encounter any problems, post in <a href="https://github.com/markbind/markbind/issues">our issue tracker</a>.</li>
+        </ol>
+        <p><strong>We look forward to your PR. Happy coding!</strong></p>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>

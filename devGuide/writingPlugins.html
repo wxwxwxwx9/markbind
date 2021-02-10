@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - Writing Plugins</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body data-spy="scroll" data-target="#mb-page-nav" data-offset="100">
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">Developer Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/devGuide.html">Contributing</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/settingUp.html">Setting up</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/workflow.html">Workflow</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Design
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/projectStructure.html">Project Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/architecture.html">Architecture</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/writingPlugins.html">Writing Plugins</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/projectManagement.html">Project management</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Appendices
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/styleGuides.html">Style guides</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Writing Plugins</span></p>
+
+        <h1 id="writing-plugins"><span id="writing-plugins" class="anchor"></span>Writing Plugins<a class="fa fa-anchor" href="#writing-plugins" onclick="event.stopPropagation()"></a></h1>
+        <p>MarkBind plugins are <code class="hljs inline no-lang" v-pre>js</code> scripts that are loaded and run during the page generation. MarkBind allows plugins to modify a page's content during the page generation process, amongst other things.</p>
+        <p>This page details the available interfaces you may use to write plugins.</p>
+        <h2 id="rendering"><span id="rendering" class="anchor"></span>Rendering<a class="fa fa-anchor" href="#rendering" onclick="event.stopPropagation()"></a></h2>
+        <p><a href="/images/rendering.png" target="_self"><img src="/images/rendering.png" alt class="img-fluid"></a></p>
+        <p>MarkBind provides two entry points for modifying the page generated - <code class="hljs inline no-lang" v-pre>processNode</code> and <code class="hljs inline no-lang" v-pre>postRender</code>.</p>
+        <p><code class="hljs inline no-lang" v-pre>processNode</code> operates during the html processing stage of MarkBind, where each node (html element) processed is passed
+          to the entry point.</p>
+        <p>In most cases, this is sufficient, and more performant since this ties directly into MarkBind's html processing.</p>
+        <p>However, if you need to operate on the page as a whole, or you need access to the front matter of the page, you may use the <code class="hljs inline no-lang" v-pre>postRender</code> interface instead, which operates on the html content after it is processed by MarkBind.</p>
+        <ul>
+          <li><code class="hljs inline no-lang" v-pre>processNode(pluginContext, node)</code>: Called before MarkBind renders the source from Markdown to HTML.
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>pluginContext</code>: User provided parameters for the plugin. This can be specified in the <code class="hljs inline no-lang" v-pre>site.json</code>.</li>
+              <li><code class="hljs inline no-lang" v-pre>node</code>: A <a href="https://github.com/fb55/domhandler">domhandler</a> node object, which represents a html element.
+                This object may be directly manipulated for simple operations, or operated on using <a href="https://cheerio.js.org/">cheerio</a>.</li>
+            </ul>
+          </li>
+          <li><code class="hljs inline no-lang" v-pre>postRender(pluginContext, frontMatter, content)</code>: Called after the HTML is rendered
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>pluginContext</code>: User provided parameters for the plugin. This can be specified in the <code class="hljs inline no-lang" v-pre>site.json</code>.</li>
+              <li><code class="hljs inline no-lang" v-pre>frontMatter</code>: The frontMatter of the page being processed, in case any frontMatter data is required.</li>
+              <li><code class="hljs inline no-lang" v-pre>content</code>: The rendered HTML.</li>
+              <li><strong>Returns:</strong> the post-processed html string</li>
+            </ul>
+          </li>
+        </ul>
+        <box type="info">
+          <p>Note that both of these interfaces are executed independently on a page, a layout or an
+            <span data-mb-component-type="popover" v-b-popover.hover.top.html="popoverInnerGetters" class="trigger">
+              <span data-mb-slot-name="content">
+                Something referenced by a panel with a <code class="hljs inline no-lang" v-pre>src</code> attribute (<code class="hljs inline no-lang" v-pre>&lt;panel src=&quot;...&quot;&gt;</code>).
+              </span>
+              external
+            </span>.</p>
+          <p>That is, the dom tree being processed during <code class="hljs inline no-lang" v-pre>processNode</code> and the content passed into <code class="hljs inline no-lang" v-pre>postRender</code> will belong to either one of these types of files.
+          </p>
+        </box>
+        <p></p>
+        <p>An example of a plugin is shown below. The plugin shows two ways of appending a paragraph of text to a specific <code class="hljs inline no-lang" v-pre>div</code> in the Markdown files:</p>
+        <pre><code class="hljs js" v-pre><span><span class="hljs-comment">// myPlugin.js</span>
+</span><span>
+</span><span><span class="hljs-keyword">const</span> cheerio = <span class="hljs-built_in">module</span>.parent.require(<span class="hljs-string">&#x27;cheerio&#x27;</span>);
+</span><span>
+</span><span><span class="hljs-built_in">module</span>.exports = {
+</span><span>  processNode: <span class="hljs-function">(<span class="hljs-params">pluginContext, node</span>) =&gt;</span> {
+</span><span>    <span class="hljs-keyword">if</span> (node.attribs.id === <span class="hljs-string">&#x27;my-div&#x27;</span>) {
+</span><span>      cheerio(node).append(pluginContext.content);
+</span><span>    }
+</span><span>  },
+</span><span>  postRender: <span class="hljs-function">(<span class="hljs-params">pluginContext, frontMatter, content</span>) =&gt;</span> {
+</span><span>    <span class="hljs-keyword">const</span> $ = cheerio.load(content, { <span class="hljs-attr">xmlMode</span>: <span class="hljs-literal">false</span> });
+</span><span>    <span class="hljs-comment">// Modify the page...</span>
+</span><span>    $(<span class="hljs-string">&#x27;#my-div&#x27;</span>).append(pluginContext.content);
+</span><span>    <span class="hljs-keyword">return</span> $.html();
+</span><span>  },
+</span><span>};
+</span></code></pre>
+        <pre><code class="hljs js" v-pre><span><span class="hljs-comment">// site.json</span>
+</span><span>
+</span><span>{
+</span><span>  ...
+</span><span>  <span class="hljs-string">&quot;plugins&quot;</span>: [
+</span><span>    <span class="hljs-string">&quot;myPlugin&quot;</span>
+</span><span>  ],
+</span><span>  <span class="hljs-string">&quot;pluginsContext&quot;</span>: {
+</span><span>    <span class="hljs-string">&quot;myPlugin&quot;</span>: {
+</span><span>      <span class="hljs-string">&quot;content&quot;</span>: <span class="hljs-string">&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;</span>,
+</span><span>    }
+</span><span>  }
+</span><span>}
+</span></code></pre>
+        <pre><code class="hljs md" v-pre><span>// index.md
+</span><span>
+</span><span>...
+</span><span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;my-div&quot;</span>&gt;</span></span>
+</span><span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</span></code></pre>
+        <h2 id="assets"><span id="assets" class="anchor"></span>Assets<a class="fa fa-anchor" href="#assets" onclick="event.stopPropagation()"></a></h2>
+        <p>Plugins can implement the methods <code class="hljs inline no-lang" v-pre>getLinks</code> and <code class="hljs inline no-lang" v-pre>getScripts</code> to add additional assets to any page.</p>
+        <ul>
+          <li><code class="hljs inline no-lang" v-pre>getLinks(pluginContext, frontMatter, content)</code>: Called to get link elements to be added to the head of the page.
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>pluginContext</code>: User provided parameters for the plugin. This can be specified in the <code class="hljs inline no-lang" v-pre>site.json</code>.</li>
+              <li><code class="hljs inline no-lang" v-pre>frontMatter</code>: The frontMatter of the page being processed, in case any frontMatter data is required.</li>
+              <li><code class="hljs inline no-lang" v-pre>content</code>: The rendered HTML.</li>
+              <li><strong>Returns:</strong> an array of strings containing link elements to be added.</li>
+            </ul>
+          </li>
+          <li><code class="hljs inline no-lang" v-pre>getScripts(pluginContext, frontMatter, content)</code>: Called to get script elements to be added after the body of the page.
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>pluginContext</code>: User provided parameters for the plugin. This can be specified in the <code class="hljs inline no-lang" v-pre>site.json</code>.</li>
+              <li><code class="hljs inline no-lang" v-pre>frontMatter</code>: The frontMatter of the page being processed, in case any frontMatter data is required.</li>
+              <li><code class="hljs inline no-lang" v-pre>content</code>: The rendered HTML.</li>
+              <li><strong>Returns:</strong> an array of strings containing script elements to be added.</li>
+            </ul>
+          </li>
+        </ul>
+        <box type="success"><template slot="_header">
+            <p>Local assets</p>
+          </template>
+          <span>
+            You can set an absolute or relative file path as the <code class="hljs inline no-lang" v-pre>src</code> or <code class="hljs inline no-lang" v-pre>href</code> attribute in your <code class="hljs inline no-lang" v-pre>&lt;script&gt;</code> or <code class="hljs inline no-lang" v-pre>&lt;link&gt;</code> tags.
+            MarkBind will copy these assets into the output directory and change the <code class="hljs inline no-lang" v-pre>src</code> or <code class="hljs inline no-lang" v-pre>href</code> attributes automatically!
+          </span></box>
+        <p>An example of a plugin which adds links and scripts to the page:</p>
+        <pre><code class="hljs js" v-pre><span><span class="hljs-comment">// myPlugin.js</span>
+</span><span>
+</span><span><span class="hljs-built_in">module</span>.exports = {
+</span><span>  getLinks: <span class="hljs-function">(<span class="hljs-params">pluginContext, frontMatter, content</span>) =&gt;</span> [<span class="hljs-string">&#x27;&lt;link rel=&quot;STYLESHEET_LINK&quot;&gt;&#x27;</span>],
+</span><span>  getScripts: <span class="hljs-function">(<span class="hljs-params">pluginContext, frontMatter, content</span>) =&gt;</span> [
+</span><span>    <span class="hljs-string">&#x27;&lt;script src=&quot;SCRIPT_LINK&quot;&gt;&lt;/script&gt;&#x27;</span>,
+</span><span>    <span class="hljs-string">&#x27;&lt;script&gt;alert(&quot;hello&quot;)&lt;/script&gt;&#x27;</span>
+</span><span>  ],
+</span><span>};
+</span><span>
+</span></code></pre>
+        <p>This will add the following link and script elements to the page:</p>
+        <ul>
+          <li><code class="hljs inline no-lang" v-pre>&lt;link rel=&quot;stylesheet&quot; href=&quot;STYLESHEET_LINK&quot;&gt;</code></li>
+          <li><code class="hljs inline no-lang" v-pre>&lt;script src=&quot;SCRIPT_LINK&quot;&gt;&lt;/script&gt;</code></li>
+          <li><code class="hljs inline no-lang" v-pre>&lt;script&gt;alert(&quot;hello&quot;)&lt;/script&gt;</code></li>
+        </ul>
+        <h2 id="tag-behaviour"><span id="tag-behaviour" class="anchor"></span>Tag Behaviour<a class="fa fa-anchor" href="#tag-behaviour" onclick="event.stopPropagation()"></a></h2>
+        <p>MarkBind also provides several convenient interfaces that can be used alone, or in conjunction with the <a href="#rendering">rendering</a> interfaces to modify how tags are processed.</p>
+        <p>To use these interfaces, add the <code class="hljs inline no-lang" v-pre>tagConfig</code> property to your plugin export:</p>
+        <pre><code class="hljs js" v-pre><span><span class="hljs-built_in">module</span>.exports = {
+</span><span>  tagConfig: {
+</span><span>    puml: {
+</span><span>      isSpecial: <span class="hljs-literal">true</span>,
+</span><span>      attributes: [
+</span><span>        {
+</span><span>          name: <span class="hljs-string">&#x27;src&#x27;</span>,
+</span><span>          isRelative: <span class="hljs-literal">true</span>,
+</span><span>          isSourceFile: <span class="hljs-literal">true</span>,
+</span><span>        },
+</span><span>      ],
+</span><span>    },
+</span><span>  },
+</span><span>}
+</span></code></pre>
+        <p><strong>Tag Properties</strong></p>
+        <p>Tag properties are top-level properties of the tag configuration object. The following table lists what these properties are used for:</p>
+        <div class="table-responsive">
+          <table class="markbind-table table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="text-align:left">Property</th>
+                <th>Values</th>
+                <th>Default</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:left"><code class="hljs inline no-lang" v-pre>isSpecial</code></td>
+                <td><code class="hljs inline no-lang" v-pre>true</code> or <code class="hljs inline no-lang" v-pre>false</code></td>
+                <td><code class="hljs inline no-lang" v-pre>false</code></td>
+                <td>Allows configuring whether any tag is to be parsed &quot;specially&quot; like a <code class="hljs inline no-lang" v-pre>&lt;script&gt;</code> or <code class="hljs inline no-lang" v-pre>&lt;style&gt;</code> tag. This allows configuring custom tags that may contain conflicting syntax, such as the <code class="hljs inline no-lang" v-pre>&lt;puml&gt;</code> tag used for UML diagram generation.</td>
+              </tr>
+              <tr>
+                <td style="text-align:left"><code class="hljs inline no-lang" v-pre>attributes</code></td>
+                <td>Array of attribute configurations</td>
+                <td><code class="hljs inline no-lang" v-pre>[]</code></td>
+                <td>Contains the attribute configurations of the tags.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Attribute Properties</strong></p>
+        <p>The following table lists what the possible properties for configuring the attributes of a tag, and what they are used for:</p>
+        <div class="table-responsive">
+          <table class="markbind-table table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="text-align:left">Property</th>
+                <th>Values</th>
+                <th>Default</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:left"><code class="hljs inline no-lang" v-pre>name</code></td>
+                <td>attribute name</td>
+                <td>none</td>
+                <td>The string name of the attribute.</td>
+              </tr>
+              <tr>
+                <td style="text-align:left"><code class="hljs inline no-lang" v-pre>isRelative</code></td>
+                <td><code class="hljs inline no-lang" v-pre>true</code> or <code class="hljs inline no-lang" v-pre>false</code></td>
+                <td><code class="hljs inline no-lang" v-pre>false</code></td>
+                <td>Should be <code class="hljs inline no-lang" v-pre>true</code> if this attribute may contain a relative link. This tells MarkBind to properly resolve such relative links when used in <code class="hljs inline no-lang" v-pre>&lt;include&gt;</code>s, by converting the link into a <code class="hljs inline no-lang" v-pre>baseUrl</code> preceded absolute link.</td>
+              </tr>
+              <tr>
+                <td style="text-align:left"><code class="hljs inline no-lang" v-pre>isSourceFile</code></td>
+                <td><code class="hljs inline no-lang" v-pre>true</code> or <code class="hljs inline no-lang" v-pre>false</code></td>
+                <td><code class="hljs inline no-lang" v-pre>false</code></td>
+                <td>Should be <code class="hljs inline no-lang" v-pre>true</code> if the attribute points to a source file. This allows flagging other source files to trigger page regeneration during live reload.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2 id="lifecycle-hooks"><span id="lifecycle-hooks" class="anchor"></span>Lifecycle hooks<a class="fa fa-anchor" href="#lifecycle-hooks" onclick="event.stopPropagation()"></a></h2>
+        <p>You may also need to maintain some plugin state during site generation, then reset this when the site or pages are regenerated.</p>
+        <p>To do this, you may implement the <code class="hljs inline no-lang" v-pre>beforeSiteGenerate</code> method.</p>
+        <ul>
+          <li><code class="hljs inline no-lang" v-pre>beforeSiteGenerate()</code>: Called during initial site generation and subsequent regenerations during live preview.
+            <ul>
+              <li>No return value is required.</li>
+            </ul>
+          </li>
+        </ul>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+          <nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap">
+            <a class="nav-link py-1" href="#writing-plugins">Writing Plugins&#x200E;</a>
+            <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+              <a class="nav-link py-1" href="#rendering">Rendering&#x200E;</a>
+              <a class="nav-link py-1" href="#assets">Assets&#x200E;</a>
+              <a class="nav-link py-1" href="#tag-behaviour">Tag Behaviour&#x200E;</a>
+              <a class="nav-link py-1" href="#lifecycle-hooks">Lifecycle hooks&#x200E;</a>
+            </nav>
+
+          </nav>
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - Setting up</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body>
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">Developer Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/devGuide.html">Contributing</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/settingUp.html">Setting up</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/workflow.html">Workflow</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Design
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/projectStructure.html">Project Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/architecture.html">Architecture</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/writingPlugins.html">Writing Plugins</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/projectManagement.html">Project management</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Appendices
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/styleGuides.html">Style guides</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Setting up</span></p>
+
+        <h1 id="setting-up"><span id="setting-up" class="anchor"></span>Setting up<a class="fa fa-anchor" href="#setting-up" onclick="event.stopPropagation()"></a></h1>
+        <div class="lead">
+          <p>This page explains how to set up your development environment to start contributing to MarkBind.</p>
+        </div>
+        <h2 id="prerequisites"><span id="prerequisites" class="anchor"></span>Prerequisites<a class="fa fa-anchor" href="#prerequisites" onclick="event.stopPropagation()"></a></h2>
+        <ol>
+          <li><strong>Node.js</strong> (LTS or higher) with<br>
+            <strong>npm</strong> v6.12.1 or higher</li>
+          <li><strong>Java</strong> 8 or later, and<br>
+            <strong>Graphviz</strong> v2.38 or later<br>
+            <span class="dimmed">(The above two are required for one of the third-party library used by MarkBind)</span></li>
+          <li><strong>Verify</strong> that all tools are accessible and the versions are as expected by running these commands in the console.
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>node --version</code></li>
+              <li><code class="hljs inline no-lang" v-pre>npm --version</code></li>
+              <li><code class="hljs inline no-lang" v-pre>java --version</code></li>
+              <li><code class="hljs inline no-lang" v-pre>dot -V</code> (for Graphviz)</li>
+            </ul>
+          </li>
+        </ol>
+        <box type="tip" seamless>
+          <p>We recommend the <strong>WebStorm IDE</strong> for working with MarkBind code.
+          </p>
+        </box>
+        <p></p>
+        <h2 id="setting-up-the-dev-environment"><span id="setting-up-the-dev-environment" class="anchor"></span>Setting up the dev environment<a class="fa fa-anchor" href="#setting-up-the-dev-environment" onclick="event.stopPropagation()"></a></h2>
+        <ol>
+          <li>
+            <p><strong>Fork and clone</strong> the MarkBind repo.</p>
+          </li>
+          <li>
+            <p><strong>To bind your cloned version of MarkBind to your console</strong> (instead of the released version of MarkBind), run <code class="hljs inline no-lang" v-pre>npm link</code> in the <code class="hljs inline no-lang" v-pre>packages/cli</code> folder of the cloned repo first.</p>
+            <box type="tip" seamless>
+              <p>To go back to the released version of MarkBind, run <code class="hljs inline no-lang" v-pre>npm unlink</code> in the same directory, followed by <code class="hljs inline no-lang" v-pre>npm i -g markbind-cli</code></p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Install dependencies</strong> by running <span data-mb-component-type="popover" v-b-popover.hover.top.html="popoverInnerGetters" class="trigger"><span data-mb-slot-name="content">Under the hood, this calls <code class="hljs inline no-lang" v-pre>npm ci</code> and <code class="hljs inline no-lang" v-pre>lerna bootstrap</code></span><code class="hljs inline no-lang" v-pre>npm run setup</code></span> in the <strong>root folder</strong> of your cloned repo.
+              <box type="info" seamless>
+                MarkBind uses <span><a href="https://github.com/lerna/lerna">lerna</a></span>, a popular multi-package development tool, to manage it's dependencies. It is essentially a high level wrapper over node and npm's functionalities
+              </box>
+            </p>
+          </li>
+          <li>
+            <p><strong>Congratulations!</strong> Now you ready to start modifying MarkBind code.</p>
+          </li>
+        </ol>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>

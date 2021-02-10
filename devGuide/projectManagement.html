@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - Project management</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body data-spy="scroll" data-target="#mb-page-nav" data-offset="100">
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">Developer Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/devGuide.html">Contributing</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/settingUp.html">Setting up</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/workflow.html">Workflow</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Design
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/projectStructure.html">Project Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/architecture.html">Architecture</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/writingPlugins.html">Writing Plugins</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/projectManagement.html">Project management</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Appendices
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/styleGuides.html">Style guides</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Project management</span></p>
+
+        <h1 id="project-management"><span id="project-management" class="anchor"></span>Project management<a class="fa fa-anchor" href="#project-management" onclick="event.stopPropagation()"></a></h1>
+        <div class="lead">
+          <p>This page contains information about project management tasks. The target audience is senior developers (and above).</p>
+        </div>
+        <h2 id="managing-prs"><span id="managing-prs" class="anchor"></span>Managing PRs<a class="fa fa-anchor" href="#managing-prs" onclick="event.stopPropagation()"></a></h2>
+        <p>For general best practices, refer to the guide <a href="https://se-education.org/guides/guidelines/PRs.html"><em>Working with PRs</em> @SE-EDU</a>.</p>
+        <h3 id="approval"><span id="approval" class="anchor"></span>Approval<a class="fa fa-anchor" href="#approval" onclick="event.stopPropagation()"></a></h3>
+        <ul>
+          <li>
+            <p><strong>If the PR is very simple</strong> (e.g. correcting a simple typo), one approval is sufficient for merging. Other PRs need two approvals.</p>
+          </li>
+          <li>
+            <p><strong>Once the first approval is given</strong> from a developer, assign a version milestone to the PR (this is usually the next version, unless there is a justification for delaying the merging to future versions).</p>
+            <box type="info" seamless>
+              <p><strong>Note:</strong> Should there be a subsequent rejection by other reviewers (or an error is spotted), the version milestone is removed immediately. The version milestone should only be restored once the new approvals come in.
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Once the second approval is given</strong> from a <mark>senior developer</mark> (or there are &gt;= 3 approvals given from anyone), the PR can be merged immediately.<br>
+              If there is no second approval yet, wait for a day before merging the PR without the second approval.</p>
+            <box type="info" seamless>
+              <p>This is to allow other developers the chance to review the PR, and delay the merge if there's any significant problems. Not everyone is available all of the time, so please be patient.
+              </p>
+            </box>
+            <p></p>
+          </li>
+        </ul>
+        <h3 id="merging"><span id="merging" class="anchor"></span>Merging<a class="fa fa-anchor" href="#merging" onclick="event.stopPropagation()"></a></h3>
+        <ol>
+          <li>
+            <p><strong>Re-run the Travis build</strong> for the current PR's <code class="hljs inline no-lang" v-pre>continuous-integration/travis-ci/pr</code>.</p>
+            <box type="info" seamless>
+              <p><strong>Rationale:</strong> This is because we do not ask PR authors to rebase their PRs, but the master branch may have since been updated. It is possible for tests to pass on their branch, only to fail when integrating the changes with the master</p>
+              <p>This is possible even if GitHub <em>doesn't</em> complain about any merge conflict!
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Merge the PR</strong>.</p>
+            <ul>
+              <li>
+                <p>Refer the guide <a href="https://se-education.org/guides/guidelines/PRs.html"><em>Working with PRs</em> @SE-EDU</a> which merge strategy to use (i.e., squash, rebase, merge commit)</p>
+              </li>
+              <li>
+                <p>Format for the merge/squashed commit title: <code class="hljs inline no-lang" v-pre>PR_TITLE (#PR_NUMBER)</code><br>
+                  <code class="hljs inline no-lang" v-pre>Add built-in support for light themes from bootswatch (#745)</code></p>
+              </li>
+              <li>
+                <p>For non-trivial PRs, ensure that there is a sensible commit message accompanied by it. Both the title and the body should follow the <a href="https://se-education.org/guides/conventions/git.html"><em>Git conventions</em> @SE-EDU</a>.</p>
+              </li>
+              <li>
+                <p>Before confirming the merge, do ensure that no other PRs have been merged to master <em>since the time you started drafting the merging commit's title and message</em>. Otherwise, you may face a glitch where GitHub merges your PR without squashing. (Reference: <a href="https://github.com/MarkBind/markbind/pull/1160">MarkBind#1160</a>)</p>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Set a milestone</strong> to the PR.</p>
+            <box type="info" seamless>
+              <p><strong>Reason:</strong> We may have missed it during the &quot;Approval&quot; stage, so please add the version milestone if it is missing, so that the drafting of the release notes during the release process will be easier.
+              </p>
+            </box>
+            <p></p>
+          </li>
+        </ol>
+        <h2 id="doing-a-release"><span id="doing-a-release" class="anchor"></span>Doing a Release<a class="fa fa-anchor" href="#doing-a-release" onclick="event.stopPropagation()"></a></h2>
+        <box type="important" seamless>
+          <p><strong>Attention new maintainers!</strong> Ensure that:</p>
+          <ul>
+            <li>You have the rights to push to master branch on <a href="https://github.com/MarkBind/markbind">MarkBind's repository</a>, and also to make new releases.</li>
+            <li>You have the rights on <a href="https://www.npmjs.com/">npm</a> to make a new release.<br>
+              You need to login to npm on your terminal with <code class="hljs inline no-lang" v-pre>npm adduser</code> first, before you can publish packages to npm.
+            </li>
+          </ul>
+        </box>
+
+        <br>
+        <ol>
+          <li>
+            <p><strong>Make sure to start with a &quot;clean slate&quot;</strong> by running <code class="hljs inline no-lang" v-pre>lerna clean</code> and then <code class="hljs inline no-lang" v-pre>npm run setup</code> in the root MarkBind directory.</p>
+          </li>
+          <li>
+            <p><strong>Increment the version number</strong> by running <code class="hljs inline no-lang" v-pre>lerna version --no-push</code>. Which to increment (<code class="hljs inline no-lang" v-pre>patch</code>, <code class="hljs inline no-lang" v-pre>minor</code> or <code class="hljs inline no-lang" v-pre>major</code>) depends on what PRs are merged for the new version, which means you must know beforehand about the changes.</p>
+            <box type="info" seamless>
+              <p>The end result of this command is version commit with an appropriate tag. We will make use of the generated tag and commit message later.
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Build the core-web package bundle</strong> by executing <code class="hljs inline no-lang" v-pre>npm run build:web</code> in the root directory, after which you should see changes in the bundles located in <code class="hljs inline no-lang" v-pre>packages/core-web/dist</code>. <br><br>Take a peek at the diff for the bundles to see if there are any strange changes.</p>
+            <box type="tip" seamless>
+              <p>If there were no changes to the files in <code class="hljs inline no-lang" v-pre>packages/core-web</code> or <code class="hljs inline no-lang" v-pre>packages/vue-components</code> since the last release of MarkBind, you may observe no changes. Simply proceed with the rest of the steps.
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Rebuild the test files</strong> using <code class="hljs inline no-lang" v-pre>npm run updatetest</code></p>
+            <p>When rebuilding the expected test files, ensure that <strong>only</strong> the version number is updated for the output <code class="hljs inline no-lang" v-pre>.html</code> files. For example, this is correct:</p>
+            <pre><code class="hljs diff" v-pre><span><span class="hljs-comment">diff --git a/test/functional/test_site/expected/bugs/index.html b/test/functional/test_site/expected/bugs/index.html</span>
+</span><span><span class="hljs-comment">index 779f279..bb3c602 100644</span>
+</span><span><span class="hljs-comment">--- a/test/functional/test_site/expected/bugs/index.html</span>
+</span><span><span class="hljs-comment">+++ b/test/functional/test_site/expected/bugs/index.html</span>
+</span><span><span class="hljs-meta">@@ -4,7 +4,7 @@</span>
+</span><span>     &lt;meta name=&quot;default-head-top&quot;&gt;
+</span><span>     &lt;meta charset=&quot;utf-8&quot;&gt;
+</span><span>     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+</span><span><span class="hljs-deletion">-    &lt;meta name=&quot;generator&quot; content=&quot;MarkBind 1.20.0&quot;&gt;</span>
+</span><span><span class="hljs-addition">+    &lt;meta name=&quot;generator&quot; content=&quot;MarkBind 1.21.0&quot;&gt;</span>
+</span><span>     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+</span><span>     &lt;title&gt;Open Bugs&lt;/title&gt;
+</span><span>     &lt;link rel=&quot;stylesheet&quot; href=&quot;../markbind/css/bootstrap.min.css&quot;&gt;
+</span></code></pre>
+            <p>If any other lines changed, that likely means the functional tests weren't updated in a pull request. Do revert everything done so far, and make a pull request specifically to fix that first!</p>
+          </li>
+          <li>
+            <p><strong>If core-web package bundle was updated earlier</strong>: also ensure that the <strong>updated bundles</strong> are copied to each of the expected test site's folders.</p>
+            <box type="info" seamless>
+              <p>We do this for each MarkBind release (rather than require contributors to update the bundles for each affected PR), in order to reduce unnecessary merge conflicts. It also makes it easier for the maintainers to vet the changes.
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Combine</strong> the changes that you made in the last two steps with the <a href="https://docs.npmjs.com/cli/version">version commit</a> generated by <code class="hljs inline no-lang" v-pre>lerna version</code>. To do so, amend the version commit and version tag by doing the following — take note to change <code class="hljs inline no-lang" v-pre>vA.B.C</code> to the new version.</p>
+            <pre><code class="no-line-numbers hljs sh" v-pre><span>$ git commit -a --amend --reuse-message vA.B.C
+</span><span>$ git tag --force vA.B.C            <span class="hljs-comment"># to reassign the tag to the newly amended commit</span>
+</span></code></pre>
+          </li>
+          <li>
+            <p><strong>Push</strong> the new commit and version tag generated by <code class="hljs inline no-lang" v-pre>npm</code> (change <code class="hljs inline no-lang" v-pre>vA.B.C</code> to the new version's string accordingly).</p>
+            <pre><code class="no-line-numbers hljs sh" v-pre><span>$ git push upstream master
+</span><span>$ git push upstream vA.B.C
+</span></code></pre>
+          </li>
+          <li>
+            <p><strong>Publish</strong> by running <code class="hljs inline no-lang" v-pre>lerna publish from-git</code>. You should receive a notification by <code class="hljs inline no-lang" v-pre>npm</code> that the publish is successful.</p>
+          </li>
+          <li>
+            <p><strong>Smoke test</strong> the new version by installing the new version (run <code class="hljs inline no-lang" v-pre>npm i -g markbind-cli@A.B.C</code>) and playing around with it a bit to ensure that it works.</p>
+            <box type="info" seamless>
+              <p>If you used <code class="hljs inline no-lang" v-pre>npm link</code> for your project, ensure that you <mark>try the new release on another platform</mark> that doesn't use <code class="hljs inline no-lang" v-pre>npm link</code>, so that we can be sure the end-users can install and use the new version.
+              </p>
+            </box>
+            <p></p>
+          </li>
+          <li>
+            <p><strong>Verify the website</strong> at <a href="http://markbind.org">markbind.org</a> has been updated.</p>
+            <p>The deployment is automated. However, if it doesn't deploy properly for the release, do the following:</p>
+            <pre><code class="no-line-numbers hljs sh" v-pre><span>$ <span class="hljs-built_in">cd</span> docs
+</span><span>$ markbind build -s ug-site.json
+</span><span>$ markbind deploy -s ug-site.json
+</span></code></pre>
+          </li>
+          <li>
+            <p><strong>Update milestones</strong>. Close the <a href="https://github.com/MarkBind/markbind/milestones">milestone on GitHub</a> and all issues in that milestone.</p>
+            <p>Also create a new milestone for the next iterations. Recommended to have at least two upcoming milestones opened.</p>
+          </li>
+          <li>
+            <p><strong>Release on GitHub</strong>.</p>
+            <p>a. Go to the Markbind release page at <a href="https://github.com/MarkBind/markbind/releases">https://github.com/MarkBind/markbind/releases</a>.</p>
+            <p>b. Click &quot;Draft a new release&quot;.</p>
+            <p>c. For the tag version, enter <code class="hljs inline no-lang" v-pre>vA.B.C</code>. (The newly released version should be recognized by GitHub, with an &quot;Existing Tag&quot; indicator, otherwise, ensure that you have pushed the version commit and tag in step 4).</p>
+            <p>d. For the release title, leave it blank.</p>
+            <p>e. For the main body, use the following template:</p>
+            <pre><code class="hljs markdown" v-pre><span><span class="hljs-section"># markbind-cli</span>
+</span><span>
+</span><span>&lt;!-- List out each of the PR for this version in the following format: --&gt;
+</span><span>&lt;!-- #ISSUE<span class="hljs-emphasis">_NUMBER ISSUE_</span>TITLE (#PR<span class="hljs-emphasis">_NUMBER) --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">## User Facing Changes</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Breaking Changes</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Any feature that is made obsolete --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&gt; Also give a brief explanation note about:</span>
+</span><span><span class="hljs-emphasis">&gt;   - what was the old feature that was made obsolete</span>
+</span><span><span class="hljs-emphasis">&gt;   - any replacement feature (if any), and</span>
+</span><span><span class="hljs-emphasis">&gt;   - how the author should modify his website to migrate from the old feature to the replacement feature (if possible).</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Features</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Features enable users (authors/readers) to do something new. --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Enhancements</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Enhances any existing features --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Fixes</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Fixes correct a programming error/assumption. --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Documentation</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Pure changes to the documentation, such as typo, restructuring, etc --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">## Other Changes</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Code Quality</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Refactoring, etc. --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### DevOps Changes</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Tooling, etc. --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Dependencies</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Dependency version upgrades of the main or any subpackages --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">### Miscellaneous</span>
+</span><span><span class="hljs-emphasis"></span>
+</span><span><span class="hljs-emphasis">&lt;!-- Any other changes --&gt;</span>
+</span><span><span class="hljs-emphasis"></span>
+</span></code></pre>
+            <p>Use the list of PRs merged in the milestone to write the release notes. You may omit any sections that do not have a single PR under it.</p>
+            <p>An example of a release note draft (taken from v1.18.0):</p>
+            <pre><code class="hljs" v-pre><span># markbind-cli
+</span><span>
+</span><span>### Breaking Changes
+</span><span>
+</span><span>#653 Disable decamelize for anchor ID generation (#667, MarkBind/vue-strap#95)
+</span><span>
+</span><span>&gt; Headings with PascalCase wordings now generate a different anchor ID
+</span><span>in order to be more compatible with anchor IDs generated by Github
+</span><span>Flavored Markdown.
+</span><span>&gt;
+</span><span>&gt; For example, if we have the following heading:
+</span><span>&gt;
+</span><span>&gt; ```markdown
+</span><span>&gt; # MarkBind docs
+</span><span>&gt; ```
+</span><span>&gt;
+</span><span>&gt; Old anchor id:
+</span><span>&gt;
+</span><span>&gt; ```
+</span><span>&gt; mark-bind-docs
+</span><span>&gt; ```
+</span><span>&gt;
+</span><span>&gt; **New** anchor id:
+</span><span>&gt;
+</span><span>&gt; ```
+</span><span>&gt; markbind-docs
+</span><span>&gt; ```
+</span><span>&gt;
+</span><span>
+</span><span>### Features
+</span><span>
+</span><span>#457 Add `deploy -t/--travis` to deploy via Travis (#649)
+</span><span>#470 Support custom MarkBind plugins (#474)
+</span><span>#642 Support specifying include variables inline (#681)
+</span><span>
+</span><span>### Enhancements
+</span><span>
+</span><span>#369 Seamless panels: omit caret if not expandable (MarkBind/vue-strap#96)
+</span><span>#657 Add temporary styles to prevent FOUC (#664)
+</span><span>
+</span><span>### Fixes
+</span><span>
+</span><span>#651 Exit MarkBind with non-zero exit code on fatal error (#679)
+</span><span>
+</span><span>### Documentation
+</span><span>
+</span><span>Restructure user docs on MarkBind syntax (#668)
+</span><span>Add documentation for badges (#686)
+</span><span>Fix filename capitalization for syntax documentation (#685)
+</span><span>
+</span><span>### Code Quality
+</span><span>
+</span><span>test: Add diff printing for easier debugging (#632)
+</span><span>
+</span><span>### Dependencies
+</span><span>
+</span><span>Bump acorn from 7.1.0 to 7.1.1 in /packages/core (#1120)
+</span></code></pre>
+            <p>f. Click &quot;Publish release&quot;.</p>
+          </li>
+          <li>
+            <p><strong>Announce the new release</strong> on our Slack channel (replace <code class="hljs inline no-lang" v-pre>A.B.C</code> with the new version). Congrats!</p>
+            <blockquote>
+              <p>Published: <code class="hljs inline no-lang" v-pre>npm i -g markbind-cli@A.B.C</code></p>
+            </blockquote>
+          </li>
+        </ol>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+          <nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap">
+            <a class="nav-link py-1" href="#project-management">Project management&#x200E;</a>
+            <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+              <a class="nav-link py-1" href="#managing-prs">Managing PRs&#x200E;</a>
+              <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                <a class="nav-link py-1" href="#approval">Approval&#x200E;</a>
+                <a class="nav-link py-1" href="#merging">Merging&#x200E;</a>
+              </nav>
+              <a class="nav-link py-1" href="#doing-a-release">Doing a Release&#x200E;</a>
+            </nav>
+
+          </nav>
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>

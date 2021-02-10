@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - Workflow</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body data-spy="scroll" data-target="#mb-page-nav" data-offset="100">
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">Developer Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/devGuide.html">Contributing</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/settingUp.html">Setting up</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/workflow.html">Workflow</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Design
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/projectStructure.html">Project Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/design/architecture.html">Architecture</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/writingPlugins.html">Writing Plugins</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/devGuide/projectManagement.html">Project management</a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)">Appendices
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/devGuide/styleGuides.html">Style guides</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Workflow</span></p>
+
+        <h1 id="workflow"><span id="workflow" class="anchor"></span>Workflow<a class="fa fa-anchor" href="#workflow" onclick="event.stopPropagation()"></a></h1>
+        <div class="lead">
+          <p>Our workflow is mostly based on the guidelines given at <a href="http://se-education.org/guides">se-education.org/guides</a>. This page points to the relevant parts of those guides and provide additional details specific to MarkBind.</p>
+        </div>
+        <p><strong>To submit a PR</strong>, follow <a href="https://se-education.org/guides/guidelines/PRs.html">this guide</a>, but note the following:</p>
+        <ul>
+          <li>You can start by looking through <a href="https://github.com/MarkBind/markbind/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+sort%3Acomments-desc">these issues</a> marked <span href class="badge" style="color:white; background-color: #7057FF;">good first issue</span>. Don't do more than one of them though.</li>
+          <li>As we squash the commits when merging a PR, there is <mark>no need to follow a strict commit organization or write elaborate commit messages for each commit</mark>.</li>
+          <li>You can refer to the <a href="/devGuide/design.html"><em>Design</em></a> page to learn about the design and implementation of MarkBind.</li>
+        </ul>
+        <p>The sections below has more information about various stages of submitting a PR.</p>
+        <h2 id="writing-code"><span id="writing-code" class="anchor"></span>Writing code<a class="fa fa-anchor" href="#writing-code" onclick="event.stopPropagation()"></a></h2>
+        <h4 id="general-tips"><span id="general-tips" class="anchor"></span>General tips<a class="fa fa-anchor" href="#general-tips" onclick="event.stopPropagation()"></a></h4>
+        <ul>
+          <li>
+            <p>Use JavaScript ES6 features if possible for better performance, e.g. Promise instead of callback.</p>
+          </li>
+          <li>
+            <p>Do note <a href="/devGuide/styleGuides.html">our style guides</a>.</p>
+          </li>
+          <li>
+            <p>Do set up your IDE debugger! We provide several sample configurations for <trigger trigger="click" for="webstorm-debug">WebStorm</trigger> and <trigger trigger="click" for="vs-code-debug">VS Code</trigger>.</p>
+            <b-modal id="webstorm-debug" hide-footer size="lg" modal-class="mb-zoom" ref="webstorm-debug"><template slot="modal-title">Debugging Configurations - WebStorm</template>
+              <p>Refer <a href="https://blog.jetbrains.com/webstorm/2018/01/how-to-debug-with-webstorm/">here</a> for a quick guide on adding debugging and running configuration in WebStorm, and how to run them.</p>
+              <p>Once done, see these screenshots for sample debugging configurations, and tweak them further to suit your needs.</p>
+              <p><strong>1. Using the docs as a development environment</strong>, with:</p>
+              <ul class="mb-3">
+                <li>the <a href="https://markbind.org/userGuide/cliCommands.html#serve-command">lazy reload <code class="hljs inline no-lang" v-pre>-o</code></a> option to speed up page building</li>
+                <li>the <code class="hljs inline no-lang" v-pre>-d</code> developer option. (see <a href="#editing-frontend-features">below</a>)</li>
+              </ul>
+              <p class="ml-4"><a href="/images/debugger/WebStorm_1.png" target="_self"><img src="/images/debugger/WebStorm_1.png" alt class="img-fluid"></a></p>
+              <p><strong>2. Debugging all tests</strong> in the <code class="hljs inline no-lang" v-pre>npm run test</code> script:</p>
+              <p class="ml-4"><a href="/images/debugger/WebStorm_2.png" target="_self"><img src="/images/debugger/WebStorm_2.png" alt class="img-fluid"></a></p>
+              <p><strong>3. Debugging only the cli package's tests</strong>:</p>
+              <p class="ml-4"><a href="/images/debugger/WebStorm_3.png" target="_self"><img src="/images/debugger/WebStorm_3.png" alt class="img-fluid"></a></p>
+            </b-modal>
+            <b-modal id="vs-code-debug" hide-footer size="lg" modal-class="mb-zoom" ref="vs-code-debug"><template slot="modal-title">Debugging Configurations - VS Code</template>
+              <p>Refer <a href="https://code.visualstudio.com/docs/editor/debugging">here</a> for a general guide on adding and running debugging configurations in VS Code.</p>
+              <p>In your <code class="hljs inline no-lang" v-pre>.vscode/launch.json</code> file, you may use these sample configurations as a baseline, and tweak them as you see fit.</p>
+              <p><strong>1. Using the docs as a development environment</strong>, with:</p>
+              <ul class="mb-3">
+                <li>the <a href="https://markbind.org/userGuide/cliCommands.html#serve-command">lazy reload <code class="hljs inline no-lang" v-pre>-o</code></a> option to speed up page building</li>
+                <li>the <code class="hljs inline no-lang" v-pre>-d</code> developer option. (see <a href="#editing-frontend-features">below</a>)</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-block-heading"><span>launch.json</span></div>
+                <div class="code-block-content">
+                  <pre><code class="ml-4 no-line-numbers hljs json" heading="launch.json" v-pre><span>{
+</span><span>    <span class="hljs-attr">&quot;configurations&quot;</span>: [
+</span><span>        {
+</span><span>            <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;node&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;Dev Docs&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;skipFiles&quot;</span>: [
+</span><span>                <span class="hljs-string">&quot;&lt;node_internals&gt;/**&quot;</span>
+</span><span>            ],
+</span><span>            <span class="hljs-attr">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;${workspaceFolder}/docs&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;program&quot;</span>: <span class="hljs-string">&quot;${workspaceFolder}/packages/cli/index.js&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;args&quot;</span>: [<span class="hljs-string">&quot;serve&quot;</span>, <span class="hljs-string">&quot;-o&quot;</span>, <span class="hljs-string">&quot;-d&quot;</span>]
+</span><span>        }
+</span><span>    ]
+</span><span>}
+</span></code></pre>
+                </div>
+              </div>
+              <p><strong>2. Debugging all tests</strong> in the <code class="hljs inline no-lang" v-pre>npm run test</code> script:</p>
+              <div class="code-block">
+                <div class="code-block-heading"><span>launch.json</span></div>
+                <div class="code-block-content">
+                  <pre><code class="ml-4 no-line-numbers hljs json" heading="launch.json" v-pre><span>{
+</span><span>    <span class="hljs-attr">&quot;configurations&quot;</span>: [
+</span><span>        {
+</span><span>            <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;node&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;skipFiles&quot;</span>: [
+</span><span>                <span class="hljs-string">&quot;&lt;node_internals&gt;/**&quot;</span>
+</span><span>            ],
+</span><span>            <span class="hljs-attr">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;${workspaceFolder}&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;runtimeExecutable&quot;</span>: <span class="hljs-string">&quot;npm&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;runtimeArgs&quot;</span>: [<span class="hljs-string">&quot;run&quot;</span>, <span class="hljs-string">&quot;test&quot;</span>]
+</span><span>        }
+</span><span>    ]
+</span><span>}
+</span></code></pre>
+                </div>
+              </div>
+              <p><strong>3. Debugging only the cli package's tests</strong>:</p>
+              <div class="code-block">
+                <div class="code-block-heading"><span>launch.json</span></div>
+                <div class="code-block-content">
+                  <pre><code class="ml-4 no-line-numbers hljs json" heading="launch.json" v-pre><span>{
+</span><span>    <span class="hljs-attr">&quot;configurations&quot;</span>: [
+</span><span>        {
+</span><span>            <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;node&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;request&quot;</span>: <span class="hljs-string">&quot;launch&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;test cli&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;skipFiles&quot;</span>: [
+</span><span>                <span class="hljs-string">&quot;&lt;node_internals&gt;/**&quot;</span>
+</span><span>            ],
+</span><span>            <span class="hljs-attr">&quot;cwd&quot;</span>: <span class="hljs-string">&quot;${workspaceFolder}/packages/cli&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;runtimeExecutable&quot;</span>: <span class="hljs-string">&quot;npm&quot;</span>,
+</span><span>            <span class="hljs-attr">&quot;runtimeArgs&quot;</span>: [<span class="hljs-string">&quot;run&quot;</span>, <span class="hljs-string">&quot;test&quot;</span>]
+</span><span>        }
+</span><span>    ]
+</span><span>}
+</span></code></pre>
+                </div>
+              </div>
+            </b-modal>
+          </li>
+        </ul>
+        <h4 id="editing-frontend-features"><span id="editing-frontend-features" class="anchor"></span>Editing frontend features<a class="fa fa-anchor" href="#editing-frontend-features" onclick="event.stopPropagation()"></a></h4>
+        <p>We update the frontend <code class="hljs inline no-lang" v-pre>markbind.min.js</code> and <code class="hljs inline no-lang" v-pre>markbind.min.css</code> bundles during release only, and not in pull requests.</p>
+        <p>Hence, if you need to view the latest frontend changes (relating to <code class="hljs inline no-lang" v-pre>packages/core-web</code> or <code class="hljs inline no-lang" v-pre>packages/vue-components</code>), you can either:</p>
+        <ol>
+          <li>Run <code class="hljs inline no-lang" v-pre>npm run build:web</code> in the root directory, which builds the above bundles,
+            then run your markbind-cli <a href="https://markbind.org/userGuide/cliCommands.html">command</a> of choice.</li>
+          <li>Run <code class="hljs inline no-lang" v-pre>markbind serve -d</code> (with any other applicable options). (<strong>recommended</strong>)<br>
+            This adds the necessary webpack middlewares to the development server to compile the above bundles,
+            and enables live and hot reloading for frontend source files.</li>
+        </ol>
+        <h2 id="testing"><span id="testing" class="anchor"></span>Testing<a class="fa fa-anchor" href="#testing" onclick="event.stopPropagation()"></a></h2>
+        <p>Our test script does the following:</p>
+        <ol>
+          <li>Lints the code (<code class="hljs inline no-lang" v-pre>.js</code>, <code class="hljs inline no-lang" v-pre>.vue</code>) and stylesheets (<code class="hljs inline no-lang" v-pre>.css</code>) for any style errors using <a href="https://eslint.org/">ESLint</a> and <a href="https://stylelint.io/">StyleLint</a>.</li>
+          <li>Runs unit tests for all packages with <a href="https://jestjs.io/">Jest</a>.</li>
+          <li>Builds the test sites whose directory names are listed in <code class="hljs inline no-lang" v-pre>packages/cli/test/functional/testSites.js</code>.</li>
+          <li>For each test site, compares the HTML files generated with the HTML files in its <code class="hljs inline no-lang" v-pre>expected</code> directory.</li>
+        </ol>
+        <p>To run the test script, use: <code class="hljs inline no-lang" v-pre>npm run test</code></p>
+        <box type="tip" seamless>
+          <p>If you only want to run tests for one of the packages (<code class="hljs inline no-lang" v-pre>packages/*</code>), simply switch into the appropriate directory and use <code class="hljs inline no-lang" v-pre>npm run test</code> as well!
+          </p>
+        </box>
+        <p></p>
+        <h4 id="updating-and-writing-tests"><span id="updating-and-writing-tests" class="anchor"></span>Updating and writing tests<a class="fa fa-anchor" href="#updating-and-writing-tests" onclick="event.stopPropagation()"></a></h4>
+        <p>Whether you are adding a new feature, updating existing features or fixing bugs, make sure to update the <strong>source</strong> test files (test sites, snapshots) to reflect the changes.</p>
+        <p>After which, you can update the <strong>expected</strong> test files with: <code class="hljs inline no-lang" v-pre>npm run updatetest</code></p>
+        <box type="warning" seamless>
+          You should always check that the generated output is correct before committing any changes to the test sites.
+        </box>
+        <h5 id="adding-test-site-content"><span id="adding-test-site-content" class="anchor"></span>Adding test site content<a class="fa fa-anchor" href="#adding-test-site-content" onclick="event.stopPropagation()"></a></h5>
+        <p>When adding new features, you should also add new site content into an existing test site or create a new test site to demonstrate the new feature. This is to ensure that your feature can be tested by building that test site.</p>
+        <p>To add a page to an existing test site, for this example, to <code class="hljs inline no-lang" v-pre>test_site</code>:</p>
+        <ol>
+          <li>
+            <p>Add a new test page, e.g., <code class="hljs inline no-lang" v-pre>newTestPage.md</code>, containing a demonstration of the new feature.</p>
+          </li>
+          <li>
+            <p>Open the <code class="hljs inline no-lang" v-pre>site.json</code> corresponding to the test site, i.e. <code class="hljs inline no-lang" v-pre>packages/cli/test/functional/test_site/site.json</code></p>
+          </li>
+          <li>
+            <p>To include the new page, i.e. <code class="hljs inline no-lang" v-pre>newTestPage.md</code>, add it to the <code class="hljs inline no-lang" v-pre>pages</code> array.</p>
+            <div class="code-block">
+              <div class="code-block-heading"><span>site.json</span></div>
+              <div class="code-block-content">
+                <pre><code heading="site.json" class="hljs" v-pre><span>&quot;pages&quot;: [
+</span><span>  {
+</span><span>    &quot;src&quot;: &quot;index.md&quot;,
+</span><span>    &quot;title&quot;: &quot;Hello World&quot;,
+</span><span>    &quot;frontmatter&quot;: {
+</span><span>      &quot;frontMatterOverrideProperty&quot;: &quot;Overridden by front matter override&quot;,
+</span><span>      &quot;globalAndFrontMatterOverrideProperty&quot;:  &quot;Overridden by front matter override&quot;
+</span><span>    }
+</span><span>  },
+</span><span>  ...
+</span><span>  {
+</span><span>    &quot;src&quot;: &quot;testLayouts.md&quot;,
+</span><span>    &quot;title&quot;: &quot;Hello World&quot;
+</span><span>  },
+</span><span>  {,
+</span><span>    <span class="highlighted">&quot;src&quot;: &quot;newTestPage.md&quot;,</span>
+</span><span>    <span class="highlighted">&quot;title&quot;: [some title you see fit]</span>
+</span><span>  },
+</span><span>  ...
+</span></code></pre>
+              </div>
+            </div>
+          </li>
+          <li>
+            <p>Update the tests using <code class="hljs inline no-lang" v-pre>npm run updatetest</code>.</p>
+          </li>
+        </ol>
+        <box type="info" seamless>
+          <p>If creating a new test site instead, the directory name of the new test site should be added to <code class="hljs inline no-lang" v-pre>packages/cli/test/functional/testSites.js</code> file.
+          </p>
+        </box>
+        <p></p>
+        <h5 id="adding-snapshot-tests-for-components"><span id="adding-snapshot-tests-for-components" class="anchor"></span>Adding snapshot tests for components<a class="fa fa-anchor" href="#adding-snapshot-tests-for-components" onclick="event.stopPropagation()"></a></h5>
+        <p>When making changes to the Vue components in <code class="hljs inline no-lang" v-pre>packages/vue-components</code>, you should add new snapshot tests or adapt existing ones as appropriate.</p>
+        <p>Once you're done, be sure to run the <code class="hljs inline no-lang" v-pre>updatetest</code> script mentioned <a href="#updating-and-writing-tests">above</a>!</p>
+        <h2 id="linting"><span id="linting" class="anchor"></span>Linting<a class="fa fa-anchor" href="#linting" onclick="event.stopPropagation()"></a></h2>
+        <p>We follow <a href="/devGuide/styleGuides.html">our style guides</a>. Using a linter will help check and fix some of the code style errors in your code. It will save time for both you and your code reviewer. The linting tool we use is <a href="https://eslint.org/">ESLint</a> and <a href="https://stylelint.io/">StyleLint</a>. Here is a <a href="https://gist.github.com/nicholaschuayunzhi/bfe53dbb5f1a0f02d545d55956f9ab7e">gist</a> with an explanation of the ESLint rules chosen in markbind-cli.</p>
+        <p>Before making a commit or pull request, you should lint your code by running the following commands from the root of your project:</p>
+        <ul>
+          <li>To lint a specific file: <code class="hljs inline no-lang" v-pre>eslint path/to/specificfile.js</code></li>
+          <li>To lint all files: <code class="hljs inline no-lang" v-pre>npm run lint</code></li>
+        </ul>
+        <p>It is also possible to auto-fix some (not all) style errors, using <code class="hljs inline no-lang" v-pre>npm run lintfix</code>.</p>
+        <box type="tip" seamless>
+          <p>ESLint has <a href="https://eslint.org/docs/user-guide/integrations">integrations with popular editors</a>. They offer features such as &quot;fix errors on save&quot;, which will make development smoother.
+          </p>
+        </box>
+        <p></p>
+        <h2 id="dependency-management"><span id="dependency-management" class="anchor"></span>Dependency management<a class="fa fa-anchor" href="#dependency-management" onclick="event.stopPropagation()"></a></h2>
+        <p>As mentioned in the <a href="/devGuide/settingUp.html#setting-up-the-dev-environment">setting up</a> page, MarkBind uses <a href="https://github.com/lerna/lerna">lerna</a> to manage the dependencies of its <a href="/devGuide/design.html">various packages</a>.</p>
+        <p>Hence, instead of manually updating the version numbers in the packages' <code class="hljs inline no-lang" v-pre>package.json</code> files, you may consider using the <code class="hljs inline no-lang" v-pre>lerna add</code> <a href="https://github.com/lerna/lerna/tree/master/commands/add#readme">command</a> to speed things up!</p>
+        <p>Also, when updating dependencies, ensure that it is updated in <em>all</em> packages using that dependency.</p>
+        <box type="warning">
+          Dependency updates are not trivial, and can be the source of subtle bugs. You should always check the respective dependency changelogs before doing so!
+        </box>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+          <nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap">
+            <a class="nav-link py-1" href="#workflow">Workflow&#x200E;</a>
+            <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+              <a class="nav-link py-1" href="#writing-code">Writing code&#x200E;</a>
+              <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                <a class="nav-link py-1" href="#general-tips">General tips&#x200E;</a>
+                <a class="nav-link py-1" href="#editing-frontend-features">Editing frontend features&#x200E;</a>
+              </nav>
+              <a class="nav-link py-1" href="#testing">Testing&#x200E;</a>
+              <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                <a class="nav-link py-1" href="#updating-and-writing-tests">Updating and writing tests&#x200E;</a>
+                <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                  <a class="nav-link py-1" href="#adding-test-site-content">Adding test site content&#x200E;</a>
+                  <a class="nav-link py-1" href="#adding-snapshot-tests-for-components">Adding snapshot tests for components&#x200E;</a>
+                </nav>
+              </nav>
+              <a class="nav-link py-1" href="#linting">Linting&#x200E;</a>
+              <a class="nav-link py-1" href="#dependency-management">Dependency management&#x200E;</a>
+            </nav>
+
+          </nav>
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>

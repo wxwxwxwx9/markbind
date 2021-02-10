@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="MarkBind 2.17.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MarkBind - User Guide: Deploying the Site</title>
+  <link rel="stylesheet" href="../markbind/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../markbind/css/bootstrap-vue.min.css">
+  <link rel="stylesheet" href="../markbind/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../markbind/glyphicons/css/bootstrap-glyphicons.min.css">
+  <link rel="stylesheet" href="../markbind/css/octicons.css">
+  <link rel="stylesheet" href="../markbind/css/codeblock-light.min.css">
+  <link rel="stylesheet" href="../markbind/css/markbind.min.css">
+  <script src="../markbind/js/polyfill.min.js"></script>
+  <script src="../markbind/js/vue.min.js"></script>
+  <script src="../markbind/js/markbind.min.js"></script>
+  <script src="../markbind/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/plugins/markbind-plugin-anchors/markbind-plugin-anchors.css">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<script>
+  const baseUrl = ''
+</script>
+
+<body data-spy="scroll" data-target="#mb-page-nav" data-offset="100">
+  <div id="app">
+    <div>
+      <header fixed>
+        <navbar type="dark" class=" temp-navbar">
+          <a slot="brand" href="/index.html" title="Home" class="navbar-brand"><img src="/images/logo-darkbackground.png" height="20"></a>
+          <li><a highlight-on="exact" href="/index.html" class="nav-link">HOME</a></li>
+          <div tags="environment--ug">
+            <li><a highlight-on="sibling-or-child" href="/userGuide/index.html" class="nav-link">USER GUIDE</a></li>
+          </div>
+          <div tags="environment--dg">
+            <li><a highlight-on="sibling-or-child" href="/devGuide/index.html" class="nav-link">DEVELOPER GUIDE</a></li>
+          </div>
+          <li><a highlight-on="exact" href="/showcase.html" class="nav-link">SHOWCASE</a></li>
+          <li><a highlight-on="exact" href="/about.html" class="nav-link">ABOUT</a></li>
+          <li>
+            <a href="https://github.com/MarkBind/markbind" target="_blank" class="nav-link"><span><span aria-hidden="true" class="fab fa-github"></span></span></a></li>
+          <li slot="right">
+            <form class="navbar-form">
+              <searchbar :data="searchData" placeholder="Search" :on-hit="searchCallback" menu-align-right></searchbar>
+            </form>
+          </li>
+        </navbar>
+      </header>
+    </div>
+    <div id="flex-body">
+      <nav id="site-nav" class="fixed-header-padding">
+        <div class="site-nav-top">
+          <div class="font-weight-bold mb-2" style="font-size: 1.25rem;">User Guide</div>
+        </div>
+        <div class="nav-component slim-scroll">
+          <site-nav>
+            <ul class="site-nav-list site-nav-list-root">
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><a href="/userGuide/gettingStarted.html"><strong>Getting Started</strong></a></div>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><strong>Authoring Contents</strong>
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/authoringContents.html">Overview</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/addingPages.html">Adding Pages</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/markBindSyntaxOverview.html">MarkBind Syntax Overview</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/formattingContents.html">Formatting Contents</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/usingComponents.html">Using Components</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/usingHtmlJavaScriptCss.html">Using HTML, JavaScript, CSS</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/tweakingThePageStructure.html">Tweaking the Page Structure</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/reusingContents.html">Reusing Contents</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><strong>Working with sites</strong>
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/workingWithSites.html">Overview</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/settingSiteProperties.html">Setting Site Properties</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/usingPlugins.html">Using Plugins</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/makingTheSiteSearchable.html">Making the Site Searchable</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/themes.html">Applying Themes</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/deployingTheSite.html">Deploying the Site</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/markBindInTheProjectWorkflow.html">MarkBind in the Project Workflow</a></div>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="site-nav-default-list-item site-nav-list-item-0" onclick="handleSiteNavClick(this)"><strong>References</strong>
+
+                  <i class="site-nav-dropdown-btn-icon site-nav-rotate-icon" onclick="handleSiteNavClick(this.parentNode, false); event.stopPropagation();">
+                    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></i></div>
+                <ul class="site-nav-dropdown-container site-nav-dropdown-container-open site-nav-list">
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/cliCommands.html">CLI Commands</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/readerFacingFeatures.html">Reader-Facing Features</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/fullSyntaxReference.html">Full Syntax Reference</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/syntaxCheatSheet.html">Syntax Cheat Sheet</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/siteJsonFile.html"><code class="hljs inline no-lang" v-pre>site.json</code> File</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/tipsAndTricks.html">Tips &amp; Tricks</a></div>
+                  </li>
+                  <li>
+                    <div class="site-nav-default-list-item site-nav-list-item-1" onclick="handleSiteNavClick(this)"><a href="/userGuide/glossary.html">Glossary</a></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </site-nav>
+        </div>
+      </nav>
+      <div id="content-wrapper" class="fixed-header-padding">
+        <p><span id="title" class="d-none">Deploying the Site</span></p>
+
+        <span id="link" class="d-none">
+          <span><a href="/userGuide/deployingTheSite.html"><em>User Guide → Deploying the Site</em></a></span></span>
+        <h1 id="deploying-the-site"><span id="deploying-the-site" class="anchor"></span>Deploying the Site<a class="fa fa-anchor" href="#deploying-the-site" onclick="event.stopPropagation()"></a></h1>
+        <span class="lead" id="overview">
+          <p><strong>A site generated by MarkBind can be deployed by simply uploading the generated files to any Web server.</strong> In addition, MarkBind provides several convenient deployment options.
+          </p>
+        </span>
+        <p></p>
+        <p>Generic steps for deploying a MarkBind site:</p>
+        <ol>
+          <li>Set the <a href="/userGuide/siteJsonFile.html#baseUrl"><code class="hljs inline no-lang" v-pre>baseUrl</code> property of the <code class="hljs inline no-lang" v-pre>site.json</code> file</a> to match the deploy location.</li>
+          <li>(Optional) Use the <a href="/userGuide/cliCommands.html#serve-command"><code class="hljs inline no-lang" v-pre>markbind serve</code> command</a> to stage the site locally and confirm the contents are as expected.</li>
+          <li>Use the <a href="/userGuide/cliCommands.html#build-command"><code class="hljs inline no-lang" v-pre>markbind build</code> command</a> to generate the site from source files. That command puts the generated site files in a directory named <code class="hljs inline no-lang" v-pre>_site</code> (you can change the output directory using parameters supplied to the command).</li>
+          <li>Upload the site files to the Web server. The sections below explain how to automate this step if you are deploying to some online platforms.</li>
+        </ol>
+        <p>Steps for deploying multiple MarkBind sites:</p>
+        <ol>
+          <li>Create multiple <code class="hljs inline no-lang" v-pre>site.json</code> files. Ensure that the <a href="/userGuide/siteJsonFile.html#baseUrl"><code class="hljs inline no-lang" v-pre>baseUrl</code> property of each <code class="hljs inline no-lang" v-pre>site.json</code> file</a> matches its deploy location.</li>
+          <li>(Optional) Use the <a href="/userGuide/cliCommands.html#serve-command"><code class="hljs inline no-lang" v-pre>markbind serve -s &lt;file&gt;</code> command</a> to stage each site locally and confirm the contents are as expected.</li>
+          <li>For each site:
+            <ol>
+              <li>Use the <a href="/userGuide/cliCommands.html#build-command"><code class="hljs inline no-lang" v-pre>markbind build -s &lt;file&gt;</code> command</a> to generate the site from source files.</li>
+              <li>Upload the site files to the Web server. The sections below explain how to automate this step if you are deploying to some online platforms.</li>
+            </ol>
+          </li>
+        </ol>
+        <h2 id="deploying-to-github-pages"><span id="deploying-to-github-pages" class="anchor"></span>Deploying to Github Pages<a class="fa fa-anchor" href="#deploying-to-github-pages" onclick="event.stopPropagation()"></a></h2>
+        <p><strong>MarkBind can easily deploy a site to <a href="https://help.github.com/categories/github-pages-basics/">Github pages</a></strong> if the project root directory is also a GitHub repo.</p>
+        <p>Running the <strong><code class="hljs inline no-lang" v-pre>markbind deploy</code></strong> command will deploy the most recent build of your site to the <code class="hljs inline no-lang" v-pre>gh-pages</code> branch of the repo <code class="hljs inline no-lang" v-pre>origin</code> and will be available
+          After the command is completed, your site will be online at <code class="hljs inline no-lang" v-pre>http://&lt;username|org&gt;.github.io/&lt;repo&gt;</code> e.g., <a href="http://se-edu.github.io/se-book">http://se-edu.github.io/se-book</a>.</p>
+        <div id="warning-about-baseUrl">
+          <box type="warning">
+            <p>If you are deploying to the site to GitHub pages, the <code class="hljs inline no-lang" v-pre>baseUrl</code> setting in the <code class="hljs inline no-lang" v-pre>site.json</code> should be set to the <code class="hljs inline no-lang" v-pre>&quot;/&lt;repositoryName&gt;&quot;</code> for the links in the deployed site to work correctly.<br>
+              <big><span class="badge badge-pill badge-secondary" style="padding-bottom: 4px; margin-right: 5px;">Example</span></big> If you are using Github Pages to host your deployed website at repo <code class="hljs inline no-lang" v-pre>myorg/myproduct</code> (i.e., the website is published at <code class="hljs inline no-lang" v-pre>https://myorg.github.io/myproduct</code>), then your <code class="hljs inline no-lang" v-pre>baseUrl</code> should be <code class="hljs inline no-lang" v-pre>&quot;/myproduct&quot;</code>.
+            </p>
+          </box>
+          <p></p>
+        </div>
+        <p>You can override the default deployment settings <span class="dimmed">(e.g., repo/branch to deploy)</span> in the <code class="hljs inline no-lang" v-pre>site.json</code>'s <code class="hljs inline no-lang" v-pre>deploy</code> section:</p>
+        <panel type="seamless" popup-url="siteJsonFile.html#deploy"><template slot="header">
+            <p><strong>User Guide: Configuring the Site → <code class="hljs inline no-lang" v-pre>deploy</code></strong></p>
+          </template>
+          <div>
+            <h4 id="deploy"><span id="deploy" class="anchor"></span><strong><code class="hljs inline no-lang" v-pre>deploy</code></strong><a class="fa fa-anchor" href="#deploy" onclick="event.stopPropagation()"></a></h4>
+            <p><strong>The settings for <a href="/userGuide/deployingTheSite.html">auto-deployment to Github pages</a>.</strong></p>
+            <ul>
+              <li>
+                <p><strong><code class="hljs inline no-lang" v-pre>message</code></strong> [Optional. Default: <code class="hljs inline no-lang" v-pre>&quot;Site Update.&quot;</code>]<br>
+                  The commit message used for the deployment commit.</p>
+              </li>
+              <li>
+                <p><strong><code class="hljs inline no-lang" v-pre>repo</code></strong> [Optional. Default: the current working project's repo]<br>
+                  The repo you want to deploy to.<br>
+                  Format: <code class="hljs inline no-lang" v-pre>&quot;https://github.com/&lt;org|username&gt;/&lt;repo&gt;.git&quot;</code> (<code class="hljs inline no-lang" v-pre>&quot;git@github.com:&lt;org|username&gt;/&lt;repo&gt;.git&quot;</code> if you use SSH)<br>
+                  <big><span class="badge badge-pill badge-secondary" style="padding-bottom: 4px; margin-right: 5px;">Example</span></big> <code class="hljs inline no-lang" v-pre>&quot;https://github.com/myorg/myrepo.git&quot;</code></p>
+              </li>
+              <li>
+                <p><strong><code class="hljs inline no-lang" v-pre>branch</code></strong> [Optional. Default: <code class="hljs inline no-lang" v-pre>&quot;gh-pages&quot;</code>]<br>
+                  The branch that will be deployed to in the remote repo.</p>
+              </li>
+            </ul>
+          </div>
+        </panel>
+        <br>
+        <box type="warning">
+          <p><code class="hljs inline no-lang" v-pre>markbind deploy</code> does not generate the static site from your source; it simply deploys the files that are already in the <code class="hljs inline no-lang" v-pre>_site</code> directory. You need to run <code class="hljs inline no-lang" v-pre>markbind build</code> first if you want to generate the site before deploying.
+          </p>
+        </box>
+        <p></p>
+        <h3 id="deploying-to-github-pages-via-ci-tools"><span id="deploying-to-github-pages-via-ci-tools" class="anchor"></span>Deploying to GitHub Pages via CI Tools<a class="fa fa-anchor" href="#deploying-to-github-pages-via-ci-tools" onclick="event.stopPropagation()"></a></h3>
+        <p><strong>You can setup CI Tools to automatically build and deploy your site on GitHub Pages every time your GitHub repo is updated.</strong></p>
+        <panel type="seamless" expanded id="generating-a-github-personal-access-token"><template slot="header">
+            <h4 id="generating-a-github-personal-access-token"><span id="generating-a-github-personal-access-token" class="anchor"></span>Generating a Github Personal Access Token<a class="fa fa-anchor" href="#generating-a-github-personal-access-token" onclick="event.stopPropagation()"></a></h4>
+          </template>
+          <p>With the exception of Github Actions, a Github Personal Access Token with <strong>repo</strong> permissions is required for deploying your MarkBind site to Github Pages via CI tools.</p>
+          <p>You may refer to Github's documentation on <a href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token">how to generate a Github Personal Access Token</a>. Ensure that you have enabled <strong>repo</strong> permissions as shown from the screenshot below. Take note of the generated token - you will not be able to see it again once you navigate away from the page.
+            <span>
+              <box background-color="white" border-color="#cccccc"><span><a href="/images/githubTokenRepoPermissions.png" target="_self"><img src="/images/githubTokenRepoPermissions.png" alt class="img-fluid"></a></span></box>
+            </span></p>
+        </panel>
+        <p></p>
+        <panel type="seamless" expanded id="deploying-via-github-actions"><template slot="header">
+            <h4 id="deploying-via-github-actions"><span id="deploying-via-github-actions" class="anchor"></span>Deploying via Github Actions<a class="fa fa-anchor" href="#deploying-via-github-actions" onclick="event.stopPropagation()"></a></h4>
+          </template>
+          <p>To instruct <a href="https://docs.github.com/en/actions">Github Actions</a> to build and deploy the site when you push to the repository, add a Github Actions workflow file in your project repo at the location <code class="hljs inline no-lang" v-pre>&lt;PROJECT_ROOT&gt;/.github/workflows/deploy.yml</code> A sample workflow file is provided below:</p>
+          <pre><code class="hljs" v-pre><span>name: Deploy Markbind Site
+</span><span>on:
+</span><span>  push:
+</span><span>    branches: master
+</span><span>
+</span><span>jobs:
+</span><span>  build:
+</span><span>    runs-on: ubuntu-latest
+</span><span>    name: test
+</span><span>    env:
+</span><span>      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</span><span>    steps:
+</span><span>      - uses: actions/checkout@v2
+</span><span>      - uses: actions/setup-node@v2
+</span><span>        with:
+</span><span>          node-version: '10'
+</span><span>      - run: npm i -g markbind-cli
+</span><span>      - run: markbind build
+</span><span>      - run: markbind deploy --ci
+</span></code></pre>
+          <box type="info">
+            <p>The sample <code class="hljs inline no-lang" v-pre>deploy.yml</code> workflow above uses the <a href="https://docs.github.com/en/actions/reference/authentication-in-a-workflow">default Github Token secret</a> that is generated automatically for each Github Actions workflow. You may also use a <a href="#generating-a-github-personal-access-token">Github Personal Access Token</a> in place of the default Github Token.
+            </p>
+          </box>
+          <p></p>
+          <p>Once you have created the file, commit and push the file to your repo. Github Actions should start to build and deploy your markbind site. You can verify this by visiting <code class="hljs inline no-lang" v-pre>www.github.com/&lt;org|username&gt;/&lt;repo&gt;/actions</code>.</p>
+          <p>For more information on customizing your workflow file to fit your specific needs, you may refer to the <a href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions">Github Action Docs</a>.</p>
+        </panel>
+        <panel type="seamless" expanded id="deploying-via-travis-ci"><template slot="header">
+            <h4 id="deploying-via-travis-ci"><span id="deploying-via-travis-ci" class="anchor"></span>Deploying via Travis CI<a class="fa fa-anchor" href="#deploying-via-travis-ci" onclick="event.stopPropagation()"></a></h4>
+          </template>
+          <h5 id="adding-your-repository-to-travis-ci"><span id="adding-your-repository-to-travis-ci" class="anchor"></span>Adding your repository to Travis CI<a class="fa fa-anchor" href="#adding-your-repository-to-travis-ci" onclick="event.stopPropagation()"></a></h5>
+          <panel type="info" expanded><template slot="header">
+              <p><span aria-hidden="true" class="fas fa-info-circle"></span> Travis CI Migration</p>
+            </template>
+            <p>Since May 2018, Travis CI has been <a href="https://docs.travis-ci.com/user/migrate/open-source-on-travis-ci-com/">undergoing migration to <code class="hljs inline no-lang" v-pre>travis-ci.com</code></a>, which changes the way you setup repositories on Travis CI.</p>
+            <ul>
+              <li>If you are new to Travis CI, you should <strong>add your repository on <code class="hljs inline no-lang" v-pre>travis-ci.com</code></strong>.</li>
+              <li>Alternatively, if you are already using Travis CI on <code class="hljs inline no-lang" v-pre>travis-ci.org</code>, you can continue to <strong>add your repository on <code class="hljs inline no-lang" v-pre>travis-ci.org</code></strong>.
+              </li>
+            </ul>
+          </panel>
+
+          <p></p>
+          <tabs>
+            <tab><template slot="_header">Add your repository on <code class="hljs inline no-lang" v-pre>travis-ci.com</code></template>
+              <ol>
+                <li><a href="https://travis-ci.com/signin">Sign in to Travis</a> using your GitHub account.</li>
+                <li>Accept the authorisation for Travis CI when you are redirected to GitHub.</li>
+                <li>Go to the <a href="https://travis-ci.com/account/repositories">Repositories page</a>, and click on the green <em>Activate</em> button.<br>
+                  <span class="dimmed"><span aria-hidden="true" class="fas fa-info-circle"></span> If you are already using Travis CI, click on the white <em>Manage Repositories on GitHub</em> button instead.</span></li>
+                <li>Select the repository with the MarkBind site, and add the Travis CI GitHub App to the repository by clicking the green <em>Approve and Install</em> button.</li>
+              </ol>
+            </tab>
+            <tab><template slot="_header">Add your repository on <code class="hljs inline no-lang" v-pre>travis-ci.org</code></template>
+              <ol>
+                <li><a href="https://travis-ci.com/signin">Sign in to Travis</a> using your GitHub account.</li>
+                <li>Accept the authorisation for Travis CI when you are redirected to GitHub.</li>
+                <li>Go to the <a href="https://travis-ci.org/account/repositories">Repositories page</a>.</li>
+                <li>Find the repository with the MarkBind site.<br>
+                  <span class="dimmed"><span aria-hidden="true" class="fas fa-info-circle"></span> If the organization/repository is not shown in the list, click on <code class="hljs inline no-lang" v-pre>Review and add</code> link at the bottom of the list of organization and follow the steps to give Travis access to the organization containing your repo. After that, come back to the <a href="https://travis-ci.org/account/repositories">Repositories page</a> and use the <code class="hljs inline no-lang" v-pre>Sync Account</code> button to sync your Travis account with GitHub.</span></li>
+                <li>Activate the repo using the slider switch in front of it.
+                  <span>
+                    <box background-color="white" border-color="#cccccc"><span><a href="/images/travisActivateRepo.png" target="_self"><img src="/images/travisActivateRepo.png" alt class="img-fluid"></a></span></box>
+                  </span></li>
+              </ol>
+            </tab>
+          </tabs>
+
+          <h5 id="configuring-your-repository-in-travis-ci"><span id="configuring-your-repository-in-travis-ci" class="anchor"></span>Configuring your repository in Travis CI<a class="fa fa-anchor" href="#configuring-your-repository-in-travis-ci" onclick="event.stopPropagation()"></a></h5>
+          <ol>
+            <li><a href="https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings">Add an environment variable in Travis CI</a> named <code class="hljs inline no-lang" v-pre>GITHUB_TOKEN</code>, with the value set to the personal access token generated in the previous step. <mark>Ensure that <em>Display value in the build log</em> is set to <em>Off</em>.</mark>
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/travisGithubToken.png" target="_self"><img src="/images/travisGithubToken.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+            <li>Add a <code class="hljs inline no-lang" v-pre>.travis.yml</code> file to instruct Travis CI to build and deploy the site when you push to the repository. An example <code class="hljs inline no-lang" v-pre>.travis.yml</code> file that can accomplish this is given below:</li>
+          </ol>
+          <pre><code class="hljs yaml" v-pre><span><span class="hljs-attr">language:</span> <span class="hljs-string">node_js</span>
+</span><span><span class="hljs-attr">node_js:</span>
+</span><span>  <span class="hljs-bullet">-</span> <span class="hljs-number">10</span>
+</span><span><span class="hljs-attr">install:</span>
+</span><span>  <span class="hljs-bullet">-</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span> <span class="hljs-string">-g</span> <span class="hljs-string">markbind-cli</span>
+</span><span><span class="hljs-attr">script:</span> <span class="hljs-string">markbind</span> <span class="hljs-string">build</span>
+</span><span><span class="hljs-attr">deploy:</span>
+</span><span>  <span class="hljs-attr">provider:</span> <span class="hljs-string">script</span>
+</span><span>  <span class="hljs-attr">script:</span> <span class="hljs-string">markbind</span> <span class="hljs-string">deploy</span> <span class="hljs-string">--ci</span>
+</span><span>  <span class="hljs-attr">skip_cleanup:</span> <span class="hljs-literal">true</span>
+</span><span>  <span class="hljs-attr">on:</span>
+</span><span>    <span class="hljs-attr">branch:</span> <span class="hljs-string">master</span>
+</span></code></pre>
+          <p>More information about <code class="hljs inline no-lang" v-pre>.travis.yml</code> can be found in the <a href="https://docs.travis-ci.com/">Travis CI documentation</a>.</p>
+          <ol>
+            <li>Commit <code class="hljs inline no-lang" v-pre>.travis.yml</code> to your MarkBind repository and push the changes. Travis CI should begin to build your site.</li>
+            <li>Select the MarkBind repository on <a href="https://travis-ci.com/auth">Travis CI</a> and <a href="https://docs.travis-ci.com/user/job-lifecycle/#breaking-the-build">check the build status</a> to see if it is successful.</li>
+            <li>Once the build succeeds, your MarkBind site should be online at <code class="hljs inline no-lang" v-pre>http://&lt;username|org&gt;.github.io/&lt;repo&gt;</code> e.g., <a href="http://se-edu.github.io/se-book">http://se-edu.github.io/se-book</a>. Travis CI will automatically build and deploy changes to your site as you push new changes to the repository after a few seconds.<br>
+              <span class="dimmed"><span aria-hidden="true" class="fas fa-info-circle"></span> You might have to go to the <code class="hljs inline no-lang" v-pre>Settings</code> of your repo and configure it to publish GitHub Pages from the <code class="hljs inline no-lang" v-pre>gh-pages</code> branch as MarkBind deploys to that branch by default.</span></li>
+          </ol>
+          <h6 id="configuring-travis-ci-to-use-a-specific-markbind-version"><span id="configuring-travis-ci-to-use-a-specific-markbind-version" class="anchor"></span>Configuring Travis CI to use a specific MarkBind version<a class="fa fa-anchor" href="#configuring-travis-ci-to-use-a-specific-markbind-version" onclick="event.stopPropagation()"></a></h6>
+          <p>When Travis CI is set up as explained above, it will use the latest version of MarkBind which may be a later version than the one you use locally.</p>
+          <ul>
+            <li>If you want Travis CI to use a specific version of MarkBind (eg. <code class="hljs inline no-lang" v-pre>v1.6.3</code>), change the <code class="hljs inline no-lang" v-pre>install</code> step in the <code class="hljs inline no-lang" v-pre>.travis.yml</code> given above to:
+              <pre><code class="hljs yaml" v-pre><span><span class="hljs-attr">install:</span>
+</span><span>  <span class="hljs-bullet">-</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span> <span class="hljs-string">-g</span> <span class="hljs-string">markbind-cli@1.63</span>
+</span></code></pre>
+            </li>
+            <li>If you want to use the latest minor version automatically until the next major version (as major versions usually contain breaking changes), you can add a <code class="hljs inline no-lang" v-pre>^</code> in front of the version number. In the example below, Travis will use the latest version of MarkBind but will stop before <code class="hljs inline no-lang" v-pre>2.*</code>
+              <pre><code class="hljs yaml" v-pre><span><span class="hljs-attr">install:</span>
+</span><span>  <span class="hljs-bullet">-</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span> <span class="hljs-string">-g</span> <span class="hljs-string">markbind-cli@^1.63</span>
+</span></code></pre>
+            </li>
+          </ul>
+          <h6 id="configuring-travis-ci-to-only-deploy-from-a-specific-repository"><span id="configuring-travis-ci-to-only-deploy-from-a-specific-repository" class="anchor"></span>Configuring Travis CI to only deploy from a specific repository<a class="fa fa-anchor" href="#configuring-travis-ci-to-only-deploy-from-a-specific-repository" onclick="event.stopPropagation()"></a></h6>
+          <p>When Travis CI is set up as explained above, Travis CI will attempt to deploy the site from any repository it is in, including forks.
+            If you want Travis CI to only deploy from a specific repository (eg. only from your main site repository), you can add to the <code class="hljs inline no-lang" v-pre>deploy</code> phase a <a href="https://docs.travis-ci.com/user/deployment#conditional-releases-with-on"><code class="hljs inline no-lang" v-pre>repo</code> condition in the form <code class="hljs inline no-lang" v-pre>owner_name/repo_name</code></a>.</p>
+          <p>For example, if you only want Travis CI to deploy the site when it is run from the <code class="hljs inline no-lang" v-pre>se-edu/se-book</code> repository, the following <code class="hljs inline no-lang" v-pre>repo</code> condition should be added to <code class="hljs inline no-lang" v-pre>.travis.yml</code>.</p>
+          <pre><code class="hljs yaml" v-pre><span>  <span class="hljs-attr">on:</span>
+</span><span>    <span class="hljs-attr">branch:</span> <span class="hljs-string">master</span>
+</span><span>    <span class="hljs-attr">repo:</span> <span class="hljs-string">se-edu/se-book</span>
+</span></code></pre>
+          <p>The <code class="hljs inline no-lang" v-pre>repo</code> value can be changed to your specific repository as desired.</p>
+        </panel>
+        <panel type="seamless" expanded id="deploying-via-appveyor-ci"><template slot="header">
+            <h4 id="deploying-via-appveyor-ci"><span id="deploying-via-appveyor-ci" class="anchor"></span>Deploying via AppVeyor CI<a class="fa fa-anchor" href="#deploying-via-appveyor-ci" onclick="event.stopPropagation()"></a></h4>
+          </template>
+          <h5 id="adding-your-repository-to-appveyor-ci"><span id="adding-your-repository-to-appveyor-ci" class="anchor"></span>Adding your repository to AppVeyor CI<a class="fa fa-anchor" href="#adding-your-repository-to-appveyor-ci" onclick="event.stopPropagation()"></a></h5>
+          <ol>
+            <li><a href="https://ci.appveyor.com/login">Sign in to AppVeyor CI</a> using your Github Account.</li>
+            <li>Authorize AppVeyor App as Github App in the <a href="https://ci.appveyor.com/authorizations">account settings</a> by clicking on the <em>Install AppVeyor App</em> button.
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/appveyorInstallGithubApp.png" target="_self"><img src="/images/appveyorInstallGithubApp.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+            <li>In the <a href="https://ci.appveyor.com/projects">projects directory</a>, click on the <em>New Project</em> button.
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/appveyorAddNewProject.png" target="_self"><img src="/images/appveyorAddNewProject.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+            <li>Finally, select the repository containing your Markbind site.</li>
+          </ol>
+          <h5 id="configuring-your-repository-in-appveyor-ci"><span id="configuring-your-repository-in-appveyor-ci" class="anchor"></span>Configuring your repository in AppVeyor CI<a class="fa fa-anchor" href="#configuring-your-repository-in-appveyor-ci" onclick="event.stopPropagation()"></a></h5>
+          <ol>
+            <li>Ensure that you have generated a <a href="#generating-a-github-personal-access-token">Github Personal Access token with <strong>repo</strong> permissions</a>.</li>
+            <li>Navigate to the project settings page of your repository in AppVeyor CI.</li>
+            <li>On the left menu, click on <strong>Environment</strong>.</li>
+            <li>Under the heading <strong>Environment variables</strong>, add a custom environment variable named <code class="hljs inline no-lang" v-pre>GITHUB_TOKEN</code>, with the value set to the personal access token that was generated in the first step. <mark>Ensure that you toggle variable encryption by clicking on the padlock.</mark>
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/appveyorGithubToken.png" target="_self"><img src="/images/appveyorGithubToken.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+            <li>Remember to click <strong>Save</strong> at the bottom of the page.</li>
+            <li>Add a <code class="hljs inline no-lang" v-pre>appveyor.yml</code>file at the root of your Markbind site's repository to instruct AppVeyor CI to build and deploy the site to Github Pages when you to push to your repository. More information on customizing <code class="hljs inline no-lang" v-pre>appveyor.yml</code> can be found in <a href="https://www.appveyor.com/docs/appveyor-yml/">AppVeyor documentation</a>. An example <code class="hljs inline no-lang" v-pre>appveyor.yml</code> file is given below:</li>
+          </ol>
+          <pre><code class="hljs" v-pre><span>environment:
+</span><span>  nodejs_version: '10'
+</span><span>
+</span><span>branches:
+</span><span>  only:
+</span><span>    - master
+</span><span>
+</span><span>install:
+</span><span>  - ps: Install-Product node $env:nodejs_version
+</span><span>  - npm i -g markbind-cli
+</span><span>  - markbind build
+</span><span>  - markbind deploy --ci
+</span><span>
+</span><span>test: off
+</span><span>
+</span><span>build: off
+</span></code></pre>
+          <p>Commit and push <code class="hljs inline no-lang" v-pre>appveyor.yml</code> to your github repository. Thereafter, AppVeyor CI should begin to run the build script. You are able to view the current build status by clicking on your repository in the <a href="https://ci.appveyor.com/projects">AppVeyor projects page</a>. Once the build succeeds, you should be able to view your Markbind site, after a few seconds, at <code class="hljs inline no-lang" v-pre>http://&lt;username|org&gt;.github.io/&lt;repo&gt;</code> e.g., <a href="http://se-edu.github.io/se-book">http://se-edu.github.io/se-book</a>.</p>
+        </panel>
+        <panel type="seamless" expanded id="deploying-via-circle-ci"><template slot="header">
+            <h4 id="deploying-via-circle-ci"><span id="deploying-via-circle-ci" class="anchor"></span>Deploying via Circle CI<a class="fa fa-anchor" href="#deploying-via-circle-ci" onclick="event.stopPropagation()"></a></h4>
+          </template>
+          <h5 id="adding-your-repository-to-circle-ci"><span id="adding-your-repository-to-circle-ci" class="anchor"></span>Adding your repository to Circle CI<a class="fa fa-anchor" href="#adding-your-repository-to-circle-ci" onclick="event.stopPropagation()"></a></h5>
+          <ol>
+            <li>Ensure that you have generated a <a href="#generating-a-github-personal-access-token">Github Personal Access Token with <strong>repo</strong> permissions</a>.</li>
+            <li>Sign in to <a href="https://circleci.com/">Circle CI</a> using your Github account.</li>
+            <li>In the projects dashboard, click on the <code class="hljs inline no-lang" v-pre>Set Up Project</code> button beside the repo containing your Markbind site.
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/circleCiSetUpProject.png" target="_self"><img src="/images/circleCiSetUpProject.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+          </ol>
+          <h5 id="configuring-your-repository-in-circle-ci"><span id="configuring-your-repository-in-circle-ci" class="anchor"></span>Configuring your repository in Circle CI<a class="fa fa-anchor" href="#configuring-your-repository-in-circle-ci" onclick="event.stopPropagation()"></a></h5>
+          <ol>
+            <li>Once you have set up your project, click on the <code class="hljs inline no-lang" v-pre>Project Settings</code> button.</li>
+            <li>On the left, click on the <code class="hljs inline no-lang" v-pre>Environment Variables</code> tab and add a custom Environment Variable, <code class="hljs inline no-lang" v-pre>GITHUB_TOKEN</code>, which contains the value of your Github Personal Access Token.
+              <span>
+                <box background-color="white" border-color="#cccccc"><span><a href="/images/circleCiGithubToken.png" target="_self"><img src="/images/circleCiGithubToken.png" alt class="img-fluid"></a></span></box>
+              </span></li>
+            <li>Commit and push a <code class="hljs inline no-lang" v-pre>config.yml</code> file to the repo containg your Markbind Site that instructs Circle CI to build and deploy your Markbind site to Github Pages whenever you push to your repository. Ensure that the <code class="hljs inline no-lang" v-pre>config.yml</code> file is located in the <code class="hljs inline no-lang" v-pre>&lt;PROJECT_ROOT&gt;/.circleci/</code> directory. A sample <code class="hljs inline no-lang" v-pre>config.yml</code> file is shown below:</li>
+          </ol>
+          <pre><code class="hljs" v-pre><span>jobs:
+</span><span>  Build-And-Deploy:
+</span><span>    docker:
+</span><span>      - image: 'cimg/base:stable'
+</span><span>    steps:
+</span><span>      - checkout
+</span><span>      - node/install:
+</span><span>          node-version: &quot;10&quot;
+</span><span>          npm-version: &quot;6&quot;
+</span><span>          install-yarn: false
+</span><span>      - run: node --version
+</span><span>      - run: npm i -g markbind-cli
+</span><span>      - run: markbind build
+</span><span>      - run: markbind deploy --ci
+</span><span>version: 2.1
+</span><span>orbs:
+</span><span>  node: circleci/node@4.1.0
+</span><span>workflows:
+</span><span>  Deploy-Markbind-Site:
+</span><span>    jobs:
+</span><span>      - Build-And-Deploy
+</span></code></pre>
+          <p>After you have pushed the <code class="hljs inline no-lang" v-pre>config.yml</code> file to your remote repo, you should see Circle CI starting to run the Deploy job in your projects dashboard. Once it is successful, you should be able to view your Markbind site at <code class="hljs inline no-lang" v-pre>http://&lt;username|org&gt;.github.io/&lt;repo&gt;</code>.</p>
+          <p>For more information on customizing your build script, you may refer to <a href="https://circleci.com/docs/2.0/configuration-reference/#section=configuration">Circle CI Config Reference Document</a>.
+          </p>
+        </panel>
+        <p></p>
+        <hr>
+        <h2 id="deploying-to-netlify"><span id="deploying-to-netlify" class="anchor"></span>Deploying to Netlify<a class="fa fa-anchor" href="#deploying-to-netlify" onclick="event.stopPropagation()"></a></h2>
+        <p><strong>You can setup <a href="https://www.netlify.com/"><span data-mb-component-type="tooltip" v-b-tooltip.hover.top.html="tooltipInnerContentGetter" class="trigger"><span data-mb-slot-name="_content">a platform for deploying static webpages (among other things)</span>Netlify</span></a>
+            to automatically build and deploy your site on their platform every time your GitHub repo is updated.</strong></p>
+        <p>Here are the steps to set up Netlify:</p>
+        <ol>
+          <li>Go to <a href="https://app.netlify.com/">https://app.netlify.com/</a> and sign up</li>
+          <li>Next go to <a href="https://app.netlify.com/account/sites">https://app.netlify.com/account/sites</a> and select <code class="hljs inline no-lang" v-pre>New site from Git</code></li>
+          <li>Select your git provider
+            <span>
+              <box background-color="white" border-color="#cccccc"><span><a href="/images/netlifyPreview1.png" target="_self"><img src="/images/netlifyPreview1.png" alt class="img-fluid"></a></span></box>
+            </span></li>
+          <li>Select your markbind site repository
+            <span>
+              <box background-color="white" border-color="#cccccc"><span><a href="/images/netlifyPreview2.png" target="_self"><img src="/images/netlifyPreview2.png" alt class="img-fluid"></a></span></box>
+            </span></li>
+          <li>Update the build settings as follows and hit <code class="hljs inline no-lang" v-pre>Deploy site</code>:
+            <ul>
+              <li><code class="hljs inline no-lang" v-pre>Build Command</code>: <code class="hljs inline no-lang" v-pre>npm i markbind-cli -g &amp;&amp; markbind build --baseUrl</code></li>
+              <li><code class="hljs inline no-lang" v-pre>Publish directory</code>: <code class="hljs inline no-lang" v-pre>_site</code></li>
+              <li><code class="hljs inline no-lang" v-pre>Show advanced</code>: Add a new variable with the key as <code class="hljs inline no-lang" v-pre>NODE_VERSION</code> and the value as <strong><code class="hljs inline no-lang" v-pre>10</code> or higher</strong>
+                <span>
+                  <box background-color="white" border-color="#cccccc"><span><a href="/images/netlifyPreview3.png" target="_self"><img src="/images/netlifyPreview3.png" alt class="img-fluid"></a></span></box>
+                </span>
+                <span>
+                  <box background-color="white" border-color="#cccccc"><span><a href="/images/netlifyPreview3-advanced.png" target="_self"><img src="/images/netlifyPreview3-advanced.png" alt class="img-fluid"></a></span></box>
+                </span></li>
+            </ul>
+          </li>
+        </ol>
+        <p>Now your site will be deployed on Netlify at the given address specified after deployment. It will be updated automatically when the default branch of your repo is updated.</p>
+        <p>Additionally, <strong>when contributors make a pull request to your GitHub repo, you can <em>preview</em> the updated site</strong> at the bottom of the pull request by clicking on <code class="hljs inline no-lang" v-pre>details</code> link in the PR:
+          <span>
+            <box background-color="white" border-color="#cccccc"><span><a href="/images/netlifyPreview4.png" target="_self"><img src="/images/netlifyPreview4.png" alt class="img-fluid"></a></span></box>
+          </span></p>
+        <p><span aria-hidden="true" class="fas fa-info-circle"></span> Note that when Netlify is set up as explained above, it will use the latest version of MarkBind which may be a later version than the one you use locally. If you want Netlify to use a specific version of Netlify, follow the instructions in the box below:</p>
+        <box>
+          <h5 id="setting-up-netlify-to-use-a-specific-version-of-markbind"><span id="setting-up-netlify-to-use-a-specific-version-of-markbind" class="anchor"></span>Setting up Netlify to use a specific version of MarkBind<a class="fa fa-anchor" href="#setting-up-netlify-to-use-a-specific-version-of-markbind" onclick="event.stopPropagation()"></a></h5>
+          <p>Here are the steps to set up Netlify to use a specific version of MarkBind.</p>
+          <ol>
+            <li>
+              <p>Navigate to the root directory of your site.</p>
+            </li>
+            <li>
+              <p>run <code class="hljs inline no-lang" v-pre>npm init</code> which will create <code class="hljs inline no-lang" v-pre>package.json</code> and <code class="hljs inline no-lang" v-pre>package.lock.json</code></p>
+            </li>
+            <li>
+              <p>run <code class="hljs inline no-lang" v-pre>npm install markbind-cli@1.6.3 --save</code> to install markbind as a dependency (using v1.6.3 as an example)</p>
+            </li>
+            <li>
+              <p>create/update <code class="hljs inline no-lang" v-pre>.gitignore</code> file in the root directory and add:</p>
+              <pre><code class="no-line-numbers hljs" v-pre><span>node_modules
+</span></code></pre>
+            </li>
+            <li>
+              <p>update <code class="hljs inline no-lang" v-pre>ignore</code> in site.json to include</p>
+              <pre><code class="no-line-numbers hljs" v-pre><span>node_modules/*
+</span><span>.gitignore
+</span></code></pre>
+            </li>
+            <li>
+              <p>Now, follow the <a href="#deploying-to-netlify">previous instructions for setting up Netlify</a> but with the following difference:<br>
+                In step 5, <mark>Set the <code class="hljs inline no-lang" v-pre>Build Command</code> to <code class="hljs inline no-lang" v-pre>markbind build --baseUrl</code></mark></p>
+            </li>
+          </ol>
+        </box>
+        <div class="clearfix">
+          <p><span class="float-left"><a class="btn btn-light" href="/userGuide/themes.html"><span><span aria-hidden="true" class="far fa-arrow-alt-circle-left"></span> <span>Themes</span></span></a></span></p>
+          <p><span class="float-right"><a class="btn btn-light" href="/userGuide/markBindInTheProjectWorkflow.html"><span><span>MarkBind in the Project Workflow</span> <span aria-hidden="true" class="far fa-arrow-alt-circle-right"></span></span></a></span></p>
+        </div>
+        <br>
+        <i class="fa fa-arrow-circle-up fa-lg d-print-none" id="scroll-top-button" onclick="handleScrollTop()" aria-hidden="true"></i>
+      </div>
+      <nav id="page-nav" class="fixed-header-padding">
+        <div class="nav-component slim-scroll">
+
+          <nav id="mb-page-nav" class="nav nav-pills flex-column my-0 small no-flex-wrap">
+            <a class="nav-link py-1" href="#deploying-the-site">Deploying the Site&#x200E;</a>
+            <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+              <a class="nav-link py-1" href="#deploying-to-github-pages">Deploying to Github Pages&#x200E;</a>
+              <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                <a class="nav-link py-1" href="#deploying-to-github-pages-via-ci-tools">Deploying to GitHub Pages via CI Tools&#x200E;</a>
+                <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                  <a class="nav-link py-1" href="#generating-a-github-personal-access-token">Generating a Github Personal Access Token&#x200E;</a>
+                  <a class="nav-link py-1" href="#deploying-via-github-actions">Deploying via Github Actions&#x200E;</a>
+                  <a class="nav-link py-1" href="#deploying-via-travis-ci">Deploying via Travis CI&#x200E;</a>
+                  <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                    <a class="nav-link py-1" href="#adding-your-repository-to-travis-ci">Adding your repository to Travis CI&#x200E;</a>
+                    <a class="nav-link py-1" href="#configuring-your-repository-in-travis-ci">Configuring your repository in Travis CI&#x200E;</a>
+                    <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                      <a class="nav-link py-1" href="#configuring-travis-ci-to-use-a-specific-markbind-version">Configuring Travis CI to use a specific MarkBind version&#x200E;</a>
+                      <a class="nav-link py-1" href="#configuring-travis-ci-to-only-deploy-from-a-specific-repository">Configuring Travis CI to only deploy from a specific repository&#x200E;</a>
+                    </nav>
+                  </nav>
+                  <a class="nav-link py-1" href="#deploying-via-appveyor-ci">Deploying via AppVeyor CI&#x200E;</a>
+                  <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                    <a class="nav-link py-1" href="#adding-your-repository-to-appveyor-ci">Adding your repository to AppVeyor CI&#x200E;</a>
+                    <a class="nav-link py-1" href="#configuring-your-repository-in-appveyor-ci">Configuring your repository in AppVeyor CI&#x200E;</a>
+                  </nav>
+                  <a class="nav-link py-1" href="#deploying-via-circle-ci">Deploying via Circle CI&#x200E;</a>
+                  <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                    <a class="nav-link py-1" href="#adding-your-repository-to-circle-ci">Adding your repository to Circle CI&#x200E;</a>
+                    <a class="nav-link py-1" href="#configuring-your-repository-in-circle-ci">Configuring your repository in Circle CI&#x200E;</a>
+                  </nav>
+                </nav>
+              </nav>
+              <a class="nav-link py-1" href="#deploying-to-netlify">Deploying to Netlify&#x200E;</a>
+              <nav class="nav nav-pills flex-column my-0 nested no-flex-wrap">
+                <a class="nav-link py-1" href="#setting-up-netlify-to-use-a-specific-version-of-markbind">Setting up Netlify to use a specific version of MarkBind&#x200E;</a>
+              </nav>
+            </nav>
+
+          </nav>
+
+        </div>
+      </nav>
+    </div>
+    <div>
+      <footer>
+        <div class="text-center">
+          <small>[Generated by <a href="https://markbind.org/">MarkBind 2.17.0</a> on Thu, Feb 11, 2021, 2:46:23 AM GMT+8]</small><br>
+          <small>This site is powered by <a href="https://www.netlify.com/">Netlify</a>.</small></div>
+      </footer>
+    </div>
+  </div>
+</body>
+<script src="../markbind/js/bootstrap-utility.min.js"></script>
+<script>
+  MarkBind.setupWithSearch()
+</script>
+
+</html>
