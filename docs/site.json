@@ -1,5 +1,5 @@
 {
-  "baseUrl": "",
+  "baseUrl": "/markbind",
   "timeZone": "Asia/Singapore",
   "titlePrefix": "MarkBind",
   "style": {
