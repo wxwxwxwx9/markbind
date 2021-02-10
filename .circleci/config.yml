@@ -12,8 +12,8 @@ jobs:
       - run: cd ../ && git clone -b fix-1432-circle-ci-1 https://github.com/raysonkoh/markbind.git
       - run: cd ../markbind/packages/cli && npm link
       - run: cd ../markbind && npm run setup
-      - run: cd ../markbind/docs build
-      - run: cd ../markbind/docs deploy --ci
+      - run: cd ../markbind/docs && markbind build
+      - run: cd ../markbind/docs && markbind deploy --ci
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
