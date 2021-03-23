@@ -1,3 +1,17 @@
+const Vue = require('vue');
+const { renderToString } = require('vue-server-renderer').createRenderer();
+
+const domino = require('domino');
+
+global.window = domino.createWindow('<h1>Hello world</h1>');
+global.document = global.window.document;
+
+const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
+
+Vue.use(MarkBindVue);
+
+const { unescape } = require('html-escaper');
+
 const cheerio = require('cheerio'); require('../patches/htmlparser2');
 const fs = require('fs-extra');
 const htmlBeautify = require('js-beautify').html;
@@ -468,8 +482,21 @@ class Page {
       ...layoutManager.getLayoutPageNjkAssets(this.layout),
     };
 
+    // content = `<div id="app">${content}</div>`;
+    content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
+
     // Compile the page into Vue application and outputs the render function into script for browser
     await this.compileVuePageAndCreateScript(content);
+
+    // content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
+
+    // const VueAppPage = new Vue({
+    //   template: content,
+    //   // template: `<div id="app">${content}</div>`,
+    //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
+    // });
+    // content = await renderToString(VueAppPage);
+    // content = unescape(content);
 
     const renderedTemplate = this.pageConfig.template.render(
       this.prepareTemplateData(content, !!pageNav)); // page.njk
