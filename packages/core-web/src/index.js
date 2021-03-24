@@ -7,6 +7,7 @@ import initScrollTopButton from './scrollTopButton';
 import './styles/index.css';
 
 Vue.use(MarkBindVue);
+Vue.config.devtools = true;
 
 function scrollToUrlAnchorHeading() {
   if (window.location.hash) {
@@ -174,7 +175,6 @@ window.handleSiteNavClick = function (elem, useAnchor = true) {
 function setup() {
   // eslint-disable-next-line no-unused-vars
   const vm = new Vue({
-    el: '#app',
     render(createElement) {
       return pageVueRenderFn.call(this, createElement);
     },
@@ -183,12 +183,12 @@ function setup() {
       executeAfterMountedRoutines();
     },
   });
+  vm.$mount('#app');
 }
 
 function setupWithSearch() {
   // eslint-disable-next-line no-unused-vars
   const vm = new Vue({
-    el: '#app',
     render(createElement) {
       return pageVueRenderFn.call(this, createElement);
     },
@@ -210,6 +210,7 @@ function setupWithSearch() {
       updateSearchData(this);
     },
   });
+  vm.$mount('#app');
 }
 
 /*

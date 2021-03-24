@@ -221,28 +221,28 @@ export default {
     },
   },
   created() {
-    if (this.src) {
-      const hash = getFragmentByHash(this.src);
-      if (hash) {
-        this.fragment = hash;
-        // eslint-disable-next-line prefer-destructuring
-        this.src = this.src.split('#')[0];
-      }
-    }
+    // if (this.src) {
+    //   const hash = getFragmentByHash(this.src);
+    //   if (hash) {
+    //     this.fragment = hash;
+    //     // eslint-disable-next-line prefer-destructuring
+    //     this.src = this.src.split('#')[0];
+    //   }
+    // }
 
-    // Edge case where user might want non-expandable card that isn't expanded by default
-    const notExpandableNoExpand = !this.expandableBool && this.expanded !== 'false';
+    // // Edge case where user might want non-expandable card that isn't expanded by default
+    // const notExpandableNoExpand = !this.expandableBool && this.expanded !== 'false';
 
-    // Set local data to computed prop value
+    // // Set local data to computed prop value
 
-    // Ensure this expr ordering is maintained
-    this.localExpanded = notExpandableNoExpand || this.expandedBool;
-    if (this.localExpanded === null) {
-      this.localExpanded = false;
-    }
+    // // Ensure this expr ordering is maintained
+    // this.localExpanded = notExpandableNoExpand || this.expandedBool;
+    // if (this.localExpanded === null) {
+    //   this.localExpanded = false;
+    // }
 
-    this.wasRetrieverLoaded = this.localExpanded || this.peek;
-    this.localMinimized = this.minimizedBool;
+    // this.wasRetrieverLoaded = this.localExpanded || this.peek;
+    // this.localMinimized = this.minimizedBool;
   },
   mounted() {
     this.initPanel();

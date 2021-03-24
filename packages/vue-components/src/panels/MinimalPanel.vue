@@ -133,7 +133,7 @@ export default {
     },
   },
   created() {
-    this.isHeaderAtBottom = this.localExpanded;
+    // this.isHeaderAtBottom = this.localExpanded;
   },
 };
 </script>

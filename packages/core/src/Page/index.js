@@ -6,6 +6,29 @@ const domino = require('domino');
 global.window = domino.createWindow('<h1>Hello world</h1>');
 global.document = global.window.document;
 
+/*
+ These getters are used by popovers and tooltips to get their popover/tooltip content/title.
+
+ For triggers, refer to Trigger.vue.
+ We need to create a completely new popover/tooltip for each trigger due to bootstrap-vue's implementation,
+ so this is how we retrieve our contents.
+*/
+
+function makeMbSlotGetter(slotName) {
+  return (element) => {
+    const innerElement = element.querySelector(`[data-mb-slot-name="${slotName}"]`);
+    return innerElement === null ? '' : innerElement.innerHTML;
+  };
+}
+
+// Used via vb-popover.html="popoverInnerGetters" for popovers
+global.window.popoverInnerGetters = {
+  title: makeMbSlotGetter('header'),
+  content: makeMbSlotGetter('content'),
+};
+// Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
+global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
+
 const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
 
 Vue.use(MarkBindVue);
@@ -483,27 +506,48 @@ class Page {
     };
 
     // content = `<div id="app">${content}</div>`;
-    content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
+
+    // content = `
+    //     <div id="app">
+    //       <panel>
+    //         <template #header>
+    //           minimal type panel
+    //         </template>
+    //         ...
+    //       </panel>
+    //     </div>
+    // `;
+
+    // content = `
+    //     <panel>
+    //       <template #header>
+    //         minimal type panel
+    //       </template>
+    //       ...
+    //     </panel>
+    // `;
+
+    // content = `<div> test </div>`;
 
     // Compile the page into Vue application and outputs the render function into script for browser
     await this.compileVuePageAndCreateScript(content);
 
     // content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
 
-    // const VueAppPage = new Vue({
-    //   template: content,
-    //   // template: `<div id="app">${content}</div>`,
-    //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
-    // });
-    // content = await renderToString(VueAppPage);
-    // content = unescape(content);
+    const VueAppPage = new Vue({
+      // template: content,
+      template: `<div id="app">${content}</div>`,
+      // template: '<script>  window.location.href = "gettingStarted.html"</script>',
+    });
+    content = await renderToString(VueAppPage);
+    content = unescape(content);
 
     const renderedTemplate = this.pageConfig.template.render(
       this.prepareTemplateData(content, !!pageNav)); // page.njk
 
     const outputTemplateHTML = this.pageConfig.disableHtmlBeautify
-      ? renderedTemplate
-      : htmlBeautify(renderedTemplate, pluginManager.htmlBeautifyOptions);
+      ? htmlBeautify(renderedTemplate, pluginManager.htmlBeautifyOptions)
+      : renderedTemplate;
 
     await fs.outputFile(this.pageConfig.resultPath, outputTemplateHTML);
 
