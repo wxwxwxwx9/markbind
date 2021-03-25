@@ -39,10 +39,10 @@ module.exports = merge(config, {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': 'development',
-      'process.env.VUE_ENV': '"server"',
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': 'development',
+    //   'process.env.VUE_ENV': '"server"',
+    // }),
     new VueSSRServerPlugin({ filename: 'js/markbindvue.json' }),
   ],
 });

@@ -52,12 +52,13 @@ module.exports = {
         // const resolved = `${__dirname}/dist/js/${file}`;
         // const json = vol.toJSON();
         // console.log(json);
-        const resolved = path.join(__dirname, `/dist/js/${file}`);
-        const test = `${__dirname}/README.md`;
-        const test2 = `${__dirname}/dist/js/markbindvue.json`;
-        console.log(test2);
-        console.log(testFs.existsSync(test2) ? 'exists' : 'no');
-        return fs.readFileSync(test2, 'utf-8');
+        // const resolved = path.join(__dirname, `/dist/js/${file}`);
+        // const test = `${__dirname}/README.md`;
+        // const test2 = `${__dirname}/dist/js/markbindvue.json`;
+        // console.log(test2);
+        // console.log(testFs.existsSync(test2) ? 'exists' : 'no');
+        const test3 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.json';
+        return fs.readFileSync(test3, 'utf-8');
       } catch (e) {
         console.log(e);
       }

@@ -25,7 +25,6 @@ module.exports = merge(serverConfig, {
     minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin()],
   },
   plugins: [
-    new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
