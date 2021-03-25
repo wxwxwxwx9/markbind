@@ -5,10 +5,10 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const config = require('./webpack.common.js');
+const clientConfig = require('./webpack.client.config');
 
 /* eslint-env node */
-module.exports = merge(config, {
+module.exports = merge(clientConfig, {
   mode: 'production',
   module: {
     rules: [

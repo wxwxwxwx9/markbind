@@ -21,7 +21,9 @@
     "directory": "packages/core-web"
   },
   "scripts": {
-    "build": "webpack --progress --hide-modules --config  webpack.build.js"
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "webpack --progress --hide-modules --config  webpack.buildclient.js",
+    "build:server": "webpack --progress --hide-modules --config  webpack.buildserver.js"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
@@ -45,7 +47,7 @@
     "webpack-merge": "^5.0.9",
     "webpack-node-externals": "^2.5.2",
     "vue-server-renderer": "2.6.11",
-    "memory-fs": "^0.4.1"
+    "memory-fs": "^0.5.0"
   },
   "publishConfig": {
     "access": "public"

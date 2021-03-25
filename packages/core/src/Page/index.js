@@ -29,9 +29,9 @@ global.window.popoverInnerGetters = {
 // Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
 global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
 
-const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
+// const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
 
-Vue.use(MarkBindVue);
+// Vue.use(MarkBindVue);
 
 const { unescape } = require('html-escaper');
 

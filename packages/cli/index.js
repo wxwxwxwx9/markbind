@@ -211,14 +211,14 @@ program
           let renderer;
           const rendererUpdater = (bundle) => {
             renderer = createRenderer(bundle);
-            console.log(renderer);
+            console.log('updated!');
           };
           // eslint-disable-next-line global-require
           require('@markbind/core-web/webpack.dev').server(rendererUpdater);
           // eslint-disable-next-line global-require
-          const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
-          getMiddlewares(`${config.baseUrl}/markbind`)
-            .forEach(middleware => serverConfig.middleware.push(middleware));
+          // const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
+          // getMiddlewares(`${config.baseUrl}/markbind`)
+          //   .forEach(middleware => serverConfig.middleware.push(middleware));
         }
 
         if (onePagePath) {

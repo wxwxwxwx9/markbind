@@ -4,10 +4,8 @@ const path = require('path');
 module.exports = {
   context: __dirname,
   output: {
-    filename: 'js/[name].min.js',
     library: 'MarkBind',
     libraryExport: 'default',
-    libraryTarget: 'umd',
   },
   externals: {
     vue: 'Vue',
