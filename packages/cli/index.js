@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const { createBundleRenderer } = require('vue-server-renderer');
+
 // Entry file for Markbind project
 const chokidar = require('chokidar');
 const fs = require('fs-extra');
@@ -204,8 +206,17 @@ program
         serverConfig.mount.push([config.baseUrl || '/', outputFolder]);
 
         if (options.dev) {
+          const createRenderer = bundle => createBundleRenderer(bundle);
+
+          let renderer;
+          const rendererUpdater = (bundle) => {
+            renderer = createRenderer(bundle);
+            console.log(renderer);
+          };
           // eslint-disable-next-line global-require
-          const getMiddlewares = require('@markbind/core-web/webpack.dev');
+          require('@markbind/core-web/webpack.dev').server(rendererUpdater);
+          // eslint-disable-next-line global-require
+          const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
           getMiddlewares(`${config.baseUrl}/markbind`)
             .forEach(middleware => serverConfig.middleware.push(middleware));
         }

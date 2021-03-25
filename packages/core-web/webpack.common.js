@@ -3,10 +3,6 @@ const path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: {
-    markbind: path.join(__dirname, 'src', 'index.js'),
-    markbindvue: path.join(__dirname, 'src', 'markBindVue.js'),
-  },
   output: {
     filename: 'js/[name].min.js',
     library: 'MarkBind',
