@@ -22,6 +22,8 @@ const {
   SITE_CONFIG_NAME,
 } = require('@markbind/core/src/Site/constants');
 
+const { pageVueServerRenderer } = require('@markbind/core/src/Page/PageVueServerRenderer');
+
 const liveServer = require('./src/lib/live-server');
 const cliUtil = require('./src/util/cliUtil');
 const logger = require('./src/util/logger');
@@ -200,21 +202,33 @@ program
 
     printHeader();
 
-    site
-      .readSiteConfig()
-      .then((config) => {
+    const config = site.readSiteConfig();
+      // .then(
+      //   // eslint-disable-next-line global-require
+      //   require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
+      // )
+      // .then((config) => {
+      //   if (options.dev) {
+      //     // eslint-disable-next-line global-require
+      //     require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
+      //   }
+      //   return config;
+      // })
+      require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
+      .then(() => {
         serverConfig.mount.push([config.baseUrl || '/', outputFolder]);
 
         if (options.dev) {
-          const createRenderer = bundle => createBundleRenderer(bundle);
+          // const createRenderer = bundle => createBundleRenderer(bundle);
+          // let renderer;
+          // const rendererUpdater = (bundle) => {
+          //   renderer = createRenderer(bundle);
+          //   console.log('updated!');
+          // };
 
-          let renderer;
-          const rendererUpdater = (bundle) => {
-            renderer = createRenderer(bundle);
-            console.log('updated!');
-          };
           // eslint-disable-next-line global-require
-          require('@markbind/core-web/webpack.dev').server(rendererUpdater);
+          // require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
+
           // eslint-disable-next-line global-require
           // const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
           // getMiddlewares(`${config.baseUrl}/markbind`)

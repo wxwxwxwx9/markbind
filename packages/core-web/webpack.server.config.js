@@ -17,7 +17,8 @@ module.exports = merge(config, {
     // filename: 'js/[name].min.js',
     // library: 'MarkBind',
     // libraryExport: 'default',
-    filename: 'server-bundle.js',
+    filename: 'js/markbindvue.min.js',
+    // filename: 'server-bundle.js',
     libraryTarget: 'commonjs2',
   },
   // https://webpack.js.org/configuration/externals/#externals
@@ -43,6 +44,6 @@ module.exports = merge(config, {
     //   'process.env.NODE_ENV': 'development',
     //   'process.env.VUE_ENV': '"server"',
     // }),
-    new VueSSRServerPlugin({ filename: 'js/markbindvue.json' }),
+    // new VueSSRServerPlugin({ filename: 'js/markbindvue.json' }),
   ],
 });
