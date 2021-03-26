@@ -59,7 +59,8 @@ module.exports = {
         // console.log(testFs.existsSync(test2) ? 'exists' : 'no');
         // const test3 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.json';
         const test4 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js';
-        return fs.readFileSync(test4, 'utf-8');
+        const read = fs.readFileSync(test4, 'utf-8');
+        return read;
       } catch (e) {
         console.log(e);
       }

@@ -17,8 +17,8 @@ module.exports = merge(config, {
   entry: './src/MarkBindVue.js',
   output: {
     // filename: 'js/[name].min.js',
-    library: 'MarkBind',
-    libraryExport: 'default',
+    // library: 'MarkBind',
+    // libraryExport: 'default',
     filename: 'js/markbindvue.min.js',
     // filename: 'server-bundle.js',
     // libraryTarget: 'commonjs2',

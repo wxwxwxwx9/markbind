@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const htmlBeautify = require('js-beautify').html;
 const requireFromString = require('require-from-string');
-// const Vue = require('vue');
+const Vue = require('vue');
 const VueCompiler = require('vue-template-compiler');
 
 const { renderToString } = require('vue-server-renderer').createRenderer();
@@ -11,8 +11,10 @@ const { renderToString } = require('vue-server-renderer').createRenderer();
 const pages = [];
 
 let site = {};
+
+let oldBundleRenderer;
 let bundleRenderer;
-let filePath;
+// let filePath;
 
 /**
  * Compiles page into Vue Application to get the page render function and places
@@ -51,13 +53,24 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
 
 async function renderVuePage(content) {
   // eslint-disable-next-line global-require
-  const Vue = require('vue');
+  const FreshVue = Vue.extend();
   // console.log(bundleRenderer);
+  // if (oldBundleRenderer) {
+  //   const { MarkBindVue } = requireFromString(oldBundleRenderer);
+  //   MarkBindVue.uninstall(Vue);
+  // }
+  // const panel = Vue.component('panel');
+  // console.log(panel);
   const { MarkBindVue } = requireFromString(bundleRenderer);
-  Vue.use(MarkBindVue);
+  FreshVue.use(MarkBindVue);
+  // MarkBindVue.install(FreshVue);
+  // FreshVue.use(MarkBindVue);
+  // const panel2 = Vue.component('panel');
+  // console.log(panel2);
+  // Vue.use(MarkBindVue);
   // console.log(bundleRenderer);
   // const template = `<div id="app">${content}</div>`;
-  const VueAppPage = new Vue({
+  const VueAppPage = new FreshVue({
   //   // template: content,
     template: `<div id="app">${content}</div>`,
   //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
@@ -65,7 +78,7 @@ async function renderVuePage(content) {
   // const renderedContent = await bundleRenderer.renderToString(template);
   const renderedContent = await renderToString(VueAppPage);
 
-  return unescape(renderedContent);
+  return renderedContent;
 }
 
 async function renderAllVuePages() {
@@ -76,6 +89,7 @@ async function renderAllVuePages() {
 
 async function updateBundleRenderer(bundle) {
   // bundleRenderer = createBundleRenderer(bundle);
+  oldBundleRenderer = bundleRenderer;
   bundleRenderer = bundle;
   // await site.site.buildSourceFiles();
   // bundleRenderer = require('/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js');
@@ -91,6 +105,8 @@ async function updateBundleRenderer(bundle) {
       : renderedTemplate;
 
     await fs.outputFile(pageConfig.resultPath, outputTemplateHTML);
+    const check = fs.readFileSync(pageConfig.resultPath, 'utf-8');
+
   });
   console.log('UPDATED1!');
 }

@@ -49,9 +49,9 @@ const components = {
   trigger,
   siteNav,
   submenu,
+  overlay,
   siteNavButton,
   pageNavButton,
-  overlay,
 };
 
 const directives = {
@@ -70,6 +70,20 @@ function install(Vue) {
   Vue.use(TooltipPlugin);
 }
 
-const MarkBindVue = { install };
+function uninstall(Vue) {
+  Object.keys(directives).forEach((key) => {
+    Vue.directive(key, () => null);
+    // delete Vue.options.directives[key];
+  });
+  Object.keys(components).forEach((key) => {
+    Vue.component(key, () => null);
+    // delete Vue.options.components[key];
+  });
+  // delete Vue.options.components['ModalPlugin'];
+  // delete Vue.options.components['PopoverPlugin'];
+  // delete Vue.options.components['TooltipPlugin'];
+}
+
+const MarkBindVue = { install, uninstall };
 
 export default MarkBindVue;

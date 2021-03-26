@@ -204,7 +204,7 @@ program
 
     pageVueServerRenderer.site['site'] = site;
 
-    const config = await site.readSiteConfig();
+    // const config = await site.readSiteConfig();
       // .then(
       //   // eslint-disable-next-line global-require
       //   require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
@@ -216,8 +216,9 @@ program
       //   }
       //   return config;
       // })
-      require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
-      .then(() => {
+      // require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
+      site.readSiteConfig()
+      .then(async (config) => {
         serverConfig.mount.push([config.baseUrl || '/', outputFolder]);
 
         if (options.dev) {
@@ -229,7 +230,7 @@ program
           // };
 
           // eslint-disable-next-line global-require
-          // require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
+          await require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
 
           // eslint-disable-next-line global-require
           const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
