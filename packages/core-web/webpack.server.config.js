@@ -11,8 +11,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./webpack.common.js');
 
 module.exports = merge(config, {
-  // target: 'node',
-  // devtool: '#source-map',
+  target: 'node',
+  devtool: '#source-map',
   // entry: path.join(__dirname, 'src', 'MarkBindVue.js'),
   entry: './src/MarkBindVue.js',
   output: {
@@ -23,6 +23,11 @@ module.exports = merge(config, {
     // filename: 'server-bundle.js',
     // libraryTarget: 'commonjs2',
     libraryTarget: 'umd',
+  },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+    },
   },
   // https://webpack.js.org/configuration/externals/#externals
   // https://github.com/liady/webpack-node-externals

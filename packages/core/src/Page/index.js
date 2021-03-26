@@ -3,8 +3,10 @@
 
 const domino = require('domino');
 
-global.window = domino.createWindow('<h1>Hello world</h1>');
-global.document = global.window.document;
+// global.window = {};
+
+// global.window = domino.createWindow('<h1>Hello world</h1>');
+// global.document = global.window.document;
 
 /*
  These getters are used by popovers and tooltips to get their popover/tooltip content/title.
@@ -14,20 +16,20 @@ global.document = global.window.document;
  so this is how we retrieve our contents.
 */
 
-function makeMbSlotGetter(slotName) {
-  return (element) => {
-    const innerElement = element.querySelector(`[data-mb-slot-name="${slotName}"]`);
-    return innerElement === null ? '' : innerElement.innerHTML;
-  };
-}
+// function makeMbSlotGetter(slotName) {
+//   return (element) => {
+//     const innerElement = element.querySelector(`[data-mb-slot-name="${slotName}"]`);
+//     return innerElement === null ? '' : innerElement.innerHTML;
+//   };
+// }
 
-// Used via vb-popover.html="popoverInnerGetters" for popovers
-global.window.popoverInnerGetters = {
-  title: makeMbSlotGetter('header'),
-  content: makeMbSlotGetter('content'),
-};
-// Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
-global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
+// // Used via vb-popover.html="popoverInnerGetters" for popovers
+// global.window.popoverInnerGetters = {
+//   title: makeMbSlotGetter('header'),
+//   content: makeMbSlotGetter('content'),
+// };
+// // Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
+// global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
 
 // const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
 

@@ -2,11 +2,21 @@ const path = require('path');
 const fs = require('fs-extra');
 const htmlBeautify = require('js-beautify').html;
 const requireFromString = require('require-from-string');
+
 const Vue = require('vue');
+
+let FreshVue = Vue.extend();
+
+Vue.config.silent = true;
 const VueCompiler = require('vue-template-compiler');
 
 const { renderToString } = require('vue-server-renderer').createRenderer();
 // const { createBundleRenderer } = require('vue-server-renderer');
+
+const domino = require('domino');
+
+global.window = domino.createWindow('<h1>Hello world</h1>');
+global.document = global.window.document;
 
 const pages = [];
 
@@ -53,7 +63,7 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
 
 async function renderVuePage(content) {
   // eslint-disable-next-line global-require
-  const FreshVue = Vue.extend();
+  // FreshVue = Vue.extend();
   // console.log(bundleRenderer);
   // if (oldBundleRenderer) {
   //   const { MarkBindVue } = requireFromString(oldBundleRenderer);
@@ -62,7 +72,8 @@ async function renderVuePage(content) {
   // const panel = Vue.component('panel');
   // console.log(panel);
   const { MarkBindVue } = requireFromString(bundleRenderer);
-  FreshVue.use(MarkBindVue);
+  MarkBindVue.install(FreshVue);
+  // Vue.use(MarkBindVue);
   // MarkBindVue.install(FreshVue);
   // FreshVue.use(MarkBindVue);
   // const panel2 = Vue.component('panel');
@@ -73,6 +84,24 @@ async function renderVuePage(content) {
   const VueAppPage = new FreshVue({
   //   // template: content,
     template: `<div id="app">${content}</div>`,
+    data: {
+      searchData: [],
+      popoverInnerGetters: {},
+      tooltipInnerContentGetter: {},
+      fragment: '',
+      questions: [],
+    },
+    props: {
+      threshold: Number(0.5),
+    },
+    methods: {
+      searchCallback: () => {},
+    },
+    provide: {
+      hasParentDropdown: true,
+      questions: [],
+      gotoNextQuestion: true,
+    },
   //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
   });
   // const renderedContent = await bundleRenderer.renderToString(template);
