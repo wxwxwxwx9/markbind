@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
+const htmlBeautify = require('js-beautify').html;
 const requireFromString = require('require-from-string');
 // const Vue = require('vue');
 const VueCompiler = require('vue-template-compiler');
@@ -9,7 +10,9 @@ const { renderToString } = require('vue-server-renderer').createRenderer();
 
 const pages = [];
 
+let site = {};
 let bundleRenderer;
+let filePath;
 
 /**
  * Compiles page into Vue Application to get the page render function and places
@@ -49,7 +52,7 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
 async function renderVuePage(content) {
   // eslint-disable-next-line global-require
   const Vue = require('vue');
-  const MarkBindVue = requireFromString(bundleRenderer);
+  const { MarkBindVue } = requireFromString(bundleRenderer);
   Vue.use(MarkBindVue);
   // console.log(bundleRenderer);
   // const template = `<div id="app">${content}</div>`;
@@ -70,17 +73,33 @@ async function renderAllVuePages() {
   });
 }
 
-function updateBundleRenderer(bundle) {
+async function updateBundleRenderer(bundle) {
   // bundleRenderer = createBundleRenderer(bundle);
   bundleRenderer = bundle;
+  // await site.site.buildSourceFiles();
   // bundleRenderer = require('/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js');
-  console.log('updated!');
+  pages.forEach(async (pageContentCopy) => {
+    const { content, pageConfig, asset, pageNav, pluginManager, page } = pageContentCopy;
+    await compileVuePageAndCreateScript(content, pageConfig, asset);
+    const renderedContent = await renderVuePage(content);
+    const renderedTemplate = pageConfig.template.render(
+      page.prepareTemplateData(renderedContent, !!pageNav)); // page.njk
+
+    const outputTemplateHTML = pageConfig.disableHtmlBeautify
+      ? htmlBeautify(renderedTemplate, pluginManager.htmlBeautifyOptions)
+      : renderedTemplate;
+
+    await fs.outputFile(pageConfig.resultPath, outputTemplateHTML);
+  });
+  console.log('UPDATED1!');
 }
 
 const pageVueServerRenderer = {
   compileVuePageAndCreateScript,
   renderVuePage,
   updateBundleRenderer,
+  pages,
+  site,
 };
 
 module.exports = {

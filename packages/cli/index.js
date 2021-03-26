@@ -202,6 +202,8 @@ program
 
     printHeader();
 
+    pageVueServerRenderer.site['site'] = site;
+
     const config = site.readSiteConfig();
       // .then(
       //   // eslint-disable-next-line global-require
@@ -230,9 +232,9 @@ program
           // require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
 
           // eslint-disable-next-line global-require
-          // const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
-          // getMiddlewares(`${config.baseUrl}/markbind`)
-          //   .forEach(middleware => serverConfig.middleware.push(middleware));
+          const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
+          getMiddlewares(`${config.baseUrl}/markbind`)
+            .forEach(middleware => serverConfig.middleware.push(middleware));
         }
 
         if (onePagePath) {

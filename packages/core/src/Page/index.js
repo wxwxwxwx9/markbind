@@ -1,5 +1,5 @@
-const Vue = require('vue');
-const { renderToString } = require('vue-server-renderer').createRenderer();
+// const Vue = require('vue');
+// const { renderToString } = require('vue-server-renderer').createRenderer();
 
 const domino = require('domino');
 
@@ -539,6 +539,17 @@ class Page {
     // });
     // content = await renderToString(VueAppPage);
     // content = unescape(content);
+
+    const pageContentCopy = {
+      content,
+      pageConfig: this.pageConfig,
+      asset: this.asset,
+      pageNav,
+      pluginManager,
+      page: this,
+    };
+
+    pageVueServerRenderer.pages.push(pageContentCopy);
 
     content = await pageVueServerRenderer.renderVuePage(content);
 
