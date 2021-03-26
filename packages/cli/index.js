@@ -111,7 +111,7 @@ program
   .option('-p, --port <port>', 'port for server to listen on (Default is 8080)')
   .option('-s, --site-config <file>', 'specify the site config file (default: site.json)')
   .option('-d, --dev', 'development mode, enabling live & hot reload for frontend source files.')
-  .action((userSpecifiedRoot, options) => {
+  .action(async (userSpecifiedRoot, options) => {
     if (options.dev) {
       logger.useDebugConsole();
     }
@@ -204,7 +204,7 @@ program
 
     pageVueServerRenderer.site['site'] = site;
 
-    const config = site.readSiteConfig();
+    const config = await site.readSiteConfig();
       // .then(
       //   // eslint-disable-next-line global-require
       //   require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)

@@ -52,6 +52,7 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
 async function renderVuePage(content) {
   // eslint-disable-next-line global-require
   const Vue = require('vue');
+  // console.log(bundleRenderer);
   const { MarkBindVue } = requireFromString(bundleRenderer);
   Vue.use(MarkBindVue);
   // console.log(bundleRenderer);
