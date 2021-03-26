@@ -6,6 +6,8 @@ const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const config = require('./webpack.common.js');
 
 module.exports = merge(config, {
@@ -15,19 +17,22 @@ module.exports = merge(config, {
   entry: './src/MarkBindVue.js',
   output: {
     // filename: 'js/[name].min.js',
-    // library: 'MarkBind',
-    // libraryExport: 'default',
+    library: 'MarkBind',
+    libraryExport: 'default',
     filename: 'js/markbindvue.min.js',
     // filename: 'server-bundle.js',
-    libraryTarget: 'commonjs2',
-    // libraryTarget: 'umd',
+    // libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
   },
   // https://webpack.js.org/configuration/externals/#externals
   // https://github.com/liady/webpack-node-externals
-  externals: nodeExternals({
-    // do not externalize CSS files in case we need to import it from a dependency
-    allowlist: /\.css$/,
-  }),
+  externals: {
+    // nodeExternals: nodeExternals({
+    //   // do not externalize CSS files in case we need to import it from a dependency
+    //   allowlist: /\.css$/,
+    // }),
+    vue: 'Vue',
+  },
   module: {
     rules: [
       {

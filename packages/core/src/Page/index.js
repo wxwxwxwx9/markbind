@@ -29,9 +29,9 @@ global.window.popoverInnerGetters = {
 // Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
 global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
 
-const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
+// const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
 
-Vue.use(MarkBindVue);
+// Vue.use(MarkBindVue);
 
 const cheerio = require('cheerio'); require('../patches/htmlparser2');
 const fs = require('fs-extra');
@@ -532,15 +532,15 @@ class Page {
 
     // content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
 
-    const VueAppPage = new Vue({
-      // template: content,
-      template: `<div id="app">${content}</div>`,
-      // template: '<script>  window.location.href = "gettingStarted.html"</script>',
-    });
-    content = await renderToString(VueAppPage);
-    content = unescape(content);
+    // const VueAppPage = new Vue({
+    //   // template: content,
+    //   template: `<div id="app">${content}</div>`,
+    //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
+    // });
+    // content = await renderToString(VueAppPage);
+    // content = unescape(content);
 
-    // content = await pageVueServerRenderer.renderVuePage(content);
+    content = await pageVueServerRenderer.renderVuePage(content);
 
     const renderedTemplate = this.pageConfig.template.render(
       this.prepareTemplateData(content, !!pageNav)); // page.njk

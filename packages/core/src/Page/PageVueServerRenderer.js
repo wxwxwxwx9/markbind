@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs-extra');
+const requireFromString = require('require-from-string');
 // const Vue = require('vue');
 const VueCompiler = require('vue-template-compiler');
 
@@ -48,7 +49,8 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
 async function renderVuePage(content) {
   // eslint-disable-next-line global-require
   const Vue = require('vue');
-  Vue.use(bundleRenderer);
+  const MarkBindVue = requireFromString(bundleRenderer);
+  Vue.use(MarkBindVue);
   // console.log(bundleRenderer);
   // const template = `<div id="app">${content}</div>`;
   const VueAppPage = new Vue({
@@ -71,6 +73,7 @@ async function renderAllVuePages() {
 function updateBundleRenderer(bundle) {
   // bundleRenderer = createBundleRenderer(bundle);
   bundleRenderer = bundle;
+  // bundleRenderer = require('/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js');
   console.log('updated!');
 }
 
