@@ -4,10 +4,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const config = require('./webpack.common.js');
+
+const serverConfig = require('./webpack.server.config');
 
 /* eslint-env node */
-module.exports = merge(config, {
+module.exports = merge(serverConfig, {
   mode: 'production',
   module: {
     rules: [
@@ -24,7 +25,7 @@ module.exports = merge(config, {
     minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin()],
   },
   plugins: [
-    new VueLoaderPlugin(),
+    // new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),

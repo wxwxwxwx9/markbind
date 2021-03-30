@@ -46,6 +46,7 @@
     "istextorbinary": "^3.3.0",
     "jest": "^26.1.0",
     "memfs": "^3.0.1",
-    "walk-sync": "^2.0.2"
+    "walk-sync": "^2.0.2",
+    "vue-server-renderer": "2.6.11"
   }
 }

@@ -1,8 +1,45 @@
+// const Vue = require('vue');
+// const { renderToString } = require('vue-server-renderer').createRenderer();
+
+const domino = require('domino');
+
+// global.window = {};
+
+// global.window = domino.createWindow('<h1>Hello world</h1>');
+// global.document = global.window.document;
+
+/*
+ These getters are used by popovers and tooltips to get their popover/tooltip content/title.
+
+ For triggers, refer to Trigger.vue.
+ We need to create a completely new popover/tooltip for each trigger due to bootstrap-vue's implementation,
+ so this is how we retrieve our contents.
+*/
+
+// function makeMbSlotGetter(slotName) {
+//   return (element) => {
+//     const innerElement = element.querySelector(`[data-mb-slot-name="${slotName}"]`);
+//     return innerElement === null ? '' : innerElement.innerHTML;
+//   };
+// }
+
+// // Used via vb-popover.html="popoverInnerGetters" for popovers
+// global.window.popoverInnerGetters = {
+//   title: makeMbSlotGetter('header'),
+//   content: makeMbSlotGetter('content'),
+// };
+// // Used via vb-tooltip.html="popoverInnerGenerator" for tooltips
+// global.window.tooltipInnerContentGetter = makeMbSlotGetter('_content');
+
+// const { MarkBindVue } = require('@markbind/core-web/dist/js/markbindvue.min');
+
+// Vue.use(MarkBindVue);
+
 const cheerio = require('cheerio'); require('../patches/htmlparser2');
 const fs = require('fs-extra');
 const htmlBeautify = require('js-beautify').html;
 const path = require('path');
-const VueCompiler = require('vue-template-compiler');
+const { pageVueServerRenderer } = require('./PageVueServerRenderer');
 
 const _ = {};
 _.cloneDeep = require('lodash/cloneDeep');
@@ -468,15 +505,62 @@ class Page {
       ...layoutManager.getLayoutPageNjkAssets(this.layout),
     };
 
+    // content = `<div id="app">${content}</div>`;
+
+    // content = `
+    //     <div id="app">
+    //       <panel>
+    //         <template #header>
+    //           minimal type panel
+    //         </template>
+    //         ...
+    //       </panel>
+    //     </div>
+    // `;
+
+    // content = `
+    //     <panel>
+    //       <template #header>
+    //         minimal type panel
+    //       </template>
+    //       ...
+    //     </panel>
+    // `;
+
+    // content = `<div> test </div>`;
+
     // Compile the page into Vue application and outputs the render function into script for browser
-    await this.compileVuePageAndCreateScript(content);
+    await pageVueServerRenderer.compileVuePageAndCreateScript(content, this.pageConfig, this.asset);
+
+    // content = '<div id="app"><panel header="Click to expand" type="seamless">Panel Content.</panel></div>';
+
+    // const VueAppPage = new Vue({
+    //   // template: content,
+    //   template: `<div id="app">${content}</div>`,
+    //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
+    // });
+    // content = await renderToString(VueAppPage);
+    // content = unescape(content);
+
+    const pageContentCopy = {
+      content,
+      pageConfig: this.pageConfig,
+      asset: this.asset,
+      pageNav,
+      pluginManager,
+      page: this,
+    };
+
+    pageVueServerRenderer.pages.push(pageContentCopy);
+
+    content = await pageVueServerRenderer.renderVuePage(content);
 
     const renderedTemplate = this.pageConfig.template.render(
       this.prepareTemplateData(content, !!pageNav)); // page.njk
 
     const outputTemplateHTML = this.pageConfig.disableHtmlBeautify
-      ? renderedTemplate
-      : htmlBeautify(renderedTemplate, pluginManager.htmlBeautifyOptions);
+      ? htmlBeautify(renderedTemplate, pluginManager.htmlBeautifyOptions)
+      : renderedTemplate;
 
     await fs.outputFile(this.pageConfig.resultPath, outputTemplateHTML);
 
@@ -484,41 +568,6 @@ class Page {
     await externalManager.generateDependencies(pageSources.getDynamicIncludeSrc(), this.includedFiles);
 
     this.collectHeadingsAndKeywords(pageContent);
-  }
-
-  /**
-   * Compiles page into Vue Application to get the page render function and places
-   * it into a script so that the browser can retrieve the page render function to
-   * render the page during Vue mounting.
-   *
-   * This is to avoid the overhead of compiling the page into Vue application
-   * on the client's browser (alleviates FOUC).
-   *
-   * @param content Page content to be compiled into Vue app
-   */
-  async compileVuePageAndCreateScript(content) {
-    // Compile Vue Page
-    const compiled = VueCompiler.compileToFunctions(`<div id="app">${content}</div>`);
-    const outputContent = `
-      var pageVueRenderFn = ${compiled.render};
-      var pageVueStaticRenderFns = [${compiled.staticRenderFns}];
-    `;
-
-    // Get script file name
-    const pageHtmlFileName = path.basename(this.pageConfig.resultPath, '.html');
-    const scriptFileName = `${pageHtmlFileName}.page-vue-render.js`;
-
-    /*
-     * Add the script file path for this page's render function to the page's assets (to populate page.njk).
-     * The script file path is the same as the page's file path.
-     */
-    this.asset.pageVueRenderJs = scriptFileName;
-
-    // Get script's absolute file path to output script file
-    const dirName = path.dirname(this.pageConfig.resultPath);
-    const filePath = path.join(dirName, scriptFileName);
-
-    await fs.outputFile(filePath, outputContent);
   }
 
   static addScrollToTopButton(pageData) {

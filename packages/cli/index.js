@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const { createBundleRenderer } = require('vue-server-renderer');
+
 // Entry file for Markbind project
 const chokidar = require('chokidar');
 const fs = require('fs-extra');
@@ -19,6 +21,8 @@ const {
   LAZY_LOADING_SITE_FILE_NAME,
   SITE_CONFIG_NAME,
 } = require('@markbind/core/src/Site/constants');
+
+const { pageVueServerRenderer } = require('@markbind/core/src/Page/PageVueServerRenderer');
 
 const liveServer = require('./src/lib/live-server');
 const cliUtil = require('./src/util/cliUtil');
@@ -107,7 +111,7 @@ program
   .option('-p, --port <port>', 'port for server to listen on (Default is 8080)')
   .option('-s, --site-config <file>', 'specify the site config file (default: site.json)')
   .option('-d, --dev', 'development mode, enabling live & hot reload for frontend source files.')
-  .action((userSpecifiedRoot, options) => {
+  .action(async (userSpecifiedRoot, options) => {
     if (options.dev) {
       logger.useDebugConsole();
     }
@@ -198,14 +202,38 @@ program
 
     printHeader();
 
-    site
-      .readSiteConfig()
-      .then((config) => {
+    pageVueServerRenderer.site['site'] = site;
+
+    // const config = await site.readSiteConfig();
+      // .then(
+      //   // eslint-disable-next-line global-require
+      //   require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
+      // )
+      // .then((config) => {
+      //   if (options.dev) {
+      //     // eslint-disable-next-line global-require
+      //     require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
+      //   }
+      //   return config;
+      // })
+      // require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer)
+      site.readSiteConfig()
+      .then(async (config) => {
         serverConfig.mount.push([config.baseUrl || '/', outputFolder]);
 
         if (options.dev) {
+          // const createRenderer = bundle => createBundleRenderer(bundle);
+          // let renderer;
+          // const rendererUpdater = (bundle) => {
+          //   renderer = createRenderer(bundle);
+          //   console.log('updated!');
+          // };
+
           // eslint-disable-next-line global-require
-          const getMiddlewares = require('@markbind/core-web/webpack.dev');
+          await require('@markbind/core-web/webpack.dev').server(pageVueServerRenderer.updateBundleRenderer);
+
+          // eslint-disable-next-line global-require
+          const getMiddlewares = require('@markbind/core-web/webpack.dev').client;
           getMiddlewares(`${config.baseUrl}/markbind`)
             .forEach(middleware => serverConfig.middleware.push(middleware));
         }

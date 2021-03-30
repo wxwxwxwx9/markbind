@@ -11,8 +11,8 @@ import {
 import closeable from './directives/Closeable';
 import dropdown from './Dropdown.vue';
 import navbar from './Navbar.vue';
-import panel from './Panel.vue';
 import pic from './Pic.vue';
+import panel from './Panel.vue';
 import quiz from './questions/Quiz.vue';
 import question from './questions/Question.vue';
 import qOption from './questions/QOption.vue';
@@ -26,16 +26,16 @@ import tipBox from './TipBox.vue';
 import trigger from './Trigger.vue';
 import siteNav from './SiteNav.vue';
 import submenu from './Submenu.vue';
+import overlay from './Overlay.vue';
 import siteNavButton from './SiteNavButton.vue';
 import pageNavButton from './PageNavButton.vue';
-import overlay from './Overlay.vue';
 
 const components = {
   box: tipBox,
   dropdown,
   navbar,
-  panel,
   pic,
+  panel,
   quiz,
   question,
   qOption,
@@ -49,9 +49,9 @@ const components = {
   trigger,
   siteNav,
   submenu,
+  overlay,
   siteNavButton,
   pageNavButton,
-  overlay,
 };
 
 const directives = {
@@ -59,17 +59,33 @@ const directives = {
 };
 
 function install(Vue) {
-  Object.keys(directives).forEach((key) => {
-    Vue.directive(key, directives[key]);
-  });
-  Object.keys(components).forEach((key) => {
-    Vue.component(key, components[key]);
-  });
   Vue.use(ModalPlugin);
   Vue.use(PopoverPlugin);
   Vue.use(TooltipPlugin);
+  Object.keys(directives).forEach((key) => {
+    // Vue.directive(key, directives[key]);
+    Vue.options.directives[key] = directives[key];
+  });
+  Object.keys(components).forEach((key) => {
+    // Vue.component(key, components[key]);
+    Vue.options.components[key] = components[key];
+  });
 }
 
-const MarkBindVue = { install };
+function uninstall(Vue) {
+  Object.keys(directives).forEach((key) => {
+    Vue.directive(key, () => null);
+    delete Vue.options.directives[key];
+  });
+  Object.keys(components).forEach((key) => {
+    Vue.component('panel', () => null);
+    delete Vue.options.components['panel'];
+  });
+  // delete Vue.options.components['ModalPlugin'];
+  // delete Vue.options.components['PopoverPlugin'];
+  // delete Vue.options.components['TooltipPlugin'];
+}
+
+const MarkBindVue = { install, uninstall };
 
 export default MarkBindVue;

@@ -35,9 +35,9 @@ export default {
     },
   },
   created() {
-    if (this.isOpen === null) {
-      this.isOpen = false;
-    }
+    // if (this.isOpen === null) {
+    //   this.isOpen = false;
+    // }
   },
 };
 </script>
