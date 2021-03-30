@@ -152,10 +152,10 @@ function restoreStyleTags() {
 }
 
 function executeAfterMountedRoutines() {
-  removeTemporaryStyles(); // Vue render function is called after before-mount hook
-  restoreStyleTags();
-  scrollToUrlAnchorHeading();
-  detectAndApplyFixedHeaderStyles();
+  // removeTemporaryStyles(); // Vue render function is called after before-mount hook
+  // restoreStyleTags();
+  // scrollToUrlAnchorHeading();
+  // detectAndApplyFixedHeaderStyles();
 }
 
 window.handleSiteNavClick = function (elem, useAnchor = true) {

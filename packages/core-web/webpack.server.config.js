@@ -11,10 +11,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./webpack.common.js');
 
 module.exports = merge(config, {
-  target: 'node',
-  devtool: '#source-map',
+  // target: 'node',
+  // devtool: '#source-map',
   // entry: path.join(__dirname, 'src', 'MarkBindVue.js'),
-  entry: './src/MarkBindVue.js',
+  entry: {
+    markbind: path.join(__dirname, 'src', 'MarkBindVue.js'),
+  },
   output: {
     // filename: 'js/[name].min.js',
     // library: 'MarkBind',
@@ -25,6 +27,7 @@ module.exports = merge(config, {
     libraryTarget: 'umd',
   },
   resolve: {
+    // extensions: ['.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
     },
@@ -47,6 +50,10 @@ module.exports = merge(config, {
           'css-loader',
         ],
       },
+      // {
+      //   test: /\.vue$/,
+      //   use: 'vue-loader',
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules|vue\/src|vue-router\/|vue-loader\/|vue-hot-reload-api\//,

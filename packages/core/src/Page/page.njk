@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="{{ asset.octicons }}">
     <link rel="stylesheet" href="{{ asset.highlight }}">
     {%- if not dev -%}<link rel="stylesheet" href="{{ asset.markBindCss }}">{%- endif -%}
-    <script src="{{ asset.polyfillJs }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> 
     <script src="{{ asset.markBindJs }}"></script>
     <script src="{{ asset.pageVueRenderJs }}"></script>
@@ -41,10 +40,11 @@
 <body {% if hasPageNav %} data-spy="scroll" data-target="#mb-page-nav" data-offset="100" {% endif %}>
 {{ content }}
 </body>
-<script src="{{ asset.bootstrapUtilityJs }}"></script>
 <script>
   {% if enableSearch %}MarkBind.setupWithSearch(){% else %}MarkBind.setup(){% endif %}
 </script>
+<script src="{{ asset.bootstrapUtilityJs }}"></script>
+
 {%- if asset.externalScripts %}
 {%- for script in asset.externalScripts %}
     <script src="{{ script }}"></script>

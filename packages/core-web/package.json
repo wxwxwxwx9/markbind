@@ -47,7 +47,8 @@
     "webpack-merge": "^5.0.9",
     "webpack-node-externals": "^2.5.2",
     "vue-server-renderer": "2.6.11",
-    "memory-fs": "^0.5.0"
+    "memory-fs": "^0.5.0",
+    "vue": "^2.6.11"
   },
   "publishConfig": {
     "access": "public"

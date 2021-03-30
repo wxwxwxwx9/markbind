@@ -8,6 +8,7 @@
 <variable name="highlightStyle">html</variable>
 <variable name="code">
 <!--Notice how header attribute supports inline MarkDown-->
+
 <dropdown header="*Action*" type="primary">
   <li><a href="#dropdown" class="dropdown-item">Action</a></li>
   <li><a href="#dropdown" class="dropdown-item">Another action</a></li>

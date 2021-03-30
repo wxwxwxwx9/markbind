@@ -41,7 +41,7 @@ module.exports = {
     return [
       webpackDevMiddleware(compiler, {
         publicPath,
-        serverSideRenader: true,
+        // serverSideRenader: true,
       }),
       webpackHotMiddleware(compiler),
     ];
@@ -58,8 +58,9 @@ module.exports = {
         // console.log(test2);
         // console.log(testFs.existsSync(test2) ? 'exists' : 'no');
         // const test3 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.json';
-        const test4 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js';
-        const read = fs.readFileSync(test4, 'utf-8');
+        // const test4 = '/Users/jamesongwx/Documents/GitHub/markbind/docs/dist/js/markbindvue.min.js';
+        const test5 = '/Users/jamesongwx/Desktop/markbind/test2/dist/js/markbindvue.min.js';
+        const read = fs.readFileSync(test5, 'utf-8');
         return read;
       } catch (e) {
         console.log(e);

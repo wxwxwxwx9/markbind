@@ -11,15 +11,15 @@ const serverConfig = require('./webpack.server.config');
 module.exports = merge(serverConfig, {
   mode: 'production',
   module: {
-    // rules: [
-    //   {
-    //     test: /\.css$/,
-    //     use: [
-    //       MiniCssExtractPlugin.loader,
-    //       'css-loader',
-    //     ],
-    //   },
-    // ],
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+    ],
   },
   optimization: {
     minimizer: [new TerserPlugin(), new OptimizeCssAssetsPlugin()],

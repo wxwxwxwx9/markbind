@@ -1,11 +1,11 @@
 const path = require('path');
 const fs = require('fs-extra');
 const htmlBeautify = require('js-beautify').html;
-const requireFromString = require('require-from-string');
+// const requireFromString = require('require-from-string');
 
 const Vue = require('vue');
 
-let FreshVue = Vue.extend();
+// let FreshVue = Vue.extend();
 
 Vue.config.silent = true;
 const VueCompiler = require('vue-template-compiler');
@@ -21,6 +21,8 @@ global.document = global.window.document;
 const pages = [];
 
 let site = {};
+
+let renderFns = {};
 
 let oldBundleRenderer;
 let bundleRenderer;
@@ -39,6 +41,9 @@ let bundleRenderer;
 async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
   // Compile Vue Page
   const compiled = VueCompiler.compileToFunctions(`<div id="app">${content}</div>`);
+  renderFns.render = compiled.render;
+  renderFns.staticRenderFns = compiled.staticRenderFns;
+
   const outputContent = `
     var pageVueRenderFn = ${compiled.render};
     var pageVueStaticRenderFns = [${compiled.staticRenderFns}];
@@ -61,9 +66,17 @@ async function compileVuePageAndCreateScript(content, pageConfig, pageAsset) {
   await fs.outputFile(filePath, outputContent);
 }
 
+function requireFromString(src, filename) {
+  const m = new module.constructor();
+  m.paths = module.paths;
+  m._compile(src, filename);
+  return m.exports;
+}
+
 async function renderVuePage(content) {
+  // return content;
   // eslint-disable-next-line global-require
-  // FreshVue = Vue.extend();
+  const FreshVue = Vue.extend();
   // console.log(bundleRenderer);
   // if (oldBundleRenderer) {
   //   const { MarkBindVue } = requireFromString(oldBundleRenderer);
@@ -71,8 +84,8 @@ async function renderVuePage(content) {
   // }
   // const panel = Vue.component('panel');
   // console.log(panel);
-  const { MarkBindVue } = requireFromString(bundleRenderer);
-  MarkBindVue.install(FreshVue);
+  const { MarkBindVue } = requireFromString(bundleRenderer, '');
+  MarkBindVue.install(Vue);
   // Vue.use(MarkBindVue);
   // MarkBindVue.install(FreshVue);
   // FreshVue.use(MarkBindVue);
@@ -81,27 +94,31 @@ async function renderVuePage(content) {
   // Vue.use(MarkBindVue);
   // console.log(bundleRenderer);
   // const template = `<div id="app">${content}</div>`;
-  const VueAppPage = new FreshVue({
+  const VueAppPage = new Vue({
   //   // template: content,
     template: `<div id="app">${content}</div>`,
-    data: {
-      searchData: [],
-      popoverInnerGetters: {},
-      tooltipInnerContentGetter: {},
-      fragment: '',
-      questions: [],
+    render(createElement) {
+      return renderFns.render.call(this, createElement);
     },
-    props: {
-      threshold: Number(0.5),
-    },
-    methods: {
-      searchCallback: () => {},
-    },
-    provide: {
-      hasParentDropdown: true,
-      questions: [],
-      gotoNextQuestion: true,
-    },
+    staticRenderFns: renderFns.staticRenderFns,
+    // data: {
+    //   searchData: [],
+    //   popoverInnerGetters: {},
+    //   tooltipInnerContentGetter: {},
+    //   fragment: '',
+    //   questions: [],
+    // },
+    // props: {
+    //   threshold: Number(0.5),
+    // },
+    // methods: {
+    //   searchCallback: () => {},
+    // },
+    // provide: {
+    //   hasParentDropdown: true,
+    //   questions: [],
+    //   gotoNextQuestion: true,
+    // },
   //   // template: '<script>  window.location.href = "gettingStarted.html"</script>',
   });
   // const renderedContent = await bundleRenderer.renderToString(template);
