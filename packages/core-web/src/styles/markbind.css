@@ -172,23 +172,6 @@ footer {
     }
 }
 
-/* Temporary Anti-FOUC Styles */
-
-/* By default, some of MarkBind's Vue components break the layout of the page before Vue is mounted,
-so we apply temporary styles to fix the layout until Vue correctly updates the DOM. */
-
-.temp-navbar {
-    display: flex;
-}
-
-.temp-navbar li {
-    display: block;
-}
-
-.temp-dropdown {
-    display: none;
-}
-
 /* Hide the contents of unexpanded panels */
 /* stylelint-disable selector-type-no-unknown */
 panel:not([expanded]):not([minimized]) {
